@@ -419,7 +419,7 @@ function PurchaseSale() {
     };
 
     return (
-        <div className="space-y-6 p-4">
+        <div className="hidden md:block space-y-6 p-4">
           <div className="flex justify-between">  <h1 className='text-4xl ml-5 text-center my-10 font-bold'>Purchase/Sales</h1> 
          <div className="my-10 flex gap-5 mr-5">   <button className="bg-slate-600 p-2 rounded text-white">Sales Transactions</button>
 <button className="bg-teal-600 p-2 rounded text-white">Purchase Transactions</button></div>
