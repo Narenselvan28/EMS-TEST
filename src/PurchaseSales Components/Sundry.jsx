@@ -84,7 +84,7 @@ function SundrySection({ sundryEntries, onEntriesChange, errors }) {
 
     return (
         <>
-            <div className="flex items-center space-x-3 bg-[#5C53DE] bg-opacity-10 p-3 rounded my-0 d-lg mx-5">
+            <div className="flex items-center space-x-3 bg-white w-52  p-3 rounded-3xl my-0 d-lg mx-5">
                 <label className="relative inline-flex items-center cursor-pointer">
                     <input
                         type="checkbox"
@@ -92,7 +92,7 @@ function SundrySection({ sundryEntries, onEntriesChange, errors }) {
                         onChange={() => setShowSundry(!showSundry)}
                         className="sr-only peer"
                     />
-                    <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#5C53DE]"></div>
+                    <div className="w-11 h-6 bg-gray-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-teal-600"></div>
                     <span className="ml-3 text-sm font-medium text-gray-900">
                         {showSundry ? 'Sundry Enabled' : 'Sundry Disabled'}
                     </span>
@@ -112,7 +112,7 @@ function SundrySection({ sundryEntries, onEntriesChange, errors }) {
                         <select
                             value={category}
                             onChange={(e) => setCategory(e.target.value)}
-                            className={`glass-panel border ${errors[`sundry-${sundryEntries.length}-category`] && editingIndex === null ? 'border-red-500' : 'border-slate-200'} p-3 rounded-lg w-full focus:ring-2 focus:ring-indigo-200`}
+                            className={`glass-panel border ${errors[`sundry-${sundryEntries.length}-category`] && editingIndex === null ? 'border-red-500' : 'border-slate-200'} p-3 rounded-lg w-full focus:ring-2 focus:ring-teal-200`}
                             disabled={!showSundry}
                         >
                             <option value="">- Select -</option>
@@ -137,7 +137,7 @@ function SundrySection({ sundryEntries, onEntriesChange, errors }) {
                             onChange={(e) => setValue(e.target.value)}
                             placeholder="Enter Value"
                             disabled={!showSundry}
-                            className={`glass-panel border ${errors[`sundry-${sundryEntries.length}-value`] && editingIndex === null ? 'border-red-500' : 'border-slate-200'} p-3 rounded-lg w-full focus:ring-2 focus:ring-indigo-200`}
+                            className={`glass-panel border ${errors[`sundry-${sundryEntries.length}-value`] && editingIndex === null ? 'border-red-500' : 'border-slate-200'} p-3 rounded-lg w-full focus:ring-2 focus:ring-teal-200`}
                         />
                         {errors[`sundry-${sundryEntries.length}-value`] && editingIndex === null && <p className="text-red-500 text-xs mt-1">{errors[`sundry-${sundryEntries.length}-value`]}</p>}
                     </div>
@@ -150,7 +150,7 @@ function SundrySection({ sundryEntries, onEntriesChange, errors }) {
                             onChange={(e) => setRemarks(e.target.value)}
                             placeholder="Remarks"
                             disabled={!showSundry}
-                            className="glass-panel border border-slate-200 p-3 rounded-lg w-full focus:ring-2 focus:ring-indigo-200"
+                            className="glass-panel border border-slate-200 p-3 rounded-lg w-full focus:ring-2 focus:ring-teal-200"
                         />
                     </div>
 
@@ -173,22 +173,22 @@ function SundrySection({ sundryEntries, onEntriesChange, errors }) {
 
                 <div className="w-full md:w-2/3 glass-panel rounded-xl p-6 overflow-x-auto mt-6 md:mt-0 transition-all hover:glow">
                     <h2 className="text-xl font-semibold mb-4 text-primary">Sundry Entries</h2>
-                    <table className="w-full border border-indigo-200 text-left border-collapse">
+                    <table className="w-full border border-teal-200 text-left border-collapse">
                         <thead>
-                            <tr className="table-header bg-indigo-600 text-white font-bold rounded-lg">
-                                <th className="py-3 px-4 border border-indigo-200 rounded-tl-lg">Category</th>
-                                <th className="py-3 px-4 border border-indigo-200">Value (₹)</th>
-                                <th className="py-3 px-4 border border-indigo-200">Remarks</th>
-                                <th className="py-3 px-4 border border-indigo-200 rounded-tr-lg w-36">Actions</th>
+                            <tr className="table-header bg-teal-600 text-white font-bold rounded-lg">
+                                <th className="py-3 px-4 border border-teal-200 rounded-tl-lg">Category</th>
+                                <th className="py-3 px-4 border border-teal-200">Value (₹)</th>
+                                <th className="py-3 px-4 border border-teal-200">Remarks</th>
+                                <th className="py-3 px-4 border border-teal-200 rounded-tr-lg w-36">Actions</th>
                             </tr>
                         </thead>
-                        <tbody className="divide-y divide-indigo-100">
+                        <tbody className="divide-y divide-teal-100">
                             {sundryEntries.map((entry, index) => (
                                 <tr key={index}>
-                                    <td className="py-3 px-4 border border-indigo-200">{entry.category}</td>
-                                    <td className="py-3 px-4 border border-indigo-200">₹ {entry.value}</td>
-                                    <td className="py-3 px-4 border border-indigo-200">{entry.remarks}</td>
-                                    <td className="py-3 px-4 border border-indigo-200 text-center flex space-x-2">
+                                    <td className="py-3 px-4 border border-teal-200">{entry.category}</td>
+                                    <td className="py-3 px-4 border border-teal-200">₹ {entry.value}</td>
+                                    <td className="py-3 px-4 border border-teal-200">{entry.remarks}</td>
+                                    <td className="py-3 px-4 border border-teal-200 text-center flex space-x-2">
                                         <button
                                             onClick={() => editEntry(index)}
                                             className="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded"
