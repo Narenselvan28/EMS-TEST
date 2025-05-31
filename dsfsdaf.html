@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Excel Entry Form</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+            min-height: 100vh;
+        }
+
+        input,
+        select {
+            min-width: 100px;
+        }
+
+        select {
+            height: 42px;
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.75);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border-radius: 12px;
+            border: 1px solid rgba(203, 213, 225, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .glass-panel:hover {
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        /* Primary Button (Indigo) */
+        .btn-primary {
+            background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+            color: white;
+            box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
+            transition: all 0.3s ease;
+            border: none;
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #4f46e5 0%, #4338ca 100%);
+            box-shadow: 0 6px 20px rgba(99, 102, 241, 0.4);
+            transform: translateY(-2px);
+        }
+
+        /* Secondary Button (Emerald) */
+        .btn-secondary {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+            transition: all 0.3s ease;
+            border: none;
+        }
+
+        .btn-secondary:hover {
+            background: linear-gradient(135deg, #059669 0%, #047857 100%);
+            box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4);
+            transform: translateY(-2px);
+        }
+
+        /* Success Button (Violet) */
+        .btn-success {
+            background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+            color: white;
+            box-shadow: 0 4px 15px rgba(139, 92, 246, 0.3);
+            transition: all 0.3s ease;
+            border: none;
+        }
+
+        .btn-success:hover {
+            background: linear-gradient(135deg, #7c3aed 0%, #6d28d9 100%);
+            box-shadow: 0 6px 20px rgba(139, 92, 246, 0.4);
+            transform: translateY(-2px);
+        }
+
+        /* Danger Button (Rose) */
+        .btn-danger {
+            background: linear-gradient(135deg, #f43f5e 0%, #e11d48 100%);
+            color: white;
+            box-shadow: 0 4px 15px rgba(244, 63, 94, 0.3);
+            transition: all 0.3s ease;
+            border: none;
+        }
+
+        .btn-danger:hover {
+            background: linear-gradient(135deg, #e11d48 0%, #be123c 100%);
+            box-shadow: 0 6px 20px rgba(244, 63, 94, 0.4);
+            transform: translateY(-2px);
+        }
+
+        /* Table Header (Indigo) */
+        .table-header {
+            background: linear-gradient(135deg, rgba(79, 70, 229, 0.9) 0%, rgba(67, 56, 202, 0.9) 100%);
+            color: white;
+            backdrop-filter: blur(8px);
+        }
+
+        /* Table Row Hover */
+        .table-row:hover {
+            background-color: rgba(224, 231, 255, 0.3);
+        }
+
+        /* Input Focus */
+        input:focus,
+        select:focus {
+            border-color: #818cf8;
+            box-shadow: 0 0 0 3px rgba(129, 140, 248, 0.2);
+            outline: none;
+            background: rgba(255, 255, 255, 0.9);
+        }
+
+        /* Text Colors */
+        .text-primary {
+            color: #1e293b;
+        }
+
+        .text-secondary {
+            color: #334155;
+        }
+
+        /* Status Badges */
+        .badge-pending {
+            background-color: rgba(254, 243, 199, 0.8);
+            color: #92400e;
+            backdrop-filter: blur(4px);
+        }
+
+        .badge-approved {
+            background-color: rgba(209, 250, 229, 0.8);
+            color: #065f46;
+            backdrop-filter: blur(4px);
+        }
+
+        .badge-rejected {
+            background-color: rgba(254, 226, 226, 0.8);
+            color: #991b1b;
+            backdrop-filter: blur(4px);
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgba(241, 245, 249, 0.5);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: rgba(203, 213, 225, 0.7);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+
+        /* Floating animation */
+        @keyframes float {
+            0% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-5px);
+            }
+
+            100% {
+                transform: translateY(0px);
+            }
+        }
+
+        .floating {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        /* Glow effect */
+        .glow {
+            box-shadow: 0 0 15px rgba(99, 102, 241, 0.3);
+        }
+
+        /* Transition effects */
+        .transition-all {
+            transition: all 0.3s ease;
+        }
+
+        /* Gradient text */
+        .gradient-text {
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+    </style>
+</head>
+
+<body class="p-6 text-base">
+    <div class="max-w-full mx-auto">
+        <h1 class="text-4xl font-bold mb-6 gradient-text">Purchase / Sales Entry</h1>
+
+        <!-- Header Section -->
+
+        <!-- GST Toggle -->
+        <div class="flex items-center gap-3 mb-4 glass-card p-4 rounded-lg">
+            <input type="checkbox" id="toggleGST" class="w-5 h-5 text-indigo-600 rounded focus:ring-indigo-500"
+                onchange="toggleGSTDetails()">
+            <label for="toggleGST" class="text-lg font-semibold text-primary">Add GST Details</label>
+        </div>
+
+        <!-- Main Table Section -->
+        <div class="overflow-x-auto mb-6 glass-card p-6 rounded-xl">
+            <!-- Regular Table (Non-GST) -->
+            <table class="table-auto border-collapse w-full text-base" id="regularTable">
+                <thead>
+                    <tr class="text-left table-header rounded-lg">
+                        <th class="border border-indigo-200 px-4 py-3 w-80 rounded-tl-lg">Item Name</th>
+
+                        <th class="border border-indigo-200 px-4 py-3">Qty</th>
+                        <th class="border border-indigo-200 px-4 py-3">UOM</th>
+                        <th class="border border-indigo-200 px-4 py-3">Price</th>
+                        <th class="border border-indigo-200 px-4 py-3">Amount</th>
+                        <th class="border border-indigo-200 px-4 py-3">Debit/Credit</th>
+                        <th class="border border-indigo-200 px-4 py-3 w-20 rounded-tr-lg">Action</th>
+                    </tr>
+                </thead>
+                <tbody id="regularTableBody"></tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="7" class="px-4 py-2">
+                            <button onclick="addRegularRow()"
+                                class="btn-primary px-4 py-3 rounded-lg text-sm font-medium glow transition-all">
+                                <i class="fas fa-plus mr-2"></i> Add Row
+                            </button>
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+
+            <!-- GST Table (Hidden by default) -->
+            <table class="table-auto border-collapse w-full text-base hidden" id="gstTable">
+                <thead>
+                    <tr class="text-left table-header rounded-lg">
+                        <th class="border border-indigo-200 px-4 py-3 w-96 rounded-tl-lg">Item Name</th>
+                        <th class="border border-indigo-200 px-4 py-3">UOM</th>
+                        <th class="border border-indigo-200 px-4 py-3">Qty</th>
+                        <th class="border border-indigo-200 px-4 py-3">Price</th>
+                        <th class="border border-indigo-200 px-4 py-3">CGST %</th>
+                        <th class="border border-indigo-200 px-4 py-3">CGST Amt</th>
+                        <th class="border border-indigo-200 px-4 py-3">SGST %</th>
+                        <th class="border border-indigo-200 px-4 py-3">SGST Amt</th>
+                        <th class="border border-indigo-200 px-4 py-3">Total GST</th>
+                        <th class="border border-indigo-200 px-4 py-3">Grand Total</th>
+                        <th class="border border-indigo-200 px-4 py-3">Debit/Credit</th>
+                        <th class="border border-indigo-200 px-4 py-3 w-20 rounded-tr-lg">Action</th>
+                    </tr>
+                </thead>
+                <tbody id="gstTableBody"></tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="12" class="px-4 py-2">
+                            <button onclick="addGSTRow()"
+                                class="btn-primary px-4 py-3 rounded-lg text-sm font-medium glow transition-all">
+                                <i class="fas fa-plus mr-2"></i> Add Row
+                            </button>
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+
+        <!-- Sundry Section -->
+        <div class="flex items-center gap-3 mb-4 glass-card p-4 rounded-lg">
+            <input type="checkbox" id="toggleSundry" class="w-5 h-5 text-indigo-600 rounded focus:ring-indigo-500"
+                onchange="toggleSundrySection()" />
+            <label for="toggleSundry" class="text-lg font-semibold text-primary">Add Sundry Details</label>
+        </div>
+
+        <div class="p-6 glass-card rounded-xl flex flex-col md:flex-row md:space-x-6 mb-6 transition-all hover:glow">
+            <div id="sundrySection"
+                class="w-full md:w-1/3 opacity-50 pointer-events-none transition-all duration-300 space-y-4">
+                <h2 class="text-xl font-semibold text-primary">Sundry Details</h2>
+
+                <div>
+                    <label class="block mb-2 font-medium text-secondary">Category</label>
+                    <select id="categoryInput"
+                        class="glass-panel border border-slate-200 p-3 rounded-lg w-full focus:ring-2 focus:ring-indigo-200"
+                        disabled>
+                        <option value="">- Select -</option>
+                        <option>Gunny Bags</option>
+                        <option>Loading Charges</option>
+                        <option>Unloading Charges</option>
+                        <option>Transport Charges</option>
+                        <option>Roundoff (+)</option>
+                        <option>Roundoff (-)</option>
+                        <option>Other</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label class="block mb-2 font-medium text-secondary">Value (₹)</label>
+                    <input id="valueInput" type="number" step="0.01"
+                        class="glass-panel border border-slate-200 p-3 rounded-lg w-full focus:ring-2 focus:ring-indigo-200"
+                        placeholder="Enter Value" disabled />
+                </div>
+
+                <div>
+                    <label class="block mb-2 font-medium text-secondary">Remarks</label>
+                    <input id="remarksInput" type="text"
+                        class="glass-panel border border-slate-200 p-3 rounded-lg w-full focus:ring-2 focus:ring-indigo-200"
+                        placeholder="Remarks" disabled />
+                </div>
+
+                <button id="addSundryBtn"
+                    class="btn-primary px-4 py-3 rounded-lg w-full disabled:opacity-50 transition-all" disabled>
+                    Add Sundry
+                </button>
+            </div>
+
+            <div
+                class="w-full md:w-2/3 glass-panel rounded-xl p-6 overflow-x-auto mt-6 md:mt-0 transition-all hover:glow">
+                <h2 class="text-xl font-semibold mb-4 text-primary">Sundry Entries</h2>
+                <table class="w-full text-left border-collapse">
+                    <thead>
+                        <tr class="table-header rounded-lg">
+                            <th class="py-3 px-4 border border-indigo-200 rounded-tl-lg">Category</th>
+                            <th class="py-3 px-4 border border-indigo-200">Value (₹)</th>
+                            <th class="py-3 px-4 border border-indigo-200">Remarks</th>
+                            <th class="py-3 px-4 border border-indigo-200 rounded-tr-lg w-28">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="sundryTableBody" class="divide-y divide-indigo-100">
+                        <!-- Sundry entries will be added here dynamically -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Summary Section -->
+        <div class="p-6 glass-card rounded-xl max-w-4xl mx-auto mb-6 transition-all hover:glow">
+            <h2 class="text-xl font-semibold text-primary mb-4">Summary</h2>
+            <div class="flex justify-between py-3 border-b border-slate-200">
+                <span class="text-secondary">Subtotal</span>
+                <span id="subtotal" class="font-medium text-primary">₹0.00</span>
+            </div>
+            <div class="flex justify-between py-3 border-b border-slate-200" id="gstSummaryRow" style="display: none;">
+                <span class="text-secondary">GST Total</span>
+                <span id="gstTotal" class="font-medium text-primary">₹0.00</span>
+            </div>
+            <div class="flex justify-between py-3 border-b border-slate-200">
+                <span class="text-secondary">Sundry Total</span>
+                <span id="sundryTotal" class="font-medium text-primary">₹0.00</span>
+            </div>
+            <div class="flex justify-between py-3 mt-2">
+                <span class="text-primary font-semibold text-lg">Grand Total</span>
+                <span id="grandTotal" class="font-semibold text-indigo-700 text-xl">₹0.00</span>
+            </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="flex flex-wrap gap-4 mb-8 justify-center">
+            <button onclick="saveForm('next')"
+                class="btn-primary px-8 py-4 rounded-xl text-base font-medium glow transition-all">
+                <i class="fas fa-save mr-2"></i> Save & Next
+            </button>
+            <button onclick="saveForm('new')"
+                class="btn-secondary px-8 py-4 rounded-xl text-base font-medium glow transition-all">
+                <i class="fas fa-file mr-2"></i> Save & New
+            </button>
+            <button onclick="saveForm('all')"
+                class="btn-success px-8 py-4 rounded-xl text-base font-medium glow transition-all">
+                <i class="fas fa-database mr-2"></i> Save All
+            </button>
+            <button onclick="resetForm()"
+                class="btn-danger px-8 py-4 rounded-xl text-base font-medium glow transition-all">
+                <i class="fas fa-redo mr-2"></i> Reset Form
+            </button>
+        </div>
+
+        <!-- Reference Items Section -->
+        <div class="mb-6 glass-card p-6 rounded-xl transition-all hover:glow">
+            <h2 class="text-2xl font-semibold mb-6 gradient-text">Reference Items with Sundry Details</h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+                <div>
+                    <label class="block mb-2 font-medium text-secondary">Order Type</label>
+                    <select
+                        class="glass-panel border border-slate-200 p-3 rounded-lg w-full text-base focus:ring-2 focus:ring-indigo-200"
+                        id="refOrderType">
+                        <option value="">- All -</option>
+                        <option value="purchase">Purchase</option>
+                        <option value="sale">Sale</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label class="block mb-2 font-medium text-secondary">Party Name</label>
+                    <select
+                        class="glass-panel border border-slate-200 p-3 rounded-lg w-full text-base focus:ring-2 focus:ring-indigo-200"
+                        id="refPartyName">
+                        <option value="">- All -</option>
+                        <option>Ems Cocos</option>
+                        <option>APA Rasu</option>
+                        <option>Anand SOK</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label class="block mb-2 font-medium text-secondary">Status</label>
+                    <select
+                        class="glass-panel border border-slate-200 p-3 rounded-lg w-full text-base focus:ring-2 focus:ring-indigo-200"
+                        id="refStatus">
+                        <option value="">- All -</option>
+                        <option value="pending">Pending</option>
+                        <option value="approved">Approved</option>
+                        <option value="rejected">Rejected</option>
+                    </select>
+                </div>
+                <div class="flex items-end">
+                    <button onclick="searchReferences()"
+                        class="btn-primary px-6 py-3 rounded-lg text-base w-full glow transition-all">
+                        <i class="fas fa-search mr-2"></i> Search
+                    </button>
+                </div>
+            </div>
+
+            <div class="overflow-x-auto rounded-lg">
+                <table class="table-auto border-collapse w-full text-sm" id="referenceTable">
+                    <thead>
+                        <tr class="table-header rounded-lg">
+                            <th class="border border-indigo-200 px-4 py-3 rounded-tl-lg">Ref No.</th>
+                            <th class="border border-indigo-200 px-4 py-3">Date</th>
+                            <th class="border border-indigo-200 px-4 py-3">Party</th>
+                            <th class="border border-indigo-200 px-4 py-3">Item Name</th>
+                            <th class="border border-indigo-200 px-4 py-3">Amount</th>
+                            <th class="border border-indigo-200 px-4 py-3">Type</th>
+                            <th class="border border-indigo-200 px-4 py-3">Status</th>
+                            <th class="border border-indigo-200 px-4 py-3 rounded-tr-lg">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="referenceTableBody">
+                        <!-- Reference items will be loaded here -->
+                        <tr class="table-row">
+                            <td class="border border-slate-100 px-4 py-2">REF-1001</td>
+                            <td class="border border-slate-100 px-4 py-2">2023-05-15</td>
+                            <td class="border border-slate-100 px-4 py-2">Ems Cocos</td>
+                            <td class="border border-slate-100 px-4 py-2">Coconut with Husk</td>
+                            <td class="border border-slate-100 px-4 py-2">₹12,500.00</td>
+                            <td class="border border-slate-100 px-4 py-2">Purchase</td>
+                            <td class="border border-slate-100 px-4 py-2">
+                                <span class="badge-approved px-3 py-1 rounded-full text-xs font-medium">Approved</span>
+                            </td>
+                            <td class="border border-slate-100 px-4 py-2">
+                                <button class="btn-primary px-3 py-1 rounded text-xs mr-1">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                                <button class="btn-secondary px-3 py-1 rounded text-xs">
+                                    <i class="fas fa-copy"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        <tr class="table-row">
+                            <td class="border border-slate-100 px-4 py-2">REF-1002</td>
+                            <td class="border border-slate-100 px-4 py-2">2023-05-16</td>
+                            <td class="border border-slate-100 px-4 py-2">APA Rasu</td>
+                            <td class="border border-slate-100 px-4 py-2">Copra</td>
+                            <td class="border border-slate-100 px-4 py-2">₹8,750.00</td>
+                            <td class="border border-slate-100 px-4 py-2">Sale</td>
+                            <td class="border border-slate-100 px-4 py-2">
+                                <span class="badge-pending px-3 py-1 rounded-full text-xs font-medium">Pending</span>
+                            </td>
+                            <td class="border border-slate-100 px-4 py-2">
+                                <button class="btn-primary px-3 py-1 rounded text-xs mr-1">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                                <button class="btn-secondary px-3 py-1 rounded text-xs">
+                                    <i class="fas fa-copy"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Font Awesome for icons -->
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+
+    <script>
+        // DOM Elements
+        const sundrySection = document.getElementById('sundrySection');
+        const toggleSundry = document.getElementById('toggleSundry');
+        const categoryInput = document.getElementById('categoryInput');
+        const valueInput = document.getElementById('valueInput');
+        const remarksInput = document.getElementById('remarksInput');
+        const addSundryBtn = document.getElementById('addSundryBtn');
+        const sundryTableBody = document.getElementById('sundryTableBody');
+
+        // Summary elements
+        const subtotalEl = document.getElementById('subtotal');
+        const gstSummaryRow = document.getElementById('gstSummaryRow');
+        const gstTotalEl = document.getElementById('gstTotal');
+        const sundryTotalEl = document.getElementById('sundryTotal');
+        const grandTotalEl = document.getElementById('grandTotal');
+
+        // Data stores
+        let sundryEntries = [];
+        let regularEntries = [];
+        let gstEntries = [];
+        let referenceEntries = [];
+
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', function () {
+            // Add initial row to the appropriate table
+            toggleGSTDetails(); // This will handle the initial table setup
+
+            // Initialize sundry section state
+            toggleSundrySection();
+
+            // Load sample reference data
+            loadReferenceData();
+
+            // Set up event listeners for inputs
+            setupEventListeners();
+        });
+
+        function setupEventListeners() {
+            // Sundry section event listeners
+            toggleSundry.addEventListener('change', toggleSundrySection);
+            categoryInput.addEventListener('input', validateSundryInputs);
+            valueInput.addEventListener('input', validateSundryInputs);
+            addSundryBtn.addEventListener('click', handleSundryAction);
+
+            // Form submission handlers
+            document.getElementById('entryDate').addEventListener('change', validateMainForm);
+            document.getElementById('orderType').addEventListener('change', validateMainForm);
+            document.getElementById('partyName').addEventListener('change', validateMainForm);
+        }
+
+        // Toggle GST details table
+        function toggleGSTDetails() {
+            const isGST = document.getElementById('toggleGST').checked;
+            const regularTable = document.getElementById('regularTable');
+            const gstTable = document.getElementById('gstTable');
+
+            gstSummaryRow.style.display = isGST ? 'flex' : 'none';
+
+            if (isGST) {
+                regularTable.classList.add('hidden');
+                gstTable.classList.remove('hidden');
+                if (gstTableBody.children.length === 0) {
+                    addGSTRow();
+                }
+            } else {
+                regularTable.classList.remove('hidden');
+                gstTable.classList.add('hidden');
+                if (regularTableBody.children.length === 0) {
+                    addRegularRow();
+                }
+            }
+
+            calculateTotals();
+        }
+
+        // Add a new row to the regular table
+        function addRegularRow() {
+            const rowId = Date.now();
+            const row = document.createElement('tr');
+            row.className = "table-row";
+            row.id = `regular-row-${rowId}`;
+            row.innerHTML = `
+                <td class="border border-slate-100 px-4 py-2">
+                    <select class="item-select glass-panel border border-slate-200 p-2 rounded-lg w-full focus:ring-2 focus:ring-indigo-200" 
+                            onchange="updateItemDetails(this, ${rowId}, 'regular')">
+                        <option value="">- Select -</option>
+                        <option value="coconut_husk">Coconut with Husk</option>
+                        <option value="coconut_no_husk">Coconut without Husk</option>
+                        <option value="copra">Copra</option>
+                        <option value="husk">Husk</option>
+                    </select>
+                </td>
+                <td class="border border-slate-100 px-4 py-2">
+                    <select class="uom-select glass-panel border border-slate-200 p-2 rounded-lg w-full focus:ring-2 focus:ring-indigo-200" disabled>
+                        <option value="">- Select -</option>
+                        <option value="nos">Nos</option>
+                        <option value="kg">Kg</option>
+                        <option value="quintal">Quintal</option>
+                    </select>
+                </td>
+                <td class="border border-slate-100 px-4 py-2">
+                    <input type="number" min="0" step="0.01" 
+                           class="qty-input glass-panel border border-slate-200 p-2 rounded-lg w-full focus:ring-2 focus:ring-indigo-200" 
+                           placeholder="Qty" onchange="calculateRowTotal(this, ${rowId}, 'regular')"/>
+                </td>
+                <td class="border border-slate-100 px-4 py-2">
+                    <input type="number" min="0" step="0.01" 
+                           class="price-input glass-panel border border-slate-200 p-2 rounded-lg w-full focus:ring-2 focus:ring-indigo-200" 
+                           placeholder="Price" onchange="calculateRowTotal(this, ${rowId}, 'regular')"/>
+                </td>
+                <td class="border border-slate-100 px-4 py-2">
+                    <input type="number" class="amount-input glass-panel border border-slate-200 p-2 rounded-lg w-full" 
+                           placeholder="Amount" readonly/>
+                </td>
+                <td class="border border-slate-100 px-4 py-2">
+                    <select class="type-select glass-panel border border-slate-200 p-2 rounded-lg w-full focus:ring-2 focus:ring-indigo-200">
+                        <option value="debit">Debit</option>
+                        <option value="credit">Credit</option>
+                    </select>
+                </td>
+                <td class="border border-slate-100 px-4 py-2">
+                    <button onclick="removeRow(${rowId}, 'regular')" class="btn-danger px-3 py-1 rounded-lg text-sm w-full transition-all">
+                        <i class="fas fa-trash"></i> Remove
+                    </button>
+                </td>
+            `;
+            document.getElementById('regularTableBody').appendChild(row);
+
+            // Add to data store
+            regularEntries.push({
+                id: rowId,
+                item: '',
+                uom: '',
+                qty: 0,
+                price: 0,
+                amount: 0,
+                type: 'debit'
+            });
+        }
+
+        // Add a new row to the GST table
+        function addGSTRow() {
+            const rowId = Date.now();
+            const row = document.createElement('tr');
+            row.className = "table-row";
+            row.id = `gst-row-${rowId}`;
+            row.innerHTML = `
+                <td class="border border-slate-100 px-4 py-2">
+                    <select class="item-select glass-panel border border-slate-200 p-2 rounded-lg w-full focus:ring-2 focus:ring-indigo-200" 
+                            onchange="updateItemDetails(this, ${rowId}, 'gst')">
+                        <option value="">- Select -</option>
+                        <option value="coconut_husk">Coconut with Husk</option>
+                        <option value="coconut_no_husk">Coconut without Husk</option>
+                        <option value="copra">Copra</option>
+                        <option value="husk">Husk</option>
+                    </select>
+                </td>
+                <td class="border border-slate-100 px-4 py-2">
+                    <select class="uom-select glass-panel border border-slate-200 p-2 rounded-lg w-full focus:ring-2 focus:ring-indigo-200" disabled>
+                        <option value="">- Select -</option>
+                        <option value="nos">Nos</option>
+                        <option value="kg">Kg</option>
+                        <option value="quintal">Quintal</option>
+                    </select>
+                </td>
+                <td class="border border-slate-100 px-4 py-2">
+                    <input type="number" min="0" step="0.01" 
+                           class="qty-input glass-panel border border-slate-200 p-2 rounded-lg w-full focus:ring-2 focus:ring-indigo-200" 
+                           placeholder="Qty" onchange="calculateGSTRow(this, ${rowId})"/>
+                </td>
+                <td class="border border-slate-100 px-4 py-2">
+                    <input type="number" min="0" step="0.01" 
+                           class="price-input glass-panel border border-slate-200 p-2 rounded-lg w-full focus:ring-2 focus:ring-indigo-200" 
+                           placeholder="Price" onchange="calculateGSTRow(this, ${rowId})"/>
+                </td>
+                <td class="border border-slate-100 px-4 py-2">
+                    <input type="number" min="0" step="0.01" value="2.5"
+                           class="cgst-percent-input glass-panel border border-slate-200 p-2 rounded-lg w-full focus:ring-2 focus:ring-indigo-200" 
+                           onchange="calculateGSTRow(this, ${rowId})"/>
+                </td>
+                <td class="border border-slate-100 px-4 py-2">
+                    <input type="number" 
+                           class="cgst-amt-input glass-panel border border-slate-200 p-2 rounded-lg w-full" 
+                           readonly/>
+                </td>
+                <td class="border border-slate-100 px-4 py-2">
+                    <input type="number" min="0" step="0.01" value="2.5"
+                           class="sgst-percent-input glass-panel border border-slate-200 p-2 rounded-lg w-full focus:ring-2 focus:ring-indigo-200" 
+                           onchange="calculateGSTRow(this, ${rowId})"/>
+                </td>
+                <td class="border border-slate-100 px-4 py-2">
+                    <input type="number" 
+                           class="sgst-amt-input glass-panel border border-s
