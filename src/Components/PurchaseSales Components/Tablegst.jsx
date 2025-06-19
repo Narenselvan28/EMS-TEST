@@ -1,5 +1,5 @@
 import React from 'react';
-import Dropdown from "../Dropdown"; // Assuming this is your Dropdown component
+import Dropdown from "../../Dropdown"; // Assuming this is your Dropdown component
 
 function Tablegst({ items, onUpdateItem, onDeleteRow, errors }) { // Receive errors prop
     return (

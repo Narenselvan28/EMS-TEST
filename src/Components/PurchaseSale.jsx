@@ -2,11 +2,11 @@ import React, { useState, useEffect, useCallback, useMemo } from "react";
 import { v4 as uuidv4 } from 'uuid'; // For generating unique IDs
 
 // Import your sub-components (ensure these paths are correct in your project)
-import Orderinfo from "../PurchaseSales Components/Orderinfo";
-import Tablegst from '../PurchaseSales Components/Tablegst';
-import Tablenogst from '../PurchaseSales Components/Tablenogst';
-import SundrySection from '../PurchaseSales Components/Sundry';
-import SummaryAndActions from '../PurchaseSales Components/Summary';
+import Orderinfo from "./PurchaseSales Components/Orderinfo";
+import Tablegst from './PurchaseSales Components/Tablegst';
+import Tablenogst from './PurchaseSales Components/Tablenogst';
+import SundrySection from './PurchaseSales Components/Sundry';
+import SummaryAndActions from './PurchaseSales Components/Summary';
 
 function PurchaseSale() {
     const today = new Date().toISOString().split('T')[0];
