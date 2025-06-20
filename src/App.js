@@ -3,6 +3,8 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Homepage from "./homepage";
 import PartyDues from "./Components/PartyDues";
 import Employeeduesmanagements from "./Components/Employeeduesmanagement";
+import VendorDuesManagement from "./Components/VendorDuesManagement";
+
 function App() {
     // Handle the back button click
     const handleBack = () => {
@@ -37,6 +39,7 @@ function App() {
                 <Route path="/" element={<Homepage />}></Route>
                 <Route path="/PartyDues" element={<PartyDues />}></Route>
                 <Route path="/employeeduesmanagements" element={<Employeeduesmanagements/>}></Route>
+                <Route path="/vendorduesmanagements" element={<VendorDuesManagement/>}></Route>
 
 
                 <Route path="/Purchase&Sales" element={<PurchaseSale />} /></Routes>

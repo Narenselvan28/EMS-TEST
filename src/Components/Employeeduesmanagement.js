@@ -1,7 +1,8 @@
 // src/pages/Employeeduesmanagements.js
 import React from 'react';
 import SummaryCards from './Employeeduesmanagement/SummaryCards';
-import DuesTable from './Employeeduesmanagement/DuesTable';
+
+import EmployeeCard from './Employeeduesmanagement/EmployeeCard';
 import Filters from './Employeeduesmanagement/Filters4edm';
 import { useNavigate } from 'react-router-dom';
 
@@ -103,9 +104,14 @@ function Employeeduesmanagements(){
             </ol>
         </nav>
         <SummaryCards />
-        <Filters />
+<Filters />
 
-        <DuesTable dues={sampleDues} />
+<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    {sampleDues.map(due => (
+        <EmployeeCard key={due.id} due={due} />
+    ))}
+</div>
+
 
     </div>)
 }
