@@ -1,22 +1,19 @@
 import React from 'react';
 
 const cards = [
-    { title: 'Total Outstanding', amount: '$87,420.00', subtitle: 'Across 32 vendors', color: 'primary' },
-    { title: 'Due This Month', amount: '$24,150.00', subtitle: 'From 14 vendors', color: 'accent' },
+    { title: 'Total Credit Outstanding', amount: '$87,420.00', subtitle: 'Across 32 vendors', color: 'primary' },
+    { title: 'Total Debit Outstanding', amount: '$24,150.00', subtitle: 'From 14 vendors', color: 'accent' },
     { title: 'Overdue Payments', amount: '$12,780.00', subtitle: 'From 8 vendors', color: 'danger' },
-    { title: 'Disputed Invoices', amount: '$5,430.00', subtitle: 'From 3 vendors', color: 'warning' },
 ];
 
-// Tailwind-safe class mapping
 const colorClasses = {
-    primary: 'border-primary',
-    accent: 'border-accent',
-    danger: 'border-danger',
-    warning: 'border-warning',
+    primary: 'border-indigo-600',
+    accent: 'border-red-500',
+    danger: 'border-green-500',
 };
 
 const SummaryCards = () => (
-    <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
         {cards.map((card, idx) => (
             <div
                 key={idx}

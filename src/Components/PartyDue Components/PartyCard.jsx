@@ -1,32 +1,30 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const PartyCard = ({ party }) => {
-    const { partyName, partyId, dueAmount, dueDate, contact, status } = party;
+    const { partyName, partyId, dueAmount, dueDate, contact, status, contactPerson, transactions } = party;
+    const navigate = useNavigate();
 
     const getStatusClasses = (status) => {
         switch (status) {
-            case 'Paid':
-                return 'bg-green-100 text-green-800';
-            case 'Pending':
-                return 'bg-yellow-100 text-yellow-800';
-            case 'Overdue':
-                return 'bg-red-100 text-red-800';
-            default:
-                return 'bg-gray-100 text-gray-800';
+            case 'Paid': return 'bg-green-100 text-green-800';
+            case 'Pending': return 'bg-yellow-100 text-yellow-800';
+            case 'Overdue': return 'bg-red-100 text-red-800';
+            default: return 'bg-gray-100 text-gray-800';
         }
     };
 
     const getButtonText = (status) => {
         switch (status) {
-            case 'Paid':
-                return { btn1: '', btn2: 'View Details' };
-            case 'Pending':
-                return { btn1: '', btn2: 'View Details' };
-            case 'Overdue':
-                return { btn1: 'Send Reminder', btn2: 'View Details' };
-            default:
-                return { btn1: '', btn2: 'View Details' };
+            case 'Paid': return { btn1: '', btn2: 'View Details' };
+            case 'Pending': return { btn1: '', btn2: 'View Details' };
+            case 'Overdue': return { btn1: 'Send Reminder', btn2: 'View Details' };
+            default: return { btn1: '', btn2: 'View Details' };
         }
+    };
+
+    const handleViewDetails = () => {
+        navigate('/party-details');
     };
 
     const statusClasses = getStatusClasses(status);
@@ -37,7 +35,7 @@ const PartyCard = ({ party }) => {
             <div className="p-5">
                 <div className="flex justify-between items-start">
                     <div>
-                        <h3 className="text-lg font-semibold text-dark  ">{partyName}</h3>
+                        <h3 className="text-lg font-semibold text-dark">{partyName}</h3>
                         <p className="text-sm text-gray-500">#{partyId}</p>
                     </div>
                     <span className={`px-2 py-1 text-xs font-semibold rounded-full ${statusClasses}`}>
@@ -60,8 +58,17 @@ const PartyCard = ({ party }) => {
                 </div>
             </div>
             <div className="bg-gray-50 px-5 py-3 flex justify-end space-x-3">
-                <button className="text-sm text-primary text-red-600 hover:text-primary/80 font-medium">{btn1}</button>
-                <button className="text-sm text-indigo-600 text-secondary hover:text-secondary/80 font-medium">{btn2}</button>
+                {btn1 && (
+                    <button className="text-sm text-red-600 hover:text-red-800 font-medium">
+                        {btn1}
+                    </button>
+                )}
+                <button
+                    onClick={handleViewDetails}
+                    className="text-sm text-indigo-600 hover:text-indigo-800 font-medium"
+                >
+                    {btn2}
+                </button>
             </div>
         </div>
     );

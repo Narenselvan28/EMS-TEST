@@ -103,7 +103,7 @@ const PartyDues = () => {
 
    
     return (
-        <div className='p-5'>
+        <div className='p-5 m-3'>
             <div className="flex justify-between items-center mb-6">
                 <h2 className="text-2xl text-dark text-3xl font-bold">Party Dues Overview</h2>
 
@@ -174,6 +174,7 @@ const PartyDues = () => {
                     borderColor="border-indigo-500"
                     bgColor="bg-primary/10"
                     textColor="text-primary"
+                    desc="From 12 Parties"
                 />
                 <SummaryCard
                     title="Total Credit Dues "
@@ -182,6 +183,7 @@ const PartyDues = () => {
                     borderColor="border-green-500"
                     bgColor="bg-green-100"
                     textColor="text-green-600"
+                    desc="From 7 Parties"
                 />
                 <SummaryCard
                     title="Debit Overdues"
@@ -190,6 +192,7 @@ const PartyDues = () => {
                     borderColor="border-red-500"
                     bgColor="bg-red-100"
                     textColor="text-red-600"
+                    desc="From 3 Parties"
                 />
             </div>
 

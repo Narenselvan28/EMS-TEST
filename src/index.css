@@ -11,3 +11,121 @@ body {
 .leaguespartan{
   font-family: 'League Spartan',sans-serif;
 }
+@keyframes fadeInScale {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+.animate-fadeInScale {
+  animation: fadeInScale 1s ease-out forwards;
+}
+
+@keyframes pulseOrb {
+  0% {
+    transform: scale(1);
+    opacity: 0.7;
+  }
+  50% {
+    transform: scale(1.05);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 0.7;
+  }
+}
+.animate-pulseOrb {
+  animation: pulseOrb 2.5s ease-in-out infinite;
+  transform-origin: center center;
+}
+
+.glow-filter {
+  filter: drop-shadow(0 0 3px rgba(92, 107, 192, 0.2)) drop-shadow(0 0 6px rgba(92, 107, 192, 0.1));
+}
+
+@keyframes sweepArc {
+  0% {
+    stroke-dashoffset: 200;
+    opacity: 0;
+    transform: rotate(0deg) scale(0.9);
+  }
+  25% {
+    stroke-dashoffset: 0;
+    opacity: 1;
+    transform: rotate(180deg) scale(1);
+  }
+  50% {
+    stroke-dashoffset: 0;
+    opacity: 0.8;
+    transform: rotate(360deg) scale(1.02);
+  }
+  75% {
+    stroke-dashoffset: -200;
+    opacity: 0;
+    transform: rotate(540deg) scale(0.9);
+  }
+  100% {
+    stroke-dashoffset: 200;
+    opacity: 0;
+    transform: rotate(720deg) scale(0.9);
+  }
+}
+.sweeping-arc {
+  stroke-dasharray: 200;
+  stroke-dashoffset: 200;
+  animation: sweepArc 3s ease-in-out infinite;
+  transform-origin: center center;
+}
+.sweeping-arc-2 {
+  animation-delay: 0.7s;
+  transform: rotate(120deg);
+}
+.sweeping-arc-3 {
+  animation-delay: 1.4s;
+  transform: rotate(240deg);
+}
+
+.data-dot-group {
+  animation: dataDotGroupRotate 3s linear infinite;
+  transform-origin: center center;
+}
+@keyframes dataDotGroupRotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+.data-dot {
+  opacity: 0;
+  animation: dataFlow 3s linear infinite;
+}
+.data-dot-1 {
+  animation-delay: 0.5s;
+}
+.data-dot-2 {
+  animation-delay: 1.2s;
+}
+.data-dot-3 {
+  animation-delay: 1.9s;
+}
+@keyframes dataFlow {
+  0%, 100% {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+  20% {
+    opacity: 0.8;
+    transform: scale(1);
+  }
+  40% {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+}

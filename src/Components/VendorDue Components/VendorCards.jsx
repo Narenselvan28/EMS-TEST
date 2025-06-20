@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import Pagination from '../PartyDue Components/Pagination'; // Make sure path is correct
+import { useNavigate } from 'react-router-dom';
 
 const vendors = [
     {
@@ -54,7 +56,8 @@ const vendors = [
         contact: '+1 444 333 222',
         type: 'Debit',
         status: 'Pending'
-    }, {
+    },
+    {
         name: 'Skyline Builders',
         code: '#VDR-5656',
         amount: '$2,800.00',
@@ -76,9 +79,9 @@ const vendors = [
 
 const VendorCards = () => {
     const [currentPage, setCurrentPage] = useState(1);
-    const itemsPerPage = 6; // 👈 now 6 cards per page
-
+    const itemsPerPage = 6;
     const totalPages = Math.ceil(vendors.length / itemsPerPage);
+
     const currentItems = vendors.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
 
     const getStatusClasses = (status) => {
@@ -89,58 +92,66 @@ const VendorCards = () => {
             default: return 'bg-gray-100 text-gray-800';
         }
     };
-
+    const navigate = useNavigate()
+    function handlenavigate(){
+        navigate('/vendor-details')
+    }
     return (
         <div className="space-y-6">
             <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
                 {currentItems.map((vendor, index) => (
-                    <div key={index} className="bg-white p-5 rounded-lg shadow border border-gray-200 flex flex-col justify-between">
-                        {/* Top Section */}
-                        <div className="flex justify-between items-start">
-                            <div>
-                                <h3 className="text-lg font-semibold text-gray-900">{vendor.name}</h3>
-                                <p className="text-xs text-gray-400">{vendor.code}</p>
+                    <div
+                        key={index}
+                        className="bg-white rounded-lg shadow-sm overflow-hidden border border-gray-200 hover:shadow-md transition-shadow"
+                    >
+                        <div className="p-5">
+                            <div className="flex justify-between items-start">
+                                <div>
+                                    <h3 className="text-lg font-semibold text-gray-800">{vendor.name}</h3>
+                                    <p className="text-sm text-gray-500">{vendor.code}</p>
+                                </div>
+                                <span className={`px-2 py-1 text-xs font-semibold rounded-full ${getStatusClasses(vendor.status)}`}>
+                                    {vendor.status}
+                                </span>
                             </div>
-                            <div className={`text-xs font-semibold px-3 py-1 rounded-full ${getStatusClasses(vendor.status)}`}>
-                                {vendor.status}
+
+                            <div className="mt-4 space-y-3 text-sm">
+                                <div className="flex justify-between">
+                                    <span className="text-gray-500">Contact</span>
+                                    <span className="font-medium">{vendor.contact}</span>
+                                </div>
+                                <div className="flex justify-between">
+                                    <span className="text-gray-500">Due Amount</span>
+                                    <span className="font-medium">{vendor.amount}</span>
+                                </div>
+                                <div className="flex justify-between">
+                                    <span className="text-gray-500">Due Date</span>
+                                    <span className="font-medium">{vendor.due}</span>
+                                </div>
                             </div>
                         </div>
 
-                        {/* Details */}
-                        <div className="mt-4 space-y-1 text-sm text-gray-700">
-                            <p><strong>Due Amount:</strong> {vendor.amount}</p>
-                            <p><strong>Due Date:</strong> {vendor.due}</p>
-                            <p><strong>Contact:</strong> {vendor.contact}</p>
-                        </div>
-
-                        {/* Action Buttons */}
-                        <div className="mt-4 flex justify-end space-x-4 text-sm font-medium">
-                            {vendor.status === 'Overdue' && (
-                                <button className="text-red-600 hover:underline">Send Reminder</button>
+                        <div className="bg-gray-50 px-5 py-3 flex justify-end space-x-3">
+                            {vendor.status.toLowerCase() === 'overdue' && (
+                                <button className="text-sm text-red-600 hover:text-red-800 font-medium">
+                                    Send Reminder
+                                </button>
                             )}
-                            <button className="text-purple-600 hover:underline">View Details</button>
+                            <button onClick={handlenavigate} className="text-sm text-indigo-600 hover:text-indigo-800 font-medium">
+                                View Details
+                            </button>
                         </div>
                     </div>
                 ))}
             </div>
 
-            {/* Pagination */}
+            {/* ✅ Pagination Integration */}
             {totalPages > 1 && (
-                <div className="flex justify-center mt-6 space-x-2">
-                    {Array.from({ length: totalPages }, (_, i) => (
-                        <button
-                            key={i}
-                            onClick={() => setCurrentPage(i + 1)}
-                            className={`px-3 py-1 rounded text-sm font-medium ${
-                                currentPage === i + 1
-                                    ? 'bg-indigo-600 text-white'
-                                    : 'bg-white border border-gray-300 text-gray-700 hover:bg-gray-100'
-                            }`}
-                        >
-                            {i + 1}
-                        </button>
-                    ))}
-                </div>
+                <Pagination
+                    currentPage={currentPage}
+                    totalPages={totalPages}
+                    onPageChange={(page) => setCurrentPage(page)}
+                />
             )}
         </div>
     );

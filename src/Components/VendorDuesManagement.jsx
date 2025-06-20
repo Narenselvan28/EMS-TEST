@@ -13,15 +13,14 @@ const VendorDuesManagement = () => {
     const handleBackToDuesMgmt = () => navigate('/duesmanagement');
 
     return (
-        <div className="min-h-screen bg-gray-50">
+        <div className="min-h-screen m-2 ">
             <Header />
-            <main className="max-w-7xl mx-auto px-4 py-6 sm:px-6 lg:px-8">
-                
+
+            {/* Remove max-width and center constraint */}
+            <main className="w-full px-6 py-6">
                 {/* Breadcrumb */}
                 <nav className="flex items-center mb-6 text-sm text-gray-600" aria-label="Breadcrumb">
                     <ol className="inline-flex items-center space-x-1 md:space-x-3">
-
-                        {/* Home */}
                         <li className="flex items-center">
                             <button
                                 onClick={handleBackToHome}
@@ -34,14 +33,12 @@ const VendorDuesManagement = () => {
                             </button>
                         </li>
 
-                        {/* Separator */}
                         <li>
                             <svg className="w-3 h-3 text-gray-400 mx-1" fill="none" viewBox="0 0 6 10">
                                 <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M1 9l4-4-4-4" />
                             </svg>
                         </li>
 
-                        {/* Intermediate Page */}
                         <li className="inline-flex items-center">
                             <button
                                 onClick={handleBackToDuesMgmt}
@@ -51,14 +48,12 @@ const VendorDuesManagement = () => {
                             </button>
                         </li>
 
-                        {/* Separator */}
                         <li>
                             <svg className="w-3 h-3 text-gray-400 mx-1" fill="none" viewBox="0 0 6 10">
                                 <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M1 9l4-4-4-4" />
                             </svg>
                         </li>
 
-                        {/* Current Page */}
                         <li aria-current="page">
                             <span className="text-gray-700 font-medium">Vendor Dues</span>
                         </li>

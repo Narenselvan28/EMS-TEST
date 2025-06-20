@@ -1,10 +1,11 @@
 import React from 'react';
 
 const Header = () => (
-    <header className=" ">
-        <div className="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
-            <h1 className="text-2xl font-bold text-gray-800">Vendor Dues Management</h1>
-            
+    <header className="  w-full py-4 px-6">
+        <div className="flex justify-between items-center">
+            <h1 className="text-2xl font-bold text-3xl mt-3">
+                Vendor Dues Management
+            </h1>
         </div>
     </header>
 );

@@ -1,22 +1,30 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import ForwardLoading from '../../essentials/ForwardLoading'; // ✅ Adjust path accordingly
 
 const EmployeeCard = ({ due }) => {
     const { id, name, department, type, amount, date, status } = due;
+    const [isLoading, setIsLoading] = useState(false);
+    const navigate = useNavigate();
 
     const getStatusClass = (status) => {
         switch (status.toLowerCase()) {
-            case 'paid':
-                return 'bg-green-100 text-green-800';
-            case 'pending':
-                return 'bg-yellow-100 text-yellow-800';
-            case 'overdue':
-                return 'bg-red-100 text-red-800';
-            case 'partial':
-                return 'bg-blue-100 text-blue-800';
-            default:
-                return 'bg-gray-100 text-gray-800';
+            case 'paid': return 'bg-green-100 text-green-800';
+            case 'pending': return 'bg-yellow-100 text-yellow-800';
+            case 'overdue': return 'bg-red-100 text-red-800';
+            case 'partial': return 'bg-blue-100 text-blue-800';
+            default: return 'bg-gray-100 text-gray-800';
         }
     };
+
+    const handlenavigate = () => {
+        setIsLoading(true);
+        setTimeout(() => {
+            navigate('/employee-details');
+        }, 800);
+    };
+
+    if (isLoading) return <ForwardLoading />;
 
     return (
         <div className="bg-white rounded-lg shadow-sm overflow-hidden border border-gray-200 hover:shadow-md transition-shadow">
@@ -55,11 +63,10 @@ const EmployeeCard = ({ due }) => {
                         Send Reminder
                     </button>
                 )}
-                <button className="text-sm text-indigo-600 hover:text-indigo-800 font-medium">
+                <button onClick={handlenavigate} className="text-sm text-indigo-600 hover:text-indigo-800 font-medium">
                     View Details
                 </button>
             </div>
-
         </div>
     );
 };
