@@ -30,6 +30,12 @@ function Homepage() {
                     >
                         Party Dues
                     </li>
+                    <li
+                        onClick={() => handleNavigate('/employeeduesmanagements')}
+                        className="text-indigo-600 cursor-pointer hover:underline"
+                    >
+                        Employee Dues Management
+                    </li>
                 </ul>
             )}
         </div>

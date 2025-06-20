@@ -21,11 +21,11 @@ const Filters = ({ onApplyFilters, onResetFilters }) => {
     };
 
     return (
-        <div className="bg-white border border-gray-200 p-4 rounded-xl shadow-sm mb-6">
-            {/* Top Filter Fields */}
-            <div className="flex flex-wrap gap-4">
+        <div className="bg-white border border-gray-200 p-4 rounded-xl shadow-sm mb-6 overflow-x-auto">
+            {/* Top Filter Fields - Single Row */}
+            <div className="flex gap-4 whitespace-nowrap">
                 {/* Party Name */}
-                <div className="w-[400px]">
+                <div className="min-w-[240px]">
                     <label htmlFor="partyName" className="block text-sm font-medium text-gray-700 mb-1">Party Name</label>
                     <input
                         type="text"
@@ -38,7 +38,7 @@ const Filters = ({ onApplyFilters, onResetFilters }) => {
                 </div>
 
                 {/* Status */}
-                <div className="w-[260px]">
+                <div className="min-w-[180px]">
                     <label htmlFor="status" className="block text-sm font-medium text-gray-700 mb-1">Status</label>
                     <select
                         id="status"
@@ -55,7 +55,7 @@ const Filters = ({ onApplyFilters, onResetFilters }) => {
                 </div>
 
                 {/* Due Type */}
-                <div className="w-[240px]">
+                <div className="min-w-[180px]">
                     <label htmlFor="dueType" className="block text-sm font-medium text-gray-700 mb-1">Due Type</label>
                     <select
                         id="dueType"
@@ -71,18 +71,18 @@ const Filters = ({ onApplyFilters, onResetFilters }) => {
                 </div>
 
                 {/* Date Range */}
-                <div className="flex-1 ">
+                <div className="min-w-[270px]">
                     <label className="block text-sm font-medium text-gray-700 mb-1">Date Range</label>
                     <div className="flex space-x-2">
                         <input
                             type="date"
-                            className="w-[60%] px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-400"
+                            className="w-[50%] px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-400"
                             value={startDate}
                             onChange={(e) => setStartDate(e.target.value)}
                         />
                         <input
                             type="date"
-                            className="w-[60%] px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-400"
+                            className="w-[50%] px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-400"
                             value={endDate}
                             onChange={(e) => setEndDate(e.target.value)}
                         />
@@ -90,7 +90,7 @@ const Filters = ({ onApplyFilters, onResetFilters }) => {
                 </div>
             </div>
 
-            {/* Buttons */}
+            {/* Buttons Row */}
             <div className="flex justify-end mt-4">
                 <div className="space-x-2">
                     <button
@@ -101,7 +101,7 @@ const Filters = ({ onApplyFilters, onResetFilters }) => {
                     </button>
                     <button
                         onClick={handleReset}
-                        className="px-5 py-2 bg-red-600 border text-white border-red-400 hover:bg-white hover:text-black rounded-lg transition"
+                        className="px-5 py-2 bg-red-600 text-white hover:bg-white hover:text-black border border-red-400 rounded-lg transition"
                     >
                         Reset
                     </button>

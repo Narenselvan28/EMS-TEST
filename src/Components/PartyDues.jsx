@@ -36,7 +36,7 @@ const PartyDues = () => {
     const navigate = useNavigate(); // Call useNavigate inside the component
 
     const handleBackToHome = () => navigate('/');
-    const handleBackToAccounts = () => navigate('/accounts'); // adjust as needed
+    const handleBackToDuesMgmt = () => navigate('/duesmanagement'); // adjust as needed
 
     // Simple Object Model for Party Dues Data
     const [allPartyDues] = useState([
@@ -101,10 +101,7 @@ const PartyDues = () => {
     const paidDues = allPartyDues.filter(party => party.status === 'Paid').reduce((sum, party) => sum + party.dueAmount, 0);
     const overdueDues = allPartyDues.filter(party => party.status === 'Overdue').reduce((sum, party) => sum + party.dueAmount, 0);
 
-    function handleback() {
-        navigate('/');
-    }
-
+   
     return (
         <div className='p-5'>
             <div className="flex justify-between items-center mb-6">
@@ -145,7 +142,7 @@ const PartyDues = () => {
                     {/* Intermediate Page */}
                     <li className="inline-flex items-center">
                         <button
-                            onClick={handleBackToAccounts}
+                            onClick={handleBackToDuesMgmt}
                             className="text-gray-500 hover:text-indigo-600 transition-colors"
                         >
                             Dues Management
