@@ -17,7 +17,7 @@ const ItemHeader = () => {
                 <div className="flex space-x-3">
                     <button
                         onClick={() => navigate('/masters/item/additem')}
-                        className="px-4 py-2 bg-indigo-600 text-white hover:bg-indigo-700 rounded-md flex items-center"
+                        className="px-4 py-2 mr-10 bg-indigo-600 text-white hover:bg-indigo-700 rounded-md flex items-center"
                     >
                         <FontAwesomeIcon icon={faPlus} className="mr-2" />
                         Add New Item
