@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import SummaryCards from './Employeeduesmanagement/SummaryCards';
-import EmployeeCard from './Employeeduesmanagement/EmployeeCard';
-import Filters from './Employeeduesmanagement/Filters4edm';
-import Pagination from './PartyDue Components/Pagination'; // ✅ import your Pagination component
+import SummaryCards from '../Employeeduesmanagement/SummaryCards';
+import EmployeeCard from '../Employeeduesmanagement/EmployeeCard';
+import Filters from '../Employeeduesmanagement/Filters4edm';
+import Pagination from '../PartyDue Components/Pagination'; // ✅ import your Pagination component
 
 const sampleDues = [
     {

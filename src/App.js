@@ -2,15 +2,25 @@ import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 import Homepage from "./homepage";
-import PartyDues from "./Components/PartyDues";
-import Employeeduesmanagements from "./Components/Employeeduesmanagement";
-import VendorDuesManagement from "./Components/VendorDuesManagement";
+import PartyMasterPage from "./Components/mastercomponents/PartyMasters";
+import MastersPage from "./Components/pages/masters";
+import PartyDues from "./Components/pages/PartyDues";
+import Employeeduesmanagements from "./Components/pages/Employeeduesmanagement";
+import VendorDuesManagement from "./Components/pages/VendorDuesManagement";
 import PartyDueDetails from "./Components/PartyDue Components/PartyDueDetails";
 import VendorDueDetails from "./Components/VendorDue Components/VendorDueDetails";
 import EmployeeDueDetails from "./Components/Employeeduesmanagement/EmployeeDueDetails";
-import PurchaseSale from "./Components/PurchaseSale";
+import PurchaseSale from "./Components/pages/PurchaseSale";
+import AddPartyForm from "./Components/mastercomponents/MasterpageComponents/PartyMasterComponents/PartyMasterComponents/AddPartyForm";
+import AddItemForm from "./Components/mastercomponents/MasterpageComponents/ItemMasterComponents/AddItemForm";
+import AddEmployeeForm from "./Components/mastercomponents/MasterpageComponents/employeeMasterComps/AddEmployeeForm";
+import SettingsPage from "./settings/SettingsMainPage";
+import DuesPage from "./Components/pages/DuesManagement";
+import EmployeeMaster from "./Components/mastercomponents/EmployeeMaster";
+import ItemMaster from "./Components/mastercomponents/ItemMaster";
 
 function App() {
+
     const handleBack = () => {
         window.history.back();
     };
@@ -48,13 +58,24 @@ function App() {
                 <BrowserRouter>
                     <Routes>
                         <Route path="/" element={<Homepage />} />
-                        <Route path="/PartyDues" element={<PartyDues />} />
-                        <Route path="/employeeduesmanagements" element={<Employeeduesmanagements />} />
-                        <Route path="/vendorduesmanagements" element={<VendorDuesManagement />} />
+                        <Route path="/duesmanagement/partyduesmanagement" element={<PartyDues />} />
+                        <Route path="/duesmanagement/employeeduesmanagement" element={<Employeeduesmanagements />} />
+                        <Route path="/duesmanagement/vendorduesmanagement" element={<VendorDuesManagement />} />
                         <Route path="/party-details" element={<PartyDueDetails />} />
                         <Route path="/vendor-details" element={<VendorDueDetails />} />
                         <Route path="/employee-details" element={<EmployeeDueDetails />} />
                         <Route path="/Purchase&Sales" element={<PurchaseSale />} />
+                        <Route path="/masters" element={<MastersPage />} />
+                        <Route path="/masters/party" element={<PartyMasterPage />} />
+                        <Route path="/masters/item/additem" element={<AddItemForm />} />
+                        <Route path="/masters/party/addparty" element={<AddPartyForm />} />
+                        <Route path="/masters/employee/addemployee" element={<AddEmployeeForm />} />
+                        <Route path="/settings" element={<SettingsPage />} />
+                        <Route path="/duesmanagement" element={<DuesPage />} />
+                        <Route path="/masters/employee" element={<EmployeeMaster />} />
+                        <Route path="/masters/item" element={<ItemMaster />} />
+
+
                     </Routes>
                 </BrowserRouter>
             </div>

@@ -1,8 +1,8 @@
 import React, { useState, useMemo } from 'react';
-import SummaryCard from './PartyDue Components/SummaryCard';
-import PartyCard from './PartyDue Components/PartyCard';
-import Filters from './PartyDue Components/Filters';
-import Pagination from './PartyDue Components/Pagination';
+import SummaryCard from '../PartyDue Components/SummaryCard';
+import PartyCard from '../PartyDue Components/PartyCard';
+import Filters from '../PartyDue Components/Filters';
+import Pagination from '../PartyDue Components/Pagination';
 import { useNavigate } from 'react-router-dom';
 
 // SVG Icons for Summary Cards (converted to React components)

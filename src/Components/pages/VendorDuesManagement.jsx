@@ -1,10 +1,10 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import Header from './VendorDue Components/Header4vd';
-import SummaryCards from './VendorDue Components/SummaryCards4vd';
-import Filters from './VendorDue Components/Filters4vd';
-import VendorCards from './VendorDue Components/VendorCards';
+import Header from '../VendorDue Components/Header4vd';
+import SummaryCards from '../VendorDue Components/SummaryCards4vd';
+import Filters from '../VendorDue Components/Filters4vd';
+import VendorCards from '../VendorDue Components/VendorCards';
 
 const VendorDuesManagement = () => {
     const navigate = useNavigate();

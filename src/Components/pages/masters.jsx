@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate } from 'react-router-dom';
-import ForwardLoading from './essentials/ForwardLoading'; // adjust if needed
+import ForwardLoading from '../../essentials/ForwardLoading'; // adjust path if needed
 
-function Homepage() {
+function MastersPage() {
     const navigate = useNavigate();
     const [loading, setLoading] = useState(false);
 
@@ -13,28 +13,22 @@ function Homepage() {
         }, 1200);
     };
 
-    const options = [
-        { label: "Purchase & Sales", path: "/purchase&sales" },
-        { label: "Dues Management", path: "/duesmanagement" },
-        { label: "Masters", path: "/masters" },
-        { label: "Reports", path: "/reports" },
-        { label: "Inventory", path: "/inventory" },
-        { label: "Accounts", path: "/accounts" },
-        { label: "Settings", path: "/settings" },
-        { label: "Help & Support", path: "/help" },
-    ];
+    const masterOptions = [
+        { label: "Item Master", path: "/masters/item" },
+        { label: "Party Master", path: "/masters/party" },
+{ label: "Employee Master", path: "/masters/employee" }    ];
 
     return (
         <div className="min-h-screen bg-gradient-to-br from-indigo-50 to-gray-100 flex items-center justify-center px-4">
             {loading ? (
                 <ForwardLoading />
             ) : (
-                <div className="bg-white p-8 rounded-2xl shadow-xl w-full max-w-4xl">
+                <div className="bg-white p-8 rounded-2xl shadow-xl w-full max-w-3xl">
                     <h1 className="text-2xl font-semibold text-gray-700 mb-6 text-center">
-                        Select a Module
+                        Master Modules
                     </h1>
                     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-                        {options.map((option, index) => (
+                        {masterOptions.map((option, index) => (
                             <div
                                 key={index}
                                 onClick={() => handleNavigate(option.path)}
@@ -50,4 +44,4 @@ function Homepage() {
     );
 }
 
-export default Homepage;
+export default MastersPage;

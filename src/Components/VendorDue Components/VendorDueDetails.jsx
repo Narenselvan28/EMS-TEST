@@ -67,11 +67,11 @@ const VendorDueDetails = () => {
             {/* Back Button + Header */}
             <div className="flex items-center mb-8">
                 <button onClick={() => window.history.back()} className="mr-4 p-2 rounded-full hover:bg-gray-200">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 " fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
                     </svg>
                 </button>
-                <h1 className="text-3xl font-bold text-indigo-600">Vendor Due Details</h1>
+                <h1 className="text-3xl font-bold ">Vendor Due Details</h1>
             </div>
 
             {/* Vendor Info Card */}
@@ -85,7 +85,7 @@ const VendorDueDetails = () => {
                     <div className="space-y-4">
                         <InfoRow label="Current Due Status" value={VendorData.currentDueStatus} valueClass="text-red-600 font-medium" />
                         <InfoRow label="Current Due Amount" value={`₹${VendorData.currentDueAmount.toLocaleString('en-IN')}.00`} />
-                        <InfoRow label="Due Typr" value={`${VendorData.duetype}`} />
+                        <InfoRow label="Due Type" value={`${VendorData.duetype}`} />
 
                     </div>
                 </div>
@@ -130,11 +130,10 @@ const VendorDueDetails = () => {
 };
 
 const InfoRow = ({ label, value, valueClass = "text-gray-900" }) => (
-    <div className="flex">
-        <div className="w-2/5 font-semibold text-gray-600">{label}:</div>
-        <div className={`w-3/5 ${valueClass}`}>{value}</div>
-    </div>
-);
+    <div className="flex items-center space-x-2">
+        <div className="min-w-[18px] font-bold text-gray-600">{label}:</div>
+        <div className={`${valueClass}`}>{value}</div>
+    </div>)
 
 const TableHeader = ({ title }) => (
     <th className="px-6 py-3 text-left text-xs font-semibold text-white">{title}</th>
