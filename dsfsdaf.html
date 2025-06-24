@@ -1,239 +1,324 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="https://cdn.jsdelivr.net/npm/chart.js">
-    <title>ERP Dashboard</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Salamy Management</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        :root {
+            --primary: #4361ee;
+            --primary-dark: #3a56d4;
+            --secondary: #3f37c9;
+            --accent: #4895ef;
+            --success: #4cc9f0;
+            --danger: #f72585;
+            --warning: #f8961e;
+            --info: #560bad;
+            --light: #f8f9fa;
+            --dark: #212529;
+        }
+        
         body {
-            font-family: 'Inter', sans-serif;
+            font-family: 'Poppins', sans-serif;
+            background-color: #f5f7fa;
+            color: #333;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary:hover {
+            background: var(--primary-dark);
+        }
+        
+        input, select {
+            transition: all 0.3s ease;
+            border: 1px solid #e2e8f0;
+        }
+        
+        input:focus, select:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.2);
+        }
+        
+        .table-header {
+            background: var(--primary);
+            color: white;
+        }
+        
+        .checkbox-label {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+        }
+        
+        .checkbox-label input {
+            margin-right: 8px;
         }
     </style>
 </head>
-<body class="bg-gray-50 text-gray-800">
-    <div class="min-h-screen">
-        <!-- Header -->
-        <header class="bg-white shadow-sm py-4 px-6 flex justify-between items-center">
-            <h1 class="text-2xl font-bold text-indigo-700">ERP Dashboard</h1>
-            <div class="flex items-center space-x-4">
-                <span class="text-sm">Welcome, <span class="font-semibold">Admin</span></span>
-                <div class="w-10 h-10 rounded-full bg-indigo-100 flex items-center justify-center">
-                    <span class="text-indigo-700 font-semibold">A</span>
+
+<body>
+    <div class="container mx-auto p-4">
+        <h1 class="text-2xl font-bold mb-6">Salamy Management</h1>
+        
+        <!-- Filters Section -->
+        <div class="card p-4 mb-6">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                <div>
+                    <label class="block mb-2 text-sm font-medium">Emp category</label>
+                    <select class="w-full p-2 border rounded">
+                        <option value="">Select</option>
+                        <option>Driver</option>
+                        <option>Helper</option>
+                        <option>Supervisor</option>
+                    </select>
+                </div>
+                
+                <div>
+                    <label class="block mb-2 text-sm font-medium">Employee type</label>
+                    <select class="w-full p-2 border rounded">
+                        <option value="">Select</option>
+                        <option>Permanent</option>
+                        <option>Contract</option>
+                        <option>Temporary</option>
+                    </select>
+                </div>
+                
+                <div>
+                    <label class="block mb-2 text-sm font-medium">DATE</label>
+                    <input type="date" class="w-full p-2 border rounded" value="<?php echo date('Y-m-d'); ?>">
+                </div>
+                
+                <div>
+                    <label class="block mb-2 text-sm font-medium">Employee category</label>
+                    <select class="w-full p-2 border rounded">
+                        <option value="">Select</option>
+                        <option>Regular</option>
+                        <option>Daily Wage</option>
+                    </select>
+                </div>
+                
+                <div>
+                    <label class="block mb-2 text-sm font-medium">Emp group</label>
+                    <select class="w-full p-2 border rounded">
+                        <option value="">Select</option>
+                        <option>Group A</option>
+                        <option>Group B</option>
+                    </select>
+                </div>
+                
+                <div>
+                    <label class="block mb-2 text-sm font-medium">Party name</label>
+                    <select class="w-full p-2 border rounded">
+                        <option value="">Select</option>
+                        <option>Party 1</option>
+                        <option>Party 2</option>
+                    </select>
+                </div>
+                
+                <div>
+                    <label class="block mb-2 text-sm font-medium">Fif/work location</label>
+                    <input type="text" class="w-full p-2 border rounded" placeholder="Location">
+                </div>
+                
+                <div>
+                    <label class="block mb-2 text-sm font-medium">Rate per Court/pay</label>
+                    <input type="number" class="w-full p-2 border rounded" placeholder="0.00">
                 </div>
             </div>
-        </header>
-
-        <!-- Main Content -->
-        <main class="p-6">
-            <!-- Summary Cards -->
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
-                <!-- Revenue Card -->
-                <div class="bg-white rounded-lg shadow p-6">
-                    <div class="flex justify-between items-start">
-                        <div>
-                            <p class="text-gray-500 text-sm">Total Revenue</p>
-                            <p class="text-2xl font-bold mt-1">$24,580</p>
-                            <p class="text-green-500 text-sm mt-1">↑ 12% vs last month</p>
-                        </div>
-                        <div class="bg-indigo-100 p-3 rounded-lg">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-indigo-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                            </svg>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Pending Orders -->
-                <div class="bg-white rounded-lg shadow p-6">
-                    <div class="flex justify-between items-start">
-                        <div>
-                            <p class="text-gray-500 text-sm">Pending Orders</p>
-                            <p class="text-2xl font-bold mt-1">56</p>
-                            <p class="text-red-500 text-sm mt-1">↓ 5% vs last month</p>
-                        </div>
-                        <div class="bg-amber-100 p-3 rounded-lg">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-amber-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
-                            </svg>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Inventory Alerts -->
-                <div class="bg-white rounded-lg shadow p-6">
-                    <div class="flex justify-between items-start">
-                        <div>
-                            <p class="text-gray-500 text-sm">Low Stock Items</p>
-                            <p class="text-2xl font-bold mt-1">8</p>
-                            <p class="text-red-500 text-sm mt-1">Check inventory</p>
-                        </div>
-                        <div class="bg-red-100 p-3 rounded-lg">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
-                            </svg>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Open Tasks -->
-                <div class="bg-white rounded-lg shadow p-6">
-                    <div class="flex justify-between items-start">
-                        <div>
-                            <p class="text-gray-500 text-sm">Open Tasks</p>
-                            <p class="text-2xl font-bold mt-1">14</p>
-                            <p class="text-amber-500 text-sm mt-1">3 overdue</p>
-                        </div>
-                        <div class="bg-blue-100 p-3 rounded-lg">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
-                            </svg>
-                        </div>
-                    </div>
+            
+            <div class="mt-4 flex justify-between items-center">
+                <div>
+                    <span class="font-medium">Total Count: </span>
+                    <span class="font-bold">$000</span>
                 </div>
             </div>
-
-            <!-- Charts Section -->
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
-                <!-- Revenue Trend -->
-                <div class="bg-white rounded-lg shadow p-6">
-                    <h2 class="text-lg font-semibold mb-4">Monthly Revenue Trend</h2>
-                    <canvas id="revenueChart" height="250"></canvas>
-                </div>
-
-                <!-- Sales by Region -->
-                <div class="bg-white rounded-lg shadow p-6">
-                    <h2 class="text-lg font-semibold mb-4">Sales by Region</h2>
-                    <canvas id="salesChart" height="250"></canvas>
-                </div>
-            </div>
-
-            <!-- Recent Activities & Quick Actions -->
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                <!-- Recent Activities -->
-                <div class="bg-white rounded-lg shadow p-6 lg:col-span-2">
-                    <h2 class="text-lg font-semibold mb-4">Recent Activities</h2>
-                    <div class="space-y-4">
-                        <div class="flex items-start space-x-3">
-                            <div class="bg-green-100 p-2 rounded-full">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-                                </svg>
-                            </div>
-                            <div>
-                                <p class="font-medium">Order #1234 completed</p>
-                                <p class="text-sm text-gray-500">2 minutes ago</p>
-                            </div>
-                        </div>
-                        <div class="flex items-start space-x-3">
-                            <div class="bg-red-100 p-2 rounded-full">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
-                                </svg>
-                            </div>
-                            <div>
-                                <p class="font-medium">Low stock: Product A</p>
-                                <p class="text-sm text-gray-500">30 minutes ago</p>
-                            </div>
-                        </div>
-                        <div class="flex items-start space-x-3">
-                            <div class="bg-blue-100 p-2 rounded-full">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                </svg>
-                            </div>
-                            <div>
-                                <p class="font-medium">New employee onboarded</p>
-                                <p class="text-sm text-gray-500">2 hours ago</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Quick Actions -->
-                <div class="bg-white rounded-lg shadow p-6">
-                    <h2 class="text-lg font-semibold mb-4">Quick Actions</h2>
-                    <div class="space-y-3">
-                        <button class="w-full flex items-center space-x-3 bg-indigo-50 hover:bg-indigo-100 text-indigo-700 px-4 py-3 rounded-lg transition">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
-                            </svg>
-                            <span>New Order</span>
-                        </button>
-                        <button class="w-full flex items-center space-x-3 bg-green-50 hover:bg-green-100 text-green-700 px-4 py-3 rounded-lg transition">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                            </svg>
-                            <span>Generate Report</span>
-                        </button>
-                        <button class="w-full flex items-center space-x-3 bg-amber-50 hover:bg-amber-100 text-amber-700 px-4 py-3 rounded-lg transition">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
-                            </svg>
-                            <span>Check Inventory</span>
-                        </button>
-                    </div>
+        </div>
+        
+        <!-- Employee Tables Section -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+            <!-- First Employee Table -->
+            <div class="card p-4">
+                <h3 class="text-lg font-semibold mb-4">#12nd Divided By #1</h3>
+                
+                <div class="overflow-x-auto">
+                    <table class="min-w-full border-collapse">
+                        <thead>
+                            <tr class="table-header text-left">
+                                <th class="p-2">Emp Code</th>
+                                <th class="p-2">Emp Name</th>
+                                <th class="p-2">Rate / Count</th>
+                                <th class="p-2">Amount Count/Day</th>
+                                <th class="p-2">Total Amount</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="border-b">
+                                <td class="p-2">Torso t</td>
+                                <td class="p-2">
+                                    <label class="checkbox-label">
+                                        <input type="checkbox"> Hori
+                                    </label>
+                                </td>
+                                <td class="p-2">0.40</td>
+                                <td class="p-2"><input type="number" class="w-full p-1 border rounded" value="1"></td>
+                                <td class="p-2">0.40</td>
+                            </tr>
+                            <tr class="border-b">
+                                <td class="p-2"></td>
+                                <td class="p-2">
+                                    <label class="checkbox-label">
+                                        <input type="checkbox"> nandha
+                                    </label>
+                                </td>
+                                <td class="p-2"></td>
+                                <td class="p-2"><input type="number" class="w-full p-1 border rounded" value="1"></td>
+                                <td class="p-2"></td>
+                            </tr>
+                            <tr class="border-b">
+                                <td class="p-2"></td>
+                                <td class="p-2">
+                                    <label class="checkbox-label">
+                                        <input type="checkbox"> 
+                                    </label>
+                                </td>
+                                <td class="p-2"></td>
+                                <td class="p-2"><input type="number" class="w-full p-1 border rounded" value="1"></td>
+                                <td class="p-2"></td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
-        </main>
+            
+            <!-- Second Employee Table -->
+            <div class="card p-4">
+                <h3 class="text-lg font-semibold mb-4">#TADD Employee</h3>
+                
+                <div class="mb-4">
+                    <label class="block mb-2 text-sm font-medium">Rate per count</label>
+                    <input type="number" class="w-full p-2 border rounded" value="0.40">
+                </div>
+                
+                <div class="overflow-x-auto">
+                    <table class="min-w-full border-collapse">
+                        <thead>
+                            <tr class="table-header text-left">
+                                <th class="p-2">Emp Code</th>
+                                <th class="p-2">Em name</th>
+                                <th class="p-2">R/C</th>
+                                <th class="p-2">Count / Attend</th>
+                                <th class="p-2">Total Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="border-b">
+                                <td class="p-2"></td>
+                                <td class="p-2">
+                                    <label class="checkbox-label">
+                                        <input type="checkbox"> 
+                                    </label>
+                                </td>
+                                <td class="p-2">0.40</td>
+                                <td class="p-2"><input type="number" class="w-full p-1 border rounded" value="1"></td>
+                                <td class="p-2"></td>
+                            </tr>
+                            <tr class="border-b">
+                                <td class="p-2"></td>
+                                <td class="p-2">
+                                    <label class="checkbox-label">
+                                        <input type="checkbox"> 
+                                    </label>
+                                </td>
+                                <td class="p-2"></td>
+                                <td class="p-2"><input type="number" class="w-full p-1 border rounded" value="1"></td>
+                                <td class="p-2"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Add Employee Button -->
+        <div class="mb-6">
+            <button class="btn-primary px-4 py-2 rounded">
+                <i class="fas fa-plus mr-2"></i> Add employee
+            </button>
+        </div>
+        
+        <!-- Summary Section -->
+        <div class="card p-4 mb-6">
+            <h3 class="text-lg font-semibold mb-4">Summary</h3>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div>
+                    <div class="text-gray-600">10.05 Emp Present</div>
+                </div>
+                <div>
+                    <div class="text-gray-600">10 or Emp Absent</div>
+                </div>
+                <div>
+                    <div class="text-gray-600">Total Salary: <span class="font-bold">$0.00</span></div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Action Buttons -->
+        <div class="flex space-x-4">
+            <button class="btn-primary px-6 py-2 rounded">Save</button>
+            <button class="bg-gray-200 hover:bg-gray-300 px-6 py-2 rounded">Reset</button>
+        </div>
     </div>
 
     <script>
-        // Revenue Trend Chart (Line Chart)
-        const revenueCtx = document.getElementById('revenueChart').getContext('2d');
-        const revenueChart = new Chart(revenueCtx, {
-            type: 'line',
-            data: {
-                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
-                datasets: [{
-                    label: 'Revenue ($)',
-                    data: [12000, 19000, 15000, 20000, 18000, 24000],
-                    borderColor: '#6366F1',
-                    backgroundColor: 'rgba(99, 102, 241, 0.1)',
-                    tension: 0.3,
-                    fill: true
-                }]
-            },
-            options: {
-                responsive: true,
-                plugins: {
-                    legend: { display: false }
+        // Simple calculation for demo purposes
+        document.querySelectorAll('input[type="number"]').forEach(input => {
+            input.addEventListener('change', function() {
+                const row = this.closest('tr');
+                if (row) {
+                    const rate = parseFloat(row.querySelector('td:nth-child(3)').textContent) || 0;
+                    const count = parseFloat(this.value) || 0;
+                    const total = rate * count;
+                    
+                    if (row.querySelector('td:nth-child(5)')) {
+                        row.querySelector('td:nth-child(5)').textContent = total.toFixed(2);
+                    }
+                    
+                    updateTotalSalary();
                 }
-            }
+            });
         });
-
-        // Sales by Region Chart (Bar Chart)
-        const salesCtx = document.getElementById('salesChart').getContext('2d');
-        const salesChart = new Chart(salesCtx, {
-            type: 'bar',
-            data: {
-                labels: ['North', 'South', 'East', 'West'],
-                datasets: [{
-                    label: 'Sales ($)',
-                    data: [8000, 12000, 6000, 9000],
-                    backgroundColor: [
-                        'rgba(99, 102, 241, 0.7)',
-                        'rgba(79, 70, 229, 0.7)',
-                        'rgba(67, 56, 202, 0.7)',
-                        'rgba(55, 48, 163, 0.7)'
-                    ],
-                    borderColor: [
-                        'rgba(99, 102, 241, 1)',
-                        'rgba(79, 70, 229, 1)',
-                        'rgba(67, 56, 202, 1)',
-                        'rgba(55, 48, 163, 1)'
-                    ],
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                responsive: true,
-                plugins: {
-                    legend: { display: false }
+        
+        function updateTotalSalary() {
+            let total = 0;
+            document.querySelectorAll('tbody tr').forEach(row => {
+                const totalCell = row.querySelector('td:last-child');
+                if (totalCell && totalCell.textContent) {
+                    total += parseFloat(totalCell.textContent) || 0;
                 }
-            }
+            });
+            
+            document.querySelector('.summary-total').textContent = '$' + total.toFixed(2);
+        }
+        
+        // Initialize with some values
+        document.addEventListener('DOMContentLoaded', function() {
+            updateTotalSalary();
         });
     </script>
 </body>

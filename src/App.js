@@ -1,6 +1,6 @@
 import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-
+import VendorMasterForm from "./Components/mastercomponents/MasterpageComponents/VendorMasterComponents/VendorMasterForm";
 import Homepage from "./homepage";
 import PartyMasterPage from "./Components/mastercomponents/PartyMasters";
 import MastersPage from "./Components/pages/masters";
@@ -18,6 +18,9 @@ import SettingsPage from "./settings/SettingsMainPage";
 import DuesPage from "./Components/pages/DuesManagement";
 import EmployeeMaster from "./Components/mastercomponents/EmployeeMaster";
 import ItemMaster from "./Components/mastercomponents/ItemMaster";
+import VehicleMasterForm from "./Components/mastercomponents/MasterpageComponents/VehicleMasterComponents/VehicleMasterForm";
+import VendorMaster from "./Components/mastercomponents/VendorMaster";
+import VehicleMaster from "./Components/mastercomponents/VehicleMaster";
 
 function App() {
 
@@ -73,8 +76,12 @@ function App() {
                         <Route path="/settings" element={<SettingsPage />} />
                         <Route path="/duesmanagement" element={<DuesPage />} />
                         <Route path="/masters/employee" element={<EmployeeMaster />} />
-                        <Route path="/masters/item" element={<ItemMaster />} />
+                        <Route path="/masters/vendor" element={<VendorMaster />} />
+                        <Route path="/masters/vehicle" element={<VehicleMaster/>} />
 
+                        <Route path="/masters/item" element={<ItemMaster />} />
+                        <Route path="/masters/vehicle/addvehicle" element={<VehicleMasterForm />} />
+                        <Route path="/masters/vendor/addvendor" element={<VendorMasterForm />} />
 
                     </Routes>
                 </BrowserRouter>

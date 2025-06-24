@@ -16,7 +16,10 @@ function MastersPage() {
     const masterOptions = [
         { label: "Item Master", path: "/masters/item" },
         { label: "Party Master", path: "/masters/party" },
-{ label: "Employee Master", path: "/masters/employee" }    ];
+        { label: "Vehicle Master", path: "/masters/vehicle" },
+        { label: "vendor Master", path: "/masters/vendor" },
+
+        { label: "Employee Master", path: "/masters/employee" }];
 
     return (
         <div className="min-h-screen bg-gradient-to-br from-indigo-50 to-gray-100 flex items-center justify-center px-4">

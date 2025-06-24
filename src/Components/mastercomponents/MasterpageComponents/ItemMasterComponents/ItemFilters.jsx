@@ -91,17 +91,18 @@ const ItemFilters = ({
             {/* Action Buttons */}
             <div className="flex justify-end mt-6 space-x-2">
                 <button
+                    onClick={handleApply}
+                    className="px-5 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition flex items-center"
+                >
+                    <span>Apply </span>
+                </button>
+                <button
                     onClick={handleReset}
                     className="px-5 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition flex items-center"
                 >
                     <span>Reset</span>
                 </button>
-                <button
-                    onClick={handleApply}
-                    className="px-5 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition flex items-center"
-                >
-                    <span>Apply Filters</span>
-                </button>
+                
             </div>
         </div>
     );
