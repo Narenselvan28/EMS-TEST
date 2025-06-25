@@ -5,22 +5,22 @@ function Tablenogst({ items, onUpdateItem, onDeleteRow, errors }) { // Receive e
     return (
         <div className="h-72 bg-white mx-5 rounded-xl overflow-x-auto">
             <div className="min-w-[900px]">
-                <table className="min-w-full bg-white text-base shadow-sm border border-teal-200 rounded-xl">
-                    <thead className="bg-teal-700 text-white">
+                <table className="min-w-full bg-white text-base shadow-sm border border-indigo-200 rounded-xl">
+                    <thead className="bg-indigo-700 text-white">
                         <tr>
-                            <th className="px-4 py-3 text-left border border-teal-200 w-[250px] rounded-tl-lg">Item Name</th>
-                            <th className="px-4 py-3 text-center border border-teal-200 w-[80px]">Qty</th>
-                            <th className="px-4 py-3 text-center border border-teal-200 w-[160px]">UOM</th>
-                            <th className="px-4 py-3 text-center border border-teal-200 w-[120px]">Price</th>
-                            <th className="px-4 py-3 text-center border border-teal-200 w-[120px]">Amount</th>
-                            <th className="px-4 py-3 text-center border border-teal-200 w-[140px]">Debit/Credit</th>
-                            <th className="px-4 py-3 text-center border border-teal-200 w-[100px] rounded-tr-lg">Action</th>
+                            <th className="px-4 py-3 text-left border border-indigo-200 w-[250px] rounded-tl-lg">Item Name</th>
+                            <th className="px-4 py-3 text-center border border-indigo-200 w-[80px]">Qty</th>
+                            <th className="px-4 py-3 text-center border border-indigo-200 w-[160px]">UOM</th>
+                            <th className="px-4 py-3 text-center border border-indigo-200 w-[120px]">Price</th>
+                            <th className="px-4 py-3 text-center border border-indigo-200 w-[120px]">Amount</th>
+                            <th className="px-4 py-3 text-center border border-indigo-200 w-[140px]">Debit/Credit</th>
+                            <th className="px-4 py-3 text-center border border-indigo-200 w-[100px] rounded-tr-lg">Action</th>
                         </tr>
                     </thead>
                     <tbody>
                         {items.map((item, index) => (
                             <tr key={item.id}>
-                                <td className="px-4 py-3 border border-teal-200">
+                                <td className="px-4 py-3 border border-indigo-200">
                                     <Dropdown
                                         options={["Coconut With Husk", "Coconut Without Husk", "Copra", "Husk"]}
                                         width="w-full"
@@ -29,7 +29,7 @@ function Tablenogst({ items, onUpdateItem, onDeleteRow, errors }) { // Receive e
                                     />
                                     {errors[`item-${index}-itemName`] && <p className="text-red-500 text-xs mt-1">{errors[`item-${index}-itemName`]}</p>}
                                 </td>
-                                <td className="px-4 py-3 text-center border border-teal-200">
+                                <td className="px-4 py-3 text-center border border-indigo-200">
                                     <input
                                         type="number"
                                         className={`border ${errors[`item-${index}-qty`] ? 'border-red-500' : 'border-gray-300'} h-10 rounded p-1 w-full text-center`}
@@ -39,7 +39,7 @@ function Tablenogst({ items, onUpdateItem, onDeleteRow, errors }) { // Receive e
                                     />
                                     {errors[`item-${index}-qty`] && <p className="text-red-500 text-xs mt-1">{errors[`item-${index}-qty`]}</p>}
                                 </td>
-                                <td className="px-4 py-3 text-center border border-teal-200">
+                                <td className="px-4 py-3 text-center border border-indigo-200">
                                     <Dropdown
                                         options={["Grams", "Quintal", "Nos"]}
                                         width="w-full"
@@ -48,7 +48,7 @@ function Tablenogst({ items, onUpdateItem, onDeleteRow, errors }) { // Receive e
                                         onSelect={(value) => onUpdateItem(item.id, 'uom', value)}
                                     />
                                 </td>
-                                <td className="px-4 py-3 text-center border border-teal-200">
+                                <td className="px-4 py-3 text-center border border-indigo-200">
                                     <input
                                         type="number"
                                         className={`border ${errors[`item-${index}-price`] ? 'border-red-500' : 'border-gray-300'} h-10 rounded p-1 w-full text-center`}
@@ -58,7 +58,7 @@ function Tablenogst({ items, onUpdateItem, onDeleteRow, errors }) { // Receive e
                                     />
                                     {errors[`item-${index}-price`] && <p className="text-red-500 text-xs mt-1">{errors[`item-${index}-price`]}</p>}
                                 </td>
-                                <td className="px-4 py-3 text-center border border-teal-200">
+                                <td className="px-4 py-3 text-center border border-indigo-200">
                                     <input
                                         type="number"
                                         readOnly
@@ -67,7 +67,7 @@ function Tablenogst({ items, onUpdateItem, onDeleteRow, errors }) { // Receive e
                                          placeholder='0'
                                     />
                                 </td>
-                                <td className="px-4 py-3 text-center border border-teal-200">
+                                <td className="px-4 py-3 text-center border border-indigo-200">
                                     <Dropdown
                                         options={["Debit", "Credit"]}
                                         width="w-full"
@@ -75,7 +75,7 @@ function Tablenogst({ items, onUpdateItem, onDeleteRow, errors }) { // Receive e
                                         onSelect={(value) => onUpdateItem(item.id, 'debitCredit', value)}
                                     />
                                 </td>
-                                <td className="px-4 py-3 text-center border border-teal-200">
+                                <td className="px-4 py-3 text-center border border-indigo-200">
                                     <button
                                         onClick={() => onDeleteRow(item.id)}
                                         className="bg-red-600 hover:bg-red-700 text-white rounded px-3 py-1 w-full text-sm"

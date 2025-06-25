@@ -34,6 +34,8 @@ import Employeeduesmanagements from "./Components/pages/Employeeduesmanagement";
 import VendorDuesManagement from "./Components/pages/VendorDuesManagement";
 import InventoryDashboard from "./Components/pages/Inventory";
 
+import SalaryManagement from "./Components/pages/SalaryPage";
+
 function App() {
     const handleBack = () => {
         window.history.back();
@@ -67,6 +69,8 @@ function App() {
         { path: "/party-details", element: <PartyDueDetails /> },
         { path: "/vendor-details", element: <VendorDueDetails /> },
         { path: "/employee-details", element: <EmployeeDueDetails /> },
+        { path: "/salary", element: <SalaryManagement /> },
+
 
         // Due Management
         { path: "/duesmanagement/partyduesmanagement", element: <PartyDues /> },
@@ -77,17 +81,25 @@ function App() {
     return (
         <div>
             {/* Sticky Navbar */}
-            <header className="bg-white sticky top-0 z-50 shadow-sm">
+            <header className="bg-white sticky top-0 z-50 shadow-sm border-b">
                 <div className="max-w-7xl mx-auto px-4 py-4 sm:px-6 lg:px-8 flex justify-between items-center">
-                    <h1 className="text-2xl font-bold text-indigo-900">ERP System</h1>
+
+                    {/* Branding Section */}
+                    <div className="flex flex-col leading-tight">
+                        <h1 className="text-2xl font-bold text-indigo-800">EMS COCOS</h1>
+                        <span className="text-sm text-gray-500 font-medium">A Websyra ERP</span>
+                    </div>
+
+                    {/* Admin Section */}
                     <div className="flex items-center space-x-4">
-                        <span className="text-indigo-700 hidden sm:inline">Welcome, Admin</span>
-                        <div className="w-10 h-10 rounded-full bg-indigo-100 text-indigo-900 flex items-center justify-center font-semibold">
+                        <span className="text-indigo-700 hidden sm:inline">Welcome, <span className="font-medium">Admin</span></span>
+                        <div className="w-10 h-10 rounded-full bg-indigo-100 text-indigo-800 flex items-center justify-center font-semibold">
                             A
                         </div>
                     </div>
                 </div>
             </header>
+
 
             {/* Mobile Blocker */}
             <div className="block md:hidden fixed inset-0 bg-white z-50 flex flex-col items-center justify-center px-4">
@@ -110,6 +122,7 @@ function App() {
                     ))}
                 </Routes>
             </div>
+
         </div>
     );
 }

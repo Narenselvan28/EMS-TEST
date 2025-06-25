@@ -64,8 +64,8 @@ function SummaryAndActions({ items, sundryEntries, showGST, onSave, onReset, onS
                     </div>
                     
                     <div className="flex justify-between pt-3">
-                        <span className="text-lg font-bold text-teal-800">Grand Total:</span>
-                        <span className="text-lg font-bold text-teal-800">₹{grandTotal.toFixed(2)}</span>
+                        <span className="text-lg font-bold text-indigo-800">Grand Total:</span>
+                        <span className="text-lg font-bold text-indigo-800">₹{grandTotal.toFixed(2)}</span>
                     </div>
                 </div>
             </div>
@@ -74,7 +74,7 @@ function SummaryAndActions({ items, sundryEntries, showGST, onSave, onReset, onS
             <div className="flex flex-col sm:flex-row gap-3 justify-center w-full max-w-md">
                 <button
                     onClick={onSaveReference}
-                    className="flex items-center justify-center px-6 py-2.5 bg-teal-800 hover:bg-teal-700 text-white rounded-lg font-medium transition-colors"
+                    className="flex items-center justify-center px-6 py-2.5 bg-indigo-800 hover:bg-indigo-700 text-white rounded-lg font-medium transition-colors"
                 >
                     <i className="fas fa-save mr-2"></i>
                     Save

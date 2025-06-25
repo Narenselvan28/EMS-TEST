@@ -427,7 +427,7 @@ function PurchaseSale() {
             <div className="hidden md:block space-y-6 p-4">
                 <div className="flex justify-between">  <h1 className='text-4xl ml-5 text-center my-10 font-bold'>Purchase/Sales</h1>
                     <div className="my-10 flex gap-5 mr-5">   <button className="bg-slate-600 p-2 rounded text-white">Sales Transactions</button>
-                        <button className="bg-teal-600 p-2 rounded text-white">Purchase Transactions</button></div>
+                        <button className="bg-indigo-600 p-2 rounded text-white">Purchase Transactions</button></div>
                 </div>
                 <nav className="flex items-center mb-6 text-sm text-gray-600" aria-label="Breadcrumb">
                     <ol className="inline-flex items-center space-x-1 md:space-x-3">
@@ -480,7 +480,7 @@ function PurchaseSale() {
                             onChange={handleGSTToggle}
                             className="sr-only peer"
                         />
-                        <div className="w-11 h-6 bg-gray-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-teal-700"></div>
+                        <div className="w-11 h-6 bg-gray-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-indigo-700"></div>
                         <span className="ml-3 text-sm font-medium text-gray-900">
                             {showGST ? 'With GST' : 'Without GST'}
                         </span>
@@ -543,7 +543,7 @@ function PurchaseSale() {
                         <div>
                             <label htmlFor="refOrderType" className="block mb-2 font-medium text-secondary">Order Type</label>
                             <select
-                                className="glass-panel border border-slate-200 p-3 rounded-lg w-full text-base focus:ring-2 focus:ring-teal-700"
+                                className="glass-panel border border-slate-200 p-3 rounded-lg w-full text-base focus:ring-2 focus:ring-indigo-700"
                                 id="refOrderType">
                                 <option value="">- All -</option>
                                 <option value="purchase">Purchase</option>
@@ -554,7 +554,7 @@ function PurchaseSale() {
                         <div>
                             <label htmlFor="refPartyName" className="block mb-2 font-medium text-secondary">Party Name</label>
                             <select
-                                className="glass-panel border border-slate-200 p-3 rounded-lg w-full text-base focus:ring-2 focus:ring-teal-700"
+                                className="glass-panel border border-slate-200 p-3 rounded-lg w-full text-base focus:ring-2 focus:ring-indigo-700"
                                 id="refPartyName">
                                 <option value="">- All -</option>
                                 <option>Ems Cocos</option>
@@ -567,7 +567,7 @@ function PurchaseSale() {
                         <div>
                             <label htmlFor="refStatus" className="block mb-2 font-medium text-secondary">Status</label>
                             <select
-                                className="glass-panel border border-slate-200 p-3 rounded-lg w-full text-base focus:ring-2 focus:ring-teal-700"
+                                className="glass-panel border border-slate-200 p-3 rounded-lg w-full text-base focus:ring-2 focus:ring-indigo-700"
                                 id="refStatus">
                                 <option value="">- All -</option>
                                 <option value="pending">Pending</option>
@@ -577,7 +577,7 @@ function PurchaseSale() {
                         </div>
                         <div className="flex items-end">
                             <button
-                                className="btn-primary px-6 py-3 bg-teal-700 text-white font-bold rounded-lg text-base w-full glow transition-all">
+                                className="btn-primary px-6 py-3 bg-indigo-700 text-white font-bold rounded-lg text-base w-full glow transition-all">
                                 <i className="fas fa-search mr-2"></i> Search
                             </button>
                         </div>
@@ -585,44 +585,44 @@ function PurchaseSale() {
 
                     {/* Reference Items Display Table */}
                     <div className="overflow-x-auto rounded-lg">
-                        <table className="table-auto border border-teal-700 border-collapse w-full text-sm" id="referenceTable">
-                            <thead className="bg-teal-700 text-white ">
+                        <table className="table-auto border border-indigo-700 border-collapse w-full text-sm" id="referenceTable">
+                            <thead className="bg-indigo-700 text-white ">
                                 <tr className="table-header rounded-lg">
-                                    <th className="border  border-teal-200 px-4 py-3 rounded-tl-lg cursor-pointer" onClick={() => requestSort('refNo')}>
+                                    <th className="border  border-indigo-200 px-4 py-3 rounded-tl-lg cursor-pointer" onClick={() => requestSort('refNo')}>
                                         Ref No.{getSortIndicator('refNo')}
                                     </th>
-                                    <th className="border  border-teal-200 px-4 py-3 cursor-pointer" onClick={() => requestSort('date')}>
+                                    <th className="border  border-indigo-200 px-4 py-3 cursor-pointer" onClick={() => requestSort('date')}>
                                         Date{getSortIndicator('date')}
                                     </th>
-                                    <th className=" px-4 border border-teal-200 py-3 cursor-pointer" onClick={() => requestSort('party')}>
+                                    <th className=" px-4 border border-indigo-200 py-3 cursor-pointer" onClick={() => requestSort('party')}>
                                         Party{getSortIndicator('party')}
                                     </th>
-                                    <th className="  px-4 border border-teal-200 py-3 cursor-pointer" onClick={() => requestSort('itemName')}>
+                                    <th className="  px-4 border border-indigo-200 py-3 cursor-pointer" onClick={() => requestSort('itemName')}>
                                         Item Name{getSortIndicator('itemName')}
                                     </th>
-                                    <th className=" px-4 border border-teal-200 py-3 cursor-pointer" onClick={() => requestSort('amount')}>
+                                    <th className=" px-4 border border-indigo-200 py-3 cursor-pointer" onClick={() => requestSort('amount')}>
                                         Amount{getSortIndicator('amount')}
                                     </th>
-                                    <th className=" px-4 border border-teal-200 py-3 cursor-pointer" onClick={() => requestSort('type')}>
+                                    <th className=" px-4 border border-indigo-200 py-3 cursor-pointer" onClick={() => requestSort('type')}>
                                         Type{getSortIndicator('type')}
                                     </th>
-                                    <th className=" px-4 border border-teal-200 py-3 cursor-pointer" onClick={() => requestSort('status')}>
+                                    <th className=" px-4 border border-indigo-200 py-3 cursor-pointer" onClick={() => requestSort('status')}>
                                         Status{getSortIndicator('status')}
                                     </th>
-                                    <th className=" px-4 border border-teal-200 py-3 rounded-tr-lg">Actions</th>
+                                    <th className=" px-4 border border-indigo-200 py-3 rounded-tr-lg">Actions</th>
                                 </tr>
                             </thead>
                             <tbody id="referenceTableBody">
                                 {/* Render reference items */}
                                 {sortedReferenceItems.map((refItem, index) => (
                                     <tr key={index} className="table-row">
-                                        <td className=" border border-teal-500 border-slate-100 px-4 py-2">{refItem.refNo}</td>
-                                        <td className=" px-4 border border-teal-200 py-2">{refItem.date}</td>
-                                        <td className=" px-4 border border-teal-200 py-2">{refItem.party}</td>
-                                        <td className=" px-4 border border-teal-200 py-2">{refItem.itemName}</td>
-                                        <td className=" px-4 border border-teal-200 py-2">₹{parseFloat(refItem.amount).toFixed(2)}</td>
-                                        <td className=" px-4 border border-teal-200 py-2">{refItem.type}</td>
-                                        <td className=" px-4 border border-teal-200 py-2">
+                                        <td className=" border border-indigo-500 border-slate-100 px-4 py-2">{refItem.refNo}</td>
+                                        <td className=" px-4 border border-indigo-200 py-2">{refItem.date}</td>
+                                        <td className=" px-4 border border-indigo-200 py-2">{refItem.party}</td>
+                                        <td className=" px-4 border border-indigo-200 py-2">{refItem.itemName}</td>
+                                        <td className=" px-4 border border-indigo-200 py-2">₹{parseFloat(refItem.amount).toFixed(2)}</td>
+                                        <td className=" px-4 border border-indigo-200 py-2">{refItem.type}</td>
+                                        <td className=" px-4 border border-indigo-200 py-2">
                                             <span className={`px-3 py-1 rounded-full text-xs font-medium ${refItem.status === 'Approved' ? 'badge-approved' :
                                                 refItem.status === 'Pending' ? 'badge-pending' :
                                                     'badge-rejected'
