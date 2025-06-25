@@ -34,7 +34,7 @@ const AdvanceByIndividualSection = ({
 
   useEffect(() => {
     loadAdvanceByIndividualData();
-  }, [advIndividualEmployeeCategory, advIndividualEmployeeGroup]);
+  }, [advIndividualEmployeeCategory, advIndividualEmployeeGroup, loadAdvanceByIndividualData]);
 
   const updateIndividualAdvanceAmount = (index, value) => {
     const updated = [...individualAdvances];
@@ -49,7 +49,10 @@ const AdvanceByIndividualSection = ({
   };
 
   const addIndividualAdvanceRow = () => {
-    setIndividualAdvances([...individualAdvances, { empCode: '', name: '', totalByGroup: 0, amount: 0, remarks: '' }]);
+    setIndividualAdvances([
+      ...individualAdvances,
+      { empCode: '', name: '', totalByGroup: 0, amount: 0, remarks: '' },
+    ]);
   };
 
   const saveAdvanceIndividual = () => {
@@ -114,7 +117,7 @@ const AdvanceByIndividualSection = ({
           <input
             type="text"
             id="advIndividualAdvanceByGroup"
-            value={`₹${advIndividualAdvanceByGroup.toFixed(2)}`}
+            value={`₹${(advIndividualAdvanceByGroup || 0).toFixed(2)}`}
             readOnly
             className="w-full px-3 py-2 border rounded-lg bg-gray-100 cursor-not-allowed text-gray-700"
           />

@@ -1,6 +1,6 @@
 import React from 'react';
 
-const SalaryEmployeeTable = ({ employees, updateEmployeeAmounts, toggleEmployeeAttendance }) => {
+const SalaryEmployeeTable = ({ employees, updateEmployeeAmounts }) => {
     return (
         <div className="overflow-x-auto rounded-lg shadow-lg">
             <table className="table-auto border-collapse w-full text-sm">
@@ -20,30 +20,21 @@ const SalaryEmployeeTable = ({ employees, updateEmployeeAmounts, toggleEmployeeA
                     {employees.map((emp, index) => (
                         <tr key={emp.empCode} className="table-row">
                             <td className="border border-slate-100 px-4 py-3">{emp.empCode}</td>
-                            <td className="border border-slate-100 px-4 py-3 flex items-center">
-                                <input
-                                    type="checkbox"
-                                    checked={emp.isPresent}
-                                    onChange={() => toggleEmployeeAttendance(index)}
-                                    className="form-checkbox h-4 w-4 text-indigo-600 mr-2 attendance-checkbox no-enter-tab"
-                                />
-                                {emp.name}
-                            </td>
-                            <td className="border border-slate-100 px-4 py-3 text-right">₹{emp.advance.toFixed(2)}</td>
-                            <td className="border border-slate-100 px-4 py-3 text-right">₹{emp.gross.toFixed(2)}</td>
-                            <td className="border border-slate-100 px-4 py-3 text-right">₹{emp.net.toFixed(2)}</td>
-                            <td className="border border-slate-100 px-4 py-3 text-right amount-to-be-given">₹{Math.max(0, emp.amountToBeGiven).toFixed(2)}</td>
+                            <td className="border border-slate-100 px-4 py-3">{emp.name}</td>
+                            <td className="border border-slate-100 px-4 py-3 text-right">₹{Math.round(emp.advance)}</td>
+                            <td className="border border-slate-100 px-4 py-3 text-right">₹{Math.round(emp.gross)}</td>
+                            <td className="border border-slate-100 px-4 py-3 text-right">₹{Math.round(emp.net)}</td>
+                            <td className="border border-slate-100 px-4 py-3 text-right amount-to-be-given">₹{Math.max(0, Math.round(emp.amountToBeGiven))}</td>
                             <td className="border border-slate-100 px-4 py-3">
                                 <input
                                     type="number"
-                                    min="0"
-                                    step="0.01"
-                                    value={emp.amountGiven.toFixed(2)}
+                                    step="1"
+                                    value={Math.round(emp.amountGiven)}
                                     className="amount-given-input glass-panel border border-slate-200 p-2 rounded-lg w-full text-right"
-                                    onChange={(e) => updateEmployeeAmounts(index, e.target.value)}
+                                    onChange={(e) => updateEmployeeAmounts(index, parseInt(e.target.value) || 0)}
                                 />
                             </td>
-                            <td className="border border-slate-100 px-4 py-3 text-right due-amount">₹{emp.dueAmount.toFixed(2)}</td>
+                            <td className="border border-slate-100 px-4 py-3 text-right due-amount">₹{Math.round(emp.dueAmount)}</td>
                         </tr>
                     ))}
                 </tbody>

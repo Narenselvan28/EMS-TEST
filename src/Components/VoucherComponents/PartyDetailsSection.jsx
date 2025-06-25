@@ -106,11 +106,11 @@ const PartyDetailsSection = ({
                     />
                     <label
                         htmlFor="nafedCheckbox"
-                        className="w-5 h-5 flex items-center justify-center bg-white border-2 border-indigo-500 rounded-md cursor-pointer peer-checked:bg-indigo-600 peer-checked:border-indigo-600 transition duration-200 text-white text-xs font-bold"
+                        className="w-6 h-6 flex items-center justify-center bg-white border-2 border-indigo-500 rounded-md cursor-pointer peer-checked:bg-indigo-600 peer-checked:border-indigo-600 transition duration-200 text-white text-xs font-bold"
                     >
                         <span className="peer-checked:inline hidden">✔</span>
                     </label>
-                    <span className="text-sm text-gray-700 font-medium">
+                    <span className="text-xl text-gray-700 font-medium">
                         <i className="fas fa-check-circle text-indigo-500 mr-1"></i> Nafed
                     </span>
                 </div>
