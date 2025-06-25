@@ -5,7 +5,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import VoucherDetailsSection from '../VoucherComponents/VoucherDetailsSection';
 import SalaryDetailsSection from '../VoucherComponents/SalaryDetailsSection';
 import AdvanceByGroupSection from '../VoucherComponents/AdvanceByGroupSection';
-import AdvanceByIndividualSection from '../VoucherComponents/AdvanceByIndividualSection';
+import AdvanceByIndividualSection from '../VoucherComponents/AdvancebyIndividualSection';
 import PartyDetailsSection from '../VoucherComponents/PartyDetailsSection';
 import VendorDetailsSection from '../VoucherComponents/VendorDetailsSection';
 import GeneralVoucherSection from '../VoucherComponents/GeneralVoucherSection';
@@ -513,11 +513,6 @@ const Vouchers = () => {
                     validateDateYear={validateDateYear}
                 />
 
-                <div id="generalLoader" className={`loader ${generalLoader ? '' : 'hidden'}`}>
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                </div>
 
                 {voucherCategory === 'salary' && (
                     <SalaryDetailsSection

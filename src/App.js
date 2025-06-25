@@ -32,6 +32,7 @@ import EmployeeDueDetails from "./Components/Employeeduesmanagement/EmployeeDueD
 import PartyDues from "./Components/pages/PartyDues";
 import Employeeduesmanagements from "./Components/pages/Employeeduesmanagement";
 import VendorDuesManagement from "./Components/pages/VendorDuesManagement";
+import InventoryDashboard from "./Components/pages/Inventory";
 
 function App() {
     const handleBack = () => {
@@ -45,6 +46,8 @@ function App() {
         { path: "/Purchase&Sales", element: <PurchaseSale /> },
         { path: "/settings", element: <SettingsPage /> },
         { path: "/vouchers", element: <VoucherEntryLayout /> },
+        { path: "/inventory", element: <InventoryDashboard /> },
+
 
         // Master Sections
         { path: "/masters/party", element: <PartyMasterPage /> },
