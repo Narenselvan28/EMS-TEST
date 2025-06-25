@@ -1,5 +1,5 @@
 import React, { useEffect, useCallback } from 'react';
-import TripsheetEntriesTable from './TripsheetEntriesTable'; // Import the new component
+import TripsheetEntriesTable from './TripsheetEntriesTable';
 
 const VendorDetailsSection = ({
     vendorName,
@@ -15,7 +15,6 @@ const VendorDetailsSection = ({
     tripsheetEntries,
     setTripsheetEntries,
 }) => {
-
     const toggleTripsheetEntry = useCallback(() => {
         if (expenseCategory === 'petrol' || expenseCategory === 'fuel') {
             loadTripsheetEntries();
@@ -28,11 +27,8 @@ const VendorDetailsSection = ({
         toggleTripsheetEntry();
     }, [expenseCategory, toggleTripsheetEntry]);
 
-
     const loadTripsheetEntries = () => {
         setTripsheetEntries([]);
-
-        console.log('Loading tripsheet entries for Fuel expense category...');
 
         setTimeout(() => {
             const fetchedTripsheetData = [
@@ -45,115 +41,123 @@ const VendorDetailsSection = ({
     };
 
     const updateTripsheetEntry = (index, field, value) => {
-        const newTripsheetEntries = [...tripsheetEntries];
-        newTripsheetEntries[index][field] = value;
-        setTripsheetEntries(newTripsheetEntries);
+        const newEntries = [...tripsheetEntries];
+        newEntries[index][field] = value;
+        setTripsheetEntries(newEntries);
     };
 
     const toggleTripsheetCloseVoucher = (index) => {
-        const newTripsheetEntries = [...tripsheetEntries];
-        if (newTripsheetEntries[index].status !== 'Closed') { // Only allow toggling if not already 'Closed'
-            newTripsheetEntries[index].closeVoucher = !newTripsheetEntries[index].closeVoucher;
+        const newEntries = [...tripsheetEntries];
+        if (newEntries[index].status !== 'Closed') {
+            newEntries[index].closeVoucher = !newEntries[index].closeVoucher;
         }
-        setTripsheetEntries(newTripsheetEntries);
+        setTripsheetEntries(newEntries);
     };
 
     const addTripsheetEntryRow = () => {
-        setTripsheetEntries([...tripsheetEntries, { id: '', date: '', amount: 0, status: 'Open', closeVoucher: false }]);
+        setTripsheetEntries([
+            ...tripsheetEntries,
+            { id: '', date: '', amount: 0, status: 'Open', closeVoucher: false }
+        ]);
     };
 
     return (
-        <div className={`glass-card p-6 rounded-xl mb-8 section-visible`}>
-            <h2 className="text-2xl font-semibold mb-6 gradient-text flex items-center">
-                <i className="fas fa-store-alt mr-3"></i> Vendor Details
+        <div className="bg-white shadow-md rounded-2xl p-6 mb-8 transition-all duration-300 hover:shadow-lg">
+            <h2 className="text-2xl font-bold mb-6 text-gray-800 flex items-center">
+                <i className="fas fa-store-alt text-indigo-600 mr-3"></i> Vendor Details
             </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
-                <div className="select-wrapper">
-                    <label htmlFor="vendorName" className="block mb-2 font-medium text-gray-700">
-                        <i className="fas fa-building mr-2"></i> Vendor Name
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-6">
+                <div>
+                    <label htmlFor="vendorName" className="block mb-2 text-sm font-medium text-gray-700">
+                        <i className="fas fa-building text-indigo-500 mr-2"></i> Vendor Name
                     </label>
                     <select
-                        className="w-full glass-panel focus:ring-2 focus:ring-indigo-200"
                         id="vendorName"
                         value={vendorName}
                         onChange={(e) => setVendorName(e.target.value)}
+                        className="w-full px-3 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-400"
                     >
-                        <option value="">- Select Vendor -</option>
+                        <option value="">— Select Vendor —</option>
                         <option>ABC Supplies</option>
                         <option>XYZ Services</option>
                         <option>Fuel Station A</option>
                         <option>Maintenance Co.</option>
                     </select>
                 </div>
-                <div className="select-wrapper">
-                    <label htmlFor="expenseCategory" className="block mb-2 font-medium text-gray-700">
-                        <i className="fas fa-tags mr-2"></i> Expense Category
+
+                <div>
+                    <label htmlFor="expenseCategory" className="block mb-2 text-sm font-medium text-gray-700">
+                        <i className="fas fa-tags text-indigo-500 mr-2"></i> Expense Category
                     </label>
                     <select
-                        className="w-full glass-panel focus:ring-2 focus:ring-indigo-200"
                         id="expenseCategory"
                         value={expenseCategory}
                         onChange={(e) => setExpenseCategory(e.target.value)}
+                        className="w-full px-3 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-400"
                     >
-                        <option value="">- Select Category -</option>
+                        <option value="">— Select Category —</option>
                         <option value="petrol">Petrol</option>
                         <option value="service">Service</option>
                         <option value="maintenance">Maintenance</option>
                         <option value="others">Others</option>
                     </select>
                 </div>
-                <div className="select-wrapper">
-                    <label htmlFor="vendorTransactionMethod" className="block mb-2 font-medium text-gray-700">
-                        <i className="fas fa-exchange-alt mr-2"></i> Transaction Method
+
+                <div>
+                    <label htmlFor="vendorTransactionMethod" className="block mb-2 text-sm font-medium text-gray-700">
+                        <i className="fas fa-exchange-alt text-indigo-500 mr-2"></i> Transaction Method
                     </label>
                     <select
-                        className="w-full glass-panel focus:ring-2 focus:ring-indigo-200"
                         id="vendorTransactionMethod"
                         value={vendorTransactionMethod}
                         onChange={(e) => setVendorTransactionMethod(e.target.value)}
+                        className="w-full px-3 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-400"
                     >
-                        <option value="">- Select Method -</option>
+                        <option value="">— Select Method —</option>
                         <option>Cash</option>
                         <option>Account</option>
                     </select>
                 </div>
+
                 <div>
-                    <label htmlFor="vendorAmount" className="block mb-2 font-medium text-gray-700">
-                        <i className="fas fa-coins mr-2"></i> Amount (₹)
+                    <label htmlFor="vendorAmount" className="block mb-2 text-sm font-medium text-gray-700">
+                        <i className="fas fa-coins text-indigo-500 mr-2"></i> Amount (₹)
                     </label>
                     <input
                         type="number"
                         step="0.01"
-                        className="w-full glass-panel focus:ring-2 focus:ring-indigo-200"
                         id="vendorAmount"
-                        placeholder="Enter Amount"
+                        placeholder="Enter amount"
                         value={vendorAmount}
                         onChange={(e) => setVendorAmount(e.target.value)}
+                        className="w-full px-3 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-400"
                     />
                 </div>
+
                 <div className="col-span-full">
-                    <label htmlFor="vendorRemarks" className="block mb-2 font-medium text-gray-700">
-                        <i className="fas fa-comment-alt mr-2"></i> Remarks
+                    <label htmlFor="vendorRemarks" className="block mb-2 text-sm font-medium text-gray-700">
+                        <i className="fas fa-comment-alt text-indigo-500 mr-2"></i> Remarks
                     </label>
                     <textarea
-                        className="w-full glass-panel focus:ring-2 focus:ring-indigo-200"
                         id="vendorRemarks"
-                        placeholder="Enter Remarks"
+                        placeholder="Enter remarks"
                         value={vendorRemarks}
                         onChange={(e) => setVendorRemarks(e.target.value)}
+                        className="w-full px-3 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-400"
                     ></textarea>
                 </div>
             </div>
 
-            {(expenseCategory === 'petrol' || expenseCategory === 'fuel') && (
-                <div id="tripsheetEntrySection" className={`glass-panel p-6 rounded-xl mt-6 ${tripsheetEntries.length > 0 ? 'section-visible' : 'section-hidden'}`}>
-                    <h3 className="text-xl font-semibold mb-4 text-gray-800 flex items-center">
+            {(expenseCategory === 'petrol' || expenseCategory === 'fuel') && tripsheetEntries.length > 0 && (
+                <div className="bg-indigo-50 border border-indigo-200 p-6 rounded-xl mt-6">
+                    <h3 className="text-xl font-semibold mb-4 text-indigo-700 flex items-center">
                         <i className="fas fa-clipboard-list mr-2"></i> Tripsheet Entries
                     </h3>
 
                     <div className="flex justify-end mb-4">
-                        <button onClick={addTripsheetEntryRow} className="btn-primary px-4 py-2 rounded-lg text-sm">
-                            <i className="fas fa-plus mr-2"></i> Add Tripsheet Entry
+                        <button onClick={addTripsheetEntryRow} className="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700">
+                            <i className="fas fa-plus mr-2"></i> Add Entry
                         </button>
                     </div>
 

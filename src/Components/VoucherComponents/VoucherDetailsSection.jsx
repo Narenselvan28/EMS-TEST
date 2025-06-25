@@ -12,14 +12,14 @@ const VoucherDetailsSection = ({
     validateDateYear
 }) => {
     return (
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8 glass-card p-6 floating transition-all">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8 bg-white shadow-md rounded-xl p-6 transition-all">
             <div>
                 <label htmlFor="voucherDate" className="block mb-2 font-medium text-gray-700">
-                    <i className="fas fa-calendar-alt mr-2"></i> Date
+                    Date
                 </label>
                 <input
                     type="date"
-                    className="w-full glass-panel focus:ring-2 focus:ring-indigo-200"
+                    className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-indigo-200"
                     id="voucherDate"
                     value={voucherDate}
                     onChange={validateDateYear}
@@ -27,12 +27,12 @@ const VoucherDetailsSection = ({
                 />
             </div>
 
-            <div className="select-wrapper">
+            <div>
                 <label htmlFor="voucherType" className="block mb-2 font-medium text-gray-700">
-                    <i className="fas fa-cash-register mr-2"></i> Voucher Type
+                    Voucher Type
                 </label>
                 <select
-                    className="w-full glass-panel focus:ring-2 focus:ring-indigo-200"
+                    className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-indigo-200"
                     id="voucherType"
                     value={voucherType}
                     onChange={(e) => setVoucherType(e.target.value)}
@@ -43,12 +43,12 @@ const VoucherDetailsSection = ({
                 </select>
             </div>
 
-            <div className="select-wrapper">
+            <div>
                 <label htmlFor="voucherCategory" className="block mb-2 font-medium text-gray-700">
-                    <i className="fas fa-tags mr-2"></i> Voucher Category
+                    Voucher Category
                 </label>
                 <select
-                    className="w-full glass-panel focus:ring-2 focus:ring-indigo-200"
+                    className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-indigo-200"
                     id="voucherCategory"
                     value={voucherCategory}
                     onChange={(e) => setVoucherCategory(e.target.value)}

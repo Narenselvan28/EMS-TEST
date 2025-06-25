@@ -101,7 +101,7 @@ const PartyDues = () => {
     const paidDues = allPartyDues.filter(party => party.status === 'Paid').reduce((sum, party) => sum + party.dueAmount, 0);
     const overdueDues = allPartyDues.filter(party => party.status === 'Overdue').reduce((sum, party) => sum + party.dueAmount, 0);
 
-   
+
     return (
         <div className='p-5 m-3'>
             <div className="flex justify-between items-center mb-6">
@@ -197,7 +197,11 @@ const PartyDues = () => {
             </div>
 
             {/* Filters */}
-            <Filters onApplyFilters={handleApplyFilters} onResetFilters={handleResetFilters} />
+            <Filters
+                onApplyFilters={(filters) => console.log("Apply Filters:", filters)}
+                onResetFilters={() => console.log("Reset Filters")}
+            />
+
 
             {/* Party Dues Cards */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
