@@ -175,8 +175,16 @@ const SalaryManagement = () => {
         );
     };
 
-    // Load Employees Button Handler
+    // Load Employees Button Handler - Now toggles visibility
     const handleLoadEmployees = () => {
+        // If already showing, hide the table and options
+        if (showEmployeeTable) {
+            setShowEmployeeTable(false);
+            setShowAdditionalOptions(false);
+            return;
+        }
+
+        // Otherwise, load the employees
         setIsLoading(true);
         setShowEmployeeTable(false);
 
@@ -462,17 +470,19 @@ const SalaryManagement = () => {
                                 />
                             </div>
                         </div>
-
-                        <div className="flex justify-end mt-5 col-span-1 md:col-span-2 lg:col-span-3">
-                            <button
-                                className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                onClick={handleLoadEmployees}
-                            >
-                                <FontAwesomeIcon icon={faUsers} className="mr-2" />Load Employees
-                            </button>
-                        </div>
                     </div>
+                    
+                   
                 </div>
+                 <div className="flex justify-end mt-5 mb-5 col-span-1 md:col-span-2 lg:col-span-3">
+                        <button
+                            className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            onClick={handleLoadEmployees}
+                        >
+                            <FontAwesomeIcon icon={faUsers} className="mr-2" />
+                            {showEmployeeTable ? 'Hide Employees' : 'Load Employees'}
+                        </button>
+                    </div>
 
                 {/* Only show these sections after Load Employees is clicked */}
                 {showAdditionalOptions && (
