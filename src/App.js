@@ -35,7 +35,7 @@ import VendorDuesManagement from "./Components/pages/VendorDuesManagement";
 import InventoryDashboard from "./Components/pages/Inventory";
 
 import SalaryManagement from "./Components/pages/SalaryPage";
-
+import PurchaseMain from "./Components/pages/PurchaseSalesMain";
 function App() {
     const handleBack = () => {
         window.history.back();
@@ -45,7 +45,9 @@ function App() {
         { path: "/", element: <Homepage /> },
         { path: "/masters", element: <MastersPage /> },
         { path: "/duesmanagement", element: <DuesPage /> },
-        { path: "/Purchase&Sales", element: <PurchaseSale /> },
+        { path: "/purchase&Sales", element: <PurchaseMain /> },
+
+        { path: "/purchase&sale/addtransaction", element: <PurchaseSale /> },
         { path: "/settings", element: <SettingsPage /> },
         { path: "/vouchers", element: <VoucherEntryLayout /> },
         { path: "/inventory", element: <InventoryDashboard /> },

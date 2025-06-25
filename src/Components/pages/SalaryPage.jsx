@@ -175,12 +175,10 @@ const SalaryManagement = () => {
         );
     };
 
-    // Load Employees Button Handler - Now toggles visibility
+    // Load Employees Button Handler
     const handleLoadEmployees = () => {
-        // If already showing, hide the table and options
+        // If already showing, just return (we won't hide the table anymore)
         if (showEmployeeTable) {
-            setShowEmployeeTable(false);
-            setShowAdditionalOptions(false);
             return;
         }
 
@@ -472,15 +470,16 @@ const SalaryManagement = () => {
                         </div>
                     </div>
                     
-                   
+                    
                 </div>
-                 <div className="flex justify-end mt-5 mb-5 col-span-1 md:col-span-2 lg:col-span-3">
+                <div className="flex justify-end mt-5 mb-5 col-span-1 md:col-span-2 lg:col-span-3">
                         <button
                             className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
                             onClick={handleLoadEmployees}
+                            disabled={showEmployeeTable}
                         >
                             <FontAwesomeIcon icon={faUsers} className="mr-2" />
-                            {showEmployeeTable ? 'Hide Employees' : 'Load Employees'}
+                            Load Employees
                         </button>
                     </div>
 
@@ -495,73 +494,76 @@ const SalaryManagement = () => {
                             </div>
                         )}
 
-                        {/* Employee Table */}
-                        {showEmployeeTable && (
-                            <div className="overflow-x-auto mb-6">
-                                <table className="min-w-full divide-y divide-gray-200">
-                                    <thead className="bg-gray-100">
-                                        <tr>
-                                            {['Attendance', 'Employee Code', 'Employee Name', 'Rate per Count', 'Count/Shift', 'Total Amount', 'Remarks'].map((th, i) => (
-                                                <th key={i} scope="col" className="px-6 py-3 text-center text-xs font-medium text-gray-700 uppercase tracking-wider">
-                                                    {th === 'Attendance' && <FontAwesomeIcon icon={faClipboardCheck} className="mr-1" />}
-                                                    {th === 'Employee Code' && <FontAwesomeIcon icon={faIdCard} className="mr-1" />}
-                                                    {th === 'Employee Name' && <FontAwesomeIcon icon={faUser} className="mr-1" />}
-                                                    {th === 'Rate per Count' && <FontAwesomeIcon icon={faMoneyBillWave} className="mr-1" />}
-                                                    {th === 'Count/Shift' && <FontAwesomeIcon icon={faListOl} className="mr-1" />}
-                                                    {th === 'Total Amount' && <FontAwesomeIcon icon={faCalculator} className="mr-1" />}
-                                                    {th === 'Remarks' && <FontAwesomeIcon icon={faComment} className="mr-1" />}
-                                                    {th}
-                                                </th>
-                                            ))}
-                                        </tr>
-                                    </thead>
-                                    <tbody className="bg-white divide-y divide-gray-200">
-                                        {employees.map((employee, index) => (
-                                            <tr key={employee.code} className={!employee.isPresent ? 'bg-gray-100' : ''}>
-                                                <td className="px-6 py-4 whitespace-nowrap text-center">
-                                                    <input
-                                                        type="checkbox"
-                                                        className="attendance-checkbox h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
-                                                        checked={employee.isPresent}
-                                                        onChange={() => handleAttendanceChange(index)}
-                                                    />
-                                                </td>
-                                                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">{employee.code}</td>
-                                                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">{employee.name}</td>
-                                                <td className="px-6 py-4 whitespace-nowrap text-center">
-                                                    <input
-                                                        type="number"
-                                                        className="w-24 px-2 py-1 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500 rate-input"
-                                                        value={employee.rate}
-                                                        readOnly
-                                                    />
-                                                </td>
-                                                <td className="px-6 py-4 whitespace-nowrap text-center">
-                                                    <input
-                                                        type="number"
-                                                        className="w-24 px-2 py-1 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500 count-input"
-                                                        value={employee.count}
-                                                        onChange={(e) => handleEmployeeDataChange(index, 'count', e.target.value)}
-                                                        disabled={totalCountChecked}
-                                                    />
-                                                </td>
-                                                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center amount-cell">
-                                                    {employee.amount ? employee.amount.toFixed(2) : '0.00'}
-                                                </td>
-                                                <td className="px-6 py-4 whitespace-nowrap text-center">
-                                                    <input
-                                                        type="text"
-                                                        className="w-32 px-2 py-1 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500"
-                                                        placeholder="Remarks"
-                                                        value={employee.remarks}
-                                                        onChange={(e) => handleEmployeeDataChange(index, 'remarks', e.target.value)}
-                                                        disabled={!employee.isPresent}
-                                                    />
-                                                </td>
+                        {/* Employee Table Section with Title */}
+                        {showEmployeeTable && ( 
+                            <div className="bg-white p-6 rounded-lg shadow-md mb-6">
+                                <h2 className="text-lg font-semibold text-gray-700 mb-6">Employee Details</h2>
+                                <div className="overflow-x-auto">
+                                    <table className="min-w-full divide-y divide-gray-200">
+                                        <thead className="bg-gray-100">
+                                            <tr>
+                                                {['Attendance', 'Employee Code', 'Employee Name', 'Rate per Count', 'Count/Shift', 'Total Amount', 'Remarks'].map((th, i) => (
+                                                    <th key={i} scope="col" className="px-6 py-3 text-center text-xs font-medium text-gray-700 uppercase tracking-wider">
+                                                        {th === 'Attendance' && <FontAwesomeIcon icon={faClipboardCheck} className="mr-1" />}
+                                                        {th === 'Employee Code' && <FontAwesomeIcon icon={faIdCard} className="mr-1" />}
+                                                        {th === 'Employee Name' && <FontAwesomeIcon icon={faUser} className="mr-1" />}
+                                                        {th === 'Rate per Count' && <FontAwesomeIcon icon={faMoneyBillWave} className="mr-1" />}
+                                                        {th === 'Count/Shift' && <FontAwesomeIcon icon={faListOl} className="mr-1" />}
+                                                        {th === 'Total Amount' && <FontAwesomeIcon icon={faCalculator} className="mr-1" />}
+                                                        {th === 'Remarks' && <FontAwesomeIcon icon={faComment} className="mr-1" />}
+                                                        {th}
+                                                    </th>
+                                                ))}
                                             </tr>
-                                        ))}
-                                    </tbody>
-                                </table>
+                                        </thead>
+                                        <tbody className="bg-white divide-y divide-gray-200">
+                                            {employees.map((employee, index) => (
+                                                <tr key={employee.code} className={!employee.isPresent ? 'bg-gray-100' : ''}>
+                                                    <td className="px-6 py-4 whitespace-nowrap text-center">
+                                                        <input
+                                                            type="checkbox"
+                                                            className="attendance-checkbox h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                                                            checked={employee.isPresent}
+                                                            onChange={() => handleAttendanceChange(index)}
+                                                        />
+                                                    </td>
+                                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">{employee.code}</td>
+                                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">{employee.name}</td>
+                                                    <td className="px-6 py-4 whitespace-nowrap text-center">
+                                                        <input
+                                                            type="number"
+                                                            className="w-24 px-2 py-1 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500 rate-input"
+                                                            value={employee.rate}
+                                                            readOnly
+                                                        />
+                                                    </td>
+                                                    <td className="px-6 py-4 whitespace-nowrap text-center">
+                                                        <input
+                                                            type="number"
+                                                            className="w-24 px-2 py-1 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500 count-input"
+                                                            value={employee.count}
+                                                            onChange={(e) => handleEmployeeDataChange(index, 'count', e.target.value)}
+                                                            disabled={totalCountChecked}
+                                                        />
+                                                    </td>
+                                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center amount-cell">
+                                                        {employee.amount ? employee.amount.toFixed(2) : '0.00'}
+                                                    </td>
+                                                    <td className="px-6 py-4 whitespace-nowrap text-center">
+                                                        <input
+                                                            type="text"
+                                                            className="w-32 px-2 py-1 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500"
+                                                            placeholder="Remarks"
+                                                            value={employee.remarks}
+                                                            onChange={(e) => handleEmployeeDataChange(index, 'remarks', e.target.value)}
+                                                            disabled={!employee.isPresent}
+                                                        />
+                                                    </td>
+                                                </tr>
+                                            ))}
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         )}
 
