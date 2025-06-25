@@ -21,6 +21,8 @@ function Homepage() {
         { label: "Inventory", path: "/inventory" },
         { label: "Accounts", path: "/accounts" },
         { label: "Settings", path: "/settings" },
+        { label: "Vouchers", path: "/vouchers" },
+
         { label: "Help & Support", path: "/help" },
     ];
 
