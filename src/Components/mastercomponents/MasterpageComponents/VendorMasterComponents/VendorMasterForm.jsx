@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import ConfirmModel from "../../../../essentials/ConfirmModel"; // Assuming ConfirmModel.jsx is in the same directory
+import ConfirmResetModal from '../../../../essentials/ConfirmResetModel'; // Import the new ConfirmResetModal
 
 export default function VendorMasterForm() {
     const [formData, setFormData] = useState({
@@ -23,6 +25,9 @@ export default function VendorMasterForm() {
         ifscCode: "",
         notes: "",
     });
+
+    const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
+    const [isResetConfirmModalOpen, setIsResetConfirmModalOpen] = useState(false); // New state for reset confirmation
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -81,6 +86,32 @@ export default function VendorMasterForm() {
             ifscCode: "",
             notes: "",
         });
+        setIsResetConfirmModalOpen(false); // Close the reset confirmation modal after reset
+    };
+
+    const handleDeleteClick = () => {
+        setIsConfirmModalOpen(true);
+    };
+
+    const handleConfirmDelete = () => {
+        console.log("Deleting Vendor:", formData.vendorCode);
+        alert(`Vendor ${formData.vendorCode} has been deleted.`);
+        setIsConfirmModalOpen(false);
+        // Optionally reset form or redirect after deletion
+        handleReset();
+    };
+
+    const handleCancelDelete = () => {
+        setIsConfirmModalOpen(false);
+    };
+
+    // New functions for reset confirmation
+    const handleResetClick = () => {
+        setIsResetConfirmModalOpen(true);
+    };
+
+    const handleCancelReset = () => {
+        setIsResetConfirmModalOpen(false);
     };
 
     return (
@@ -101,9 +132,6 @@ export default function VendorMasterForm() {
             <p className="text-gray-600 mb-6 ml-48">Fill in the vendor details below</p>
             <div className="max-w-6xl mt-10 mx-auto p-6 bg-white rounded-xl shadow-md">
                 <div className="max-w-6xl mx-auto">
-
-                    {/* Back Button and Heading */}
-
 
                     <form onSubmit={handleSubmit}>
                         {/* Basic Information Section */}
@@ -443,8 +471,15 @@ export default function VendorMasterForm() {
                         {/* Form Actions */}
                         <div className="md:col-span-2 flex justify-end gap-4 pt-4 border-t border-gray-200">
                             <button
-                                type="reset"
-                                onClick={handleReset}
+                                type="button"
+                                onClick={handleDeleteClick}
+                                className="px-5 py-2 text-sm font-medium text-white bg-red-600 rounded-md hover:bg-red-700"
+                            >
+                                Delete Vendor
+                            </button>
+                            <button
+                                type="button" // Changed to type="button" to prevent form submission directly
+                                onClick={handleResetClick} // Call the new handler for reset confirmation
                                 className="px-5 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50"
                             >
                                 Reset Form
@@ -459,6 +494,22 @@ export default function VendorMasterForm() {
                     </form>
                 </div>
             </div>
+
+            {/* Delete Confirmation Modal */}
+            <ConfirmModel
+                isOpen={isConfirmModalOpen}
+                title="Confirm Deletion"
+                message={`Are you sure you want to delete vendor "${formData.vendorName}" (${formData.vendorCode})? This action cannot be undone.`}
+                onConfirm={handleConfirmDelete}
+                onCancel={handleCancelDelete}
+            />
+
+            {/* Reset Confirmation Modal */}
+            <ConfirmResetModal
+                isOpen={isResetConfirmModalOpen}
+                onConfirm={handleReset} // Pass handleReset to onConfirm of the reset modal
+                onCancel={handleCancelReset}
+            />
         </div>
     );
 }

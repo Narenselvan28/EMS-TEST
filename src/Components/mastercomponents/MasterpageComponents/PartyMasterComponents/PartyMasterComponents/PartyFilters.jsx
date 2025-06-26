@@ -1,23 +1,32 @@
 import React, { useState } from 'react';
+import ConfirmResetModal from '../../../../../essentials/ConfirmResetModel';
 
 const PartyFilters = ({ onApplyFilters, onResetFilters }) => {
-    const [partyName, setPartyName] = useState(''); // Re-added partyName state
+    const [partyName, setPartyName] = useState('');
     const [status, setStatus] = useState('');
     const [state, setState] = useState('');
     const [district, setDistrict] = useState('');
+    const [showResetModal, setShowResetModal] = useState(false);
 
     const handleApply = () => {
-        // Include partyName when applying filters
         onApplyFilters({ partyName, status, state, district });
     };
 
-    const handleReset = () => {
-        // Reset partyName state
+    const handleResetClick = () => {
+        setShowResetModal(true);
+    };
+
+    const handleConfirmReset = () => {
         setPartyName('');
         setStatus('');
         setState('');
         setDistrict('');
         onResetFilters();
+        setShowResetModal(false);
+    };
+
+    const handleCancelReset = () => {
+        setShowResetModal(false);
     };
 
     return (
@@ -95,12 +104,19 @@ const PartyFilters = ({ onApplyFilters, onResetFilters }) => {
                     Apply
                 </button>
                 <button
-                    onClick={handleReset}
+                    onClick={handleResetClick}
                     className="px-5 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition"
                 >
                     Reset
                 </button>
             </div>
+
+            {/* Confirm Reset Modal */}
+            <ConfirmResetModal
+                isOpen={showResetModal}
+                onConfirm={handleConfirmReset}
+                onCancel={handleCancelReset}
+            />
         </div>
     );
 };

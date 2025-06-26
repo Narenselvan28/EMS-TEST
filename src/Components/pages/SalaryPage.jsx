@@ -22,6 +22,10 @@ import {
     faSave
 } from '@fortawesome/free-solid-svg-icons';
 
+// Import the modal components
+import ConfirmModel from '../../essentials/ConfirmModel'; // Adjust path if necessary
+import ConfirmResetModal from '../../essentials/ConfirmResetModel'; // Adjust path if necessary
+
 // Sample employee data
 const sampleEmployeesData = [
     { code: "EMP001", name: "John Doe", group: "driver", rate: 500, count: 1, remarks: '', isPresent: true },
@@ -49,7 +53,10 @@ const SalaryManagement = () => {
     const [showAdditionalOptions, setShowAdditionalOptions] = useState(false);
 
     // Modal States
-    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isAddEmployeeModalOpen, setIsAddEmployeeModalOpen] = useState(false); // Renamed for clarity
+    const [isResetConfirmModalOpen, setIsResetConfirmModalOpen] = useState(false); // For reset action
+    const [isCancelConfirmModalOpen, setIsCancelConfirmModalOpen] = useState(false); // For cancel action
+
     const [modalSelectedGroup, setModalSelectedGroup] = useState('');
     const [modalSelectedEmployeeCode, setModalSelectedEmployeeCode] = useState('');
     const [filteredModalEmployees, setFilteredModalEmployees] = useState([]);
@@ -213,15 +220,15 @@ const SalaryManagement = () => {
 
     // Add Employee Button Handler (Opens Modal)
     const handleAddEmployeeClick = () => {
-        setIsModalOpen(true);
+        setIsAddEmployeeModalOpen(true);
         setModalSelectedGroup('');
         setModalSelectedEmployeeCode('');
         setFilteredModalEmployees([]);
     };
 
-    // Modal Cancel Button Handler
-    const handleModalCancel = () => {
-        setIsModalOpen(false);
+    // Modal Cancel Button Handler (for Add Employee Modal)
+    const handleAddEmployeeModalCancel = () => {
+        setIsAddEmployeeModalOpen(false);
     };
 
     // Populate employee names in modal based on group selection
@@ -234,7 +241,7 @@ const SalaryManagement = () => {
     }, [modalSelectedGroup]);
 
     // Modal Save Button Handler (Adds New Employee)
-    const handleModalSave = () => {
+    const handleAddEmployeeModalSave = () => {
         if (!modalSelectedEmployeeCode) {
             alert('Please select an employee');
             return;
@@ -280,33 +287,39 @@ const SalaryManagement = () => {
                 setEmployees(prevEmployees => [...prevEmployees, newEmployee]);
             }
 
-            setIsModalOpen(false);
+            setIsAddEmployeeModalOpen(false);
         }
     };
 
-    // Reset Button Handler
+    // Reset Button Handler - Opens the ConfirmResetModal
     const handleReset = () => {
-        if (window.confirm('Are you sure you want to reset all fields?')) {
-            setDate('');
-            setEmployeeCategory('');
-            setEmployeeGroup('');
-            setPartyName('');
-            setTripLocation('');
-            setTotalCountChecked(false);
-            setTotalCountValue('');
-            setRatePerCountValue('');
-            setEmployees([]);
-            setShowEmployeeTable(false);
-            setShowAdditionalOptions(false);
-        }
+        setIsResetConfirmModalOpen(true);
     };
 
-    // Cancel Button Handler
+    const confirmReset = () => {
+        setDate('');
+        setEmployeeCategory('');
+        setEmployeeGroup('');
+        setPartyName('');
+        setTripLocation('');
+        setTotalCountChecked(false);
+        setTotalCountValue('');
+        setRatePerCountValue('');
+        setEmployees([]);
+        setShowEmployeeTable(false);
+        setShowAdditionalOptions(false);
+        setIsResetConfirmModalOpen(false); // Close modal after reset
+    };
+
+    // Cancel Button Handler - Opens the ConfirmModel
     const handleCancel = () => {
-        if (window.confirm('Are you sure you want to cancel? All unsaved changes will be lost.')) {
-            console.log('Cancelled');
-            alert('Operation cancelled.');
-        }
+        setIsCancelConfirmModalOpen(true);
+    };
+
+    const confirmCancel = () => {
+        console.log('Cancelled');
+        alert('Operation cancelled.');
+        setIsCancelConfirmModalOpen(false); // Close modal after confirming cancel
     };
 
     // Save Button Handler
@@ -469,8 +482,8 @@ const SalaryManagement = () => {
                             </div>
                         </div>
                     </div>
-                    
-                    
+
+
                 </div>
                 <div className="flex justify-end mt-5 mb-5 col-span-1 md:col-span-2 lg:col-span-3">
                         <button
@@ -495,7 +508,7 @@ const SalaryManagement = () => {
                         )}
 
                         {/* Employee Table Section with Title */}
-                        {showEmployeeTable && ( 
+                        {showEmployeeTable && (
                             <div className="bg-white p-6 rounded-lg shadow-md mb-6">
                                 <h2 className="text-lg font-semibold text-gray-700 mb-6">Employee Details</h2>
                                 <div className="overflow-x-auto">
@@ -612,13 +625,13 @@ const SalaryManagement = () => {
                     <div className="flex justify-end space-x-4 bg-white p-4 rounded-lg shadow-md">
                         <button
                             className="bg-gray-500 text-white px-4 py-2 rounded-md hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-500"
-                            onClick={handleReset}
+                            onClick={handleReset} // This will now open ConfirmResetModal
                         >
                             <FontAwesomeIcon icon={faUndo} className="mr-2" />Reset
                         </button>
                         <button
                             className="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500"
-                            onClick={handleCancel}
+                            onClick={handleCancel} // This will now open ConfirmModel
                         >
                             <FontAwesomeIcon icon={faTimes} className="mr-2" />Cancel
                         </button>
@@ -632,7 +645,7 @@ const SalaryManagement = () => {
                 )}
 
                 {/* Add Employee Modal */}
-                {isModalOpen && (
+                {isAddEmployeeModalOpen && (
                     <div className="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full flex items-center justify-center z-50">
                         <div className="relative p-5 border w-96 shadow-lg rounded-md bg-white">
                             <div className="mt-3 text-center">
@@ -677,13 +690,13 @@ const SalaryManagement = () => {
                                 <div className="flex justify-center space-x-4 px-4 py-3">
                                     <button
                                         className="bg-gray-300 text-gray-700 px-4 py-2 rounded-md hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-500"
-                                        onClick={handleModalCancel}
+                                        onClick={handleAddEmployeeModalCancel}
                                     >
                                         Cancel
                                     </button>
                                     <button
                                         className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                        onClick={handleModalSave}
+                                        onClick={handleAddEmployeeModalSave}
                                     >
                                         Add Employee
                                     </button>
@@ -692,6 +705,22 @@ const SalaryManagement = () => {
                         </div>
                     </div>
                 )}
+
+                {/* Confirm Reset Modal */}
+                <ConfirmResetModal
+                    isOpen={isResetConfirmModalOpen}
+                    onConfirm={confirmReset}
+                    onCancel={() => setIsResetConfirmModalOpen(false)}
+                />
+
+                {/* Confirm Cancel Modal */}
+                <ConfirmModel
+                    isOpen={isCancelConfirmModalOpen}
+                    title="Confirm Cancellation"
+                    message="Are you sure you want to cancel? All unsaved changes will be lost."
+                    onConfirm={confirmCancel}
+                    onCancel={() => setIsCancelConfirmModalOpen(false)}
+                />
             </div>
         </div>
     );

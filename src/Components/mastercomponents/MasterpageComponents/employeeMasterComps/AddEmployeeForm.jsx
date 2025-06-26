@@ -1,10 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
+import ConfirmModel from "../../../../essentials/ConfirmModel"; // ✅ adjust the path as per your project structure
 
 export default function AddEmployeeForm() {
+  const [showCancelModal, setShowCancelModal] = useState(false);
+
+  const handleCancelConfirm = () => {
+    setShowCancelModal(false);
+    window.history.back(); // go back on confirmation
+  };
+
   return (
     <div className="min-h-screen font-poppins bg-gradient-to-br from-gray-50 to-blue-50 py-10 px-6">
       <div className="max-w-6xl mx-auto">
-
         {/* Back Button and Heading */}
         <div className="flex items-center mb-6">
           <button
@@ -66,6 +73,7 @@ export default function AddEmployeeForm() {
             <div className="col-span-2 flex justify-end mt-8 space-x-4">
               <button
                 type="button"
+                onClick={() => setShowCancelModal(true)}
                 className="px-6 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-100 transition duration-200"
               >
                 Cancel
@@ -84,6 +92,15 @@ export default function AddEmployeeForm() {
         <footer className="text-center text-sm text-gray-500 mt-10">
           © 2025 Websyra. Built with ❤️ by Team Fedora
         </footer>
+
+        {/* Confirm Cancel Modal */}
+        <ConfirmModel
+          isOpen={showCancelModal}
+          title="Cancel Adding Employee?"
+          message="All unsaved changes will be lost. Do you really want to cancel?"
+          onConfirm={handleCancelConfirm}
+          onCancel={() => setShowCancelModal(false)}
+        />
       </div>
     </div>
   );
@@ -131,9 +148,7 @@ function Select({ label, id, options }) {
       >
         <option value="">Select {label.replace("*", "")}</option>
         {options.map((option, i) => (
-          <option key={i} value={option.toLowerCase()}>
-            {option}
-          </option>
+          <option key={i} value={option.toLowerCase()}>{option}</option>
         ))}
       </select>
     </div>

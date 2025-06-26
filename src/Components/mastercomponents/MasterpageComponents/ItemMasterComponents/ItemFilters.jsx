@@ -2,27 +2,33 @@ import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import ConfirmResetModal from '../../../../essentials/ConfirmResetModel';
+
 const ItemFilters = ({
-    search,
-    setSearch,
-    category,
-    setCategory,
-    status,
-    setStatus,
     onApplyFilters,
-    onResetFilters
+    onResetFilters // Keep onResetFilters if it performs actions in the parent
 }) => {
+    // Manage state internally within ItemFilters
+    const [search, setSearch] = useState('');
+    const [category, setCategory] = useState('All');
+    const [status, setStatus] = useState('All');
     const [showConfirm, setShowConfirm] = useState(false);
 
     const handleApply = () => {
+        // Pass the current internal state values to onApplyFilters
         onApplyFilters({ search, category, status });
     };
 
     const handleResetConfirmed = () => {
+        // Reset internal state
         setSearch('');
         setCategory('All');
         setStatus('All');
+        // Call parent's onResetFilters if it exists and needs to do something
         onResetFilters?.();
+        setShowConfirm(false);
+    };
+
+    const handleCancelReset = () => {
         setShowConfirm(false);
     };
 
@@ -110,7 +116,7 @@ const ItemFilters = ({
             <ConfirmResetModal
                 isOpen={showConfirm}
                 onConfirm={handleResetConfirmed}
-                onCancel={() => setShowConfirm(false)}
+                onCancel={handleCancelReset}
             />
         </>
     );

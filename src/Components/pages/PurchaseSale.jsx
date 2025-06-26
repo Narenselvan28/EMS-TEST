@@ -417,238 +417,203 @@ function PurchaseSale() {
         }
         return '';
     };
-    
-        const navigate = useNavigate(); // Call useNavigate inside the component
 
-        function handleBackToHome() { navigate('/');}
+    const navigate = useNavigate(); // Call useNavigate inside the component
 
-
-        return (
-            <div className="hidden md:block space-y-6 p-4">
-                <div className="flex justify-between">  <h1 className='text-4xl ml-5 text-center my-10 font-bold'>Purchase/Sales</h1>
-                    <div className="my-10 flex gap-5 mr-5">   <button className="bg-slate-600 p-2 rounded text-white">Sales Transactions</button>
-                        <button className="bg-indigo-600 p-2 rounded text-white">Purchase Transactions</button></div>
-                </div>
-                <nav className="flex items-center mb-6 text-sm text-gray-600" aria-label="Breadcrumb">
-                    <ol className="inline-flex items-center space-x-1 md:space-x-3">
-
-                        {/* Homepage */}
-                        <li className="flex items-center">
-                            <button
-                                onClick={handleBackToHome}
-                                className="flex items-center text-gray-500 hover:text-indigo-600 transition-colors"
-                            >
-                                {/* Updated Home Icon */}
-                                <svg className="w-4 h-4 mr-1.5" fill="currentColor" viewBox="0 0 20 20">
-                                    <path d="M10.707 1.293a1 1 0 00-1.414 0L2 8.586V17a1 1 0 001 1h5a1 1 0 001-1v-4h2v4a1 1 0 001 1h5a1 1 0 001-1V8.586l-7.293-7.293z" />
-                                </svg>
-                                Dashboard
-                            </button>
-                        </li>
-
-                        {/* Arrow */}
-                        <li>
-                            <svg className="w-3 h-3 text-gray-400 mx-1" fill="none" viewBox="0 0 6 10">
-                                <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M1 9l4-4-4-4" />
-                            </svg>
-                        </li>
-
-                        {/* Intermediate Page */}
+    function handleBackToHome() { navigate('/'); }
 
 
-                        {/* Arrow */}
-
-                        {/* Current Page */}
-                        <li aria-current="page">
-                            <span className="text-gray-700 font-medium">Purchase & Sales</span>
-                        </li>
-                    </ol>
-                </nav>
+    return (
+        <div className="hidden md:block space-y-6 p-4">
+            <div className="flex justify-between">  <h1 className='text-4xl ml-5 text-center my-10 font-bold'>Purchase/Sales</h1>
+                <div className="my-10 flex gap-5 mr-5">  </div>
+            </div>
 
 
-                <Orderinfo
-                    formData={formData}
-                    onFormChange={handleFormChange}
-                    errors={errors} // Pass errors to Orderinfo
-                />
 
-                <div className="flex items-center space-x-3 bg-white  w-48 p-3 rounded-xl mx-5">
-                    <label className="relative inline-flex items-center cursor-pointer">
-                        <input
-                            type="checkbox"
-                            checked={showGST}
-                            onChange={handleGSTToggle}
-                            className="sr-only peer"
-                        />
-                        <div className="w-11 h-6 bg-gray-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-indigo-700"></div>
-                        <span className="ml-3 text-sm font-medium text-gray-900">
-                            {showGST ? 'With GST' : 'Without GST'}
-                        </span>
-                    </label>
-                </div>
+            <Orderinfo
+                formData={formData}
+                onFormChange={handleFormChange}
+                errors={errors} // Pass errors to Orderinfo
+            />
 
-                {showGST ?
-                    <Tablegst
-                        items={items}
-                        onUpdateItem={updateItem}
-                        onDeleteRow={deleteRow}
-                        errors={errors} // Pass errors to Tablegst
-                    /> :
-                    <Tablenogst
-                        items={items}
-                        onUpdateItem={updateItem}
-                        onDeleteRow={deleteRow}
-                        errors={errors} // Pass errors to Tablenogst
-                    />}
+            <div className="flex items-center space-x-3 bg-white  w-48 p-3 rounded-xl mx-5">
+                <label className="relative inline-flex items-center cursor-pointer">
+                    <input
+                        type="checkbox"
+                        checked={showGST}
+                        onChange={handleGSTToggle}
+                        className="sr-only peer"
+                    />
+                    <div className="w-11 h-6 bg-gray-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-indigo-700"></div>
+                    <span className="ml-3 text-sm font-medium text-gray-900">
+                        {showGST ? 'With GST' : 'Without GST'}
+                    </span>
+                </label>
+            </div>
 
-                <div className="p-4 flex justify-center">
-                    {errors.items && <p className="text-red-500 text-sm mt-1">{errors.items}</p>}
-                </div>
-
-                <SundrySection
-                    sundryEntries={sundryEntries}
-                    onEntriesChange={handleSundryEntriesChange}
-                    errors={errors} // Pass errors to SundrySection
-                />
-
-                {/* Display general form errors if any */}
-                {Object.keys(errors).length > 0 && (
-                    <div className="m-5 p-4 bg-red-100 border border-red-400 text-red-700 rounded-lg" role="alert">
-                        <p className="font-bold">Please fix the following issues:</p>
-                        <ul className="list-disc list-inside mt-2">
-                            {Object.entries(errors).map(([key, message]) => (
-                                // Filter out specific item/sundry errors if you prefer to show them inline
-                                // or just list all of them here for a general overview
-                                <li key={key}>{message}</li>
-                            ))}
-                        </ul>
-                    </div>
-                )}
-
-                <SummaryAndActions
+            {showGST ?
+                <Tablegst
                     items={items}
-                    sundryEntries={sundryEntries}
-                    showGST={showGST}
-                    onSave={handleSaveBill} // Now uses the validated save handler
-                    onReset={handleReset}
-                    onSaveReference={addReferenceItem} // Now uses the validated save reference handler
-                />
+                    onUpdateItem={updateItem}
+                    onDeleteRow={deleteRow}
+                    errors={errors} // Pass errors to Tablegst
+                /> :
+                <Tablenogst
+                    items={items}
+                    onUpdateItem={updateItem}
+                    onDeleteRow={deleteRow}
+                    errors={errors} // Pass errors to Tablenogst
+                />}
 
-                {/* Reference Items Table Section */}
-                <div className="mb-6 bg-white rounded-2xl m-5 glass-card p-6 rounded-xl transition-all hover:glow">
-                    <h2 className="text-2xl font-semibold mb-6 gradient-text">Reference Items with Sundry Details</h2>
+            <div className="p-4 flex justify-center">
+                {errors.items && <p className="text-red-500 text-sm mt-1">{errors.items}</p>}
+            </div>
 
-                    {/* Filter/Search Controls for Reference Table */}
-                    <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
-                        <div>
-                            <label htmlFor="refOrderType" className="block mb-2 font-medium text-secondary">Order Type</label>
-                            <select
-                                className="glass-panel border border-slate-200 p-3 rounded-lg w-full text-base focus:ring-2 focus:ring-indigo-700"
-                                id="refOrderType">
-                                <option value="">- All -</option>
-                                <option value="purchase">Purchase</option>
-                                <option value="sale">Sale</option>
-                            </select>
-                        </div>
+            <SundrySection
+                sundryEntries={sundryEntries}
+                onEntriesChange={handleSundryEntriesChange}
+                errors={errors} // Pass errors to SundrySection
+            />
 
-                        <div>
-                            <label htmlFor="refPartyName" className="block mb-2 font-medium text-secondary">Party Name</label>
-                            <select
-                                className="glass-panel border border-slate-200 p-3 rounded-lg w-full text-base focus:ring-2 focus:ring-indigo-700"
-                                id="refPartyName">
-                                <option value="">- All -</option>
-                                <option>Ems Cocos</option>
-                                <option>APA Rasu</option>
-                                <option>Anand SOK</option>
-                                {/* Add more party names dynamically if needed */}
-                            </select>
-                        </div>
+            {/* Display general form errors if any */}
+            {Object.keys(errors).length > 0 && (
+                <div className="m-5 p-4 bg-red-100 border border-red-400 text-red-700 rounded-lg" role="alert">
+                    <p className="font-bold">Please fix the following issues:</p>
+                    <ul className="list-disc list-inside mt-2">
+                        {Object.entries(errors).map(([key, message]) => (
+                            // Filter out specific item/sundry errors if you prefer to show them inline
+                            // or just list all of them here for a general overview
+                            <li key={key}>{message}</li>
+                        ))}
+                    </ul>
+                </div>
+            )}
 
-                        <div>
-                            <label htmlFor="refStatus" className="block mb-2 font-medium text-secondary">Status</label>
-                            <select
-                                className="glass-panel border border-slate-200 p-3 rounded-lg w-full text-base focus:ring-2 focus:ring-indigo-700"
-                                id="refStatus">
-                                <option value="">- All -</option>
-                                <option value="pending">Pending</option>
-                                <option value="approved">Approved</option>
-                                <option value="rejected">Rejected</option>
-                            </select>
-                        </div>
-                        <div className="flex items-end">
-                            <button
-                                className="btn-primary px-6 py-3 bg-indigo-700 text-white font-bold rounded-lg text-base w-full glow transition-all">
-                                <i className="fas fa-search mr-2"></i> Search
-                            </button>
-                        </div>
+            <SummaryAndActions
+                items={items}
+                sundryEntries={sundryEntries}
+                showGST={showGST}
+                onSave={handleSaveBill} // Now uses the validated save handler
+                onReset={handleReset}
+                onSaveReference={addReferenceItem} // Now uses the validated save reference handler
+            />
+
+            {/* Reference Items Table Section */}
+            <div className="mb-6 bg-white rounded-2xl m-5 glass-card p-6 rounded-xl transition-all hover:glow">
+                <h2 className="text-2xl font-semibold mb-6 gradient-text">Reference Items with Sundry Details</h2>
+
+                {/* Filter/Search Controls for Reference Table */}
+                <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+                    <div>
+                        <label htmlFor="refOrderType" className="block mb-2 font-medium text-secondary">Order Type</label>
+                        <select
+                            className="glass-panel border border-slate-200 p-3 rounded-lg w-full text-base focus:ring-2 focus:ring-indigo-700"
+                            id="refOrderType">
+                            <option value="">- All -</option>
+                            <option value="purchase">Purchase</option>
+                            <option value="sale">Sale</option>
+                        </select>
                     </div>
 
-                    {/* Reference Items Display Table */}
-                    <div className="overflow-x-auto rounded-lg">
-                        <table className="table-auto border border-indigo-700 border-collapse w-full text-sm" id="referenceTable">
-                            <thead className="bg-indigo-700 text-white ">
-                                <tr className="table-header rounded-lg">
-                                    <th className="border  border-indigo-200 px-4 py-3 rounded-tl-lg cursor-pointer" onClick={() => requestSort('refNo')}>
-                                        Ref No.{getSortIndicator('refNo')}
-                                    </th>
-                                    <th className="border  border-indigo-200 px-4 py-3 cursor-pointer" onClick={() => requestSort('date')}>
-                                        Date{getSortIndicator('date')}
-                                    </th>
-                                    <th className=" px-4 border border-indigo-200 py-3 cursor-pointer" onClick={() => requestSort('party')}>
-                                        Party{getSortIndicator('party')}
-                                    </th>
-                                    <th className="  px-4 border border-indigo-200 py-3 cursor-pointer" onClick={() => requestSort('itemName')}>
-                                        Item Name{getSortIndicator('itemName')}
-                                    </th>
-                                    <th className=" px-4 border border-indigo-200 py-3 cursor-pointer" onClick={() => requestSort('amount')}>
-                                        Amount{getSortIndicator('amount')}
-                                    </th>
-                                    <th className=" px-4 border border-indigo-200 py-3 cursor-pointer" onClick={() => requestSort('type')}>
-                                        Type{getSortIndicator('type')}
-                                    </th>
-                                    <th className=" px-4 border border-indigo-200 py-3 cursor-pointer" onClick={() => requestSort('status')}>
-                                        Status{getSortIndicator('status')}
-                                    </th>
-                                    <th className=" px-4 border border-indigo-200 py-3 rounded-tr-lg">Actions</th>
+                    <div>
+                        <label htmlFor="refPartyName" className="block mb-2 font-medium text-secondary">Party Name</label>
+                        <select
+                            className="glass-panel border border-slate-200 p-3 rounded-lg w-full text-base focus:ring-2 focus:ring-indigo-700"
+                            id="refPartyName">
+                            <option value="">- All -</option>
+                            <option>Ems Cocos</option>
+                            <option>APA Rasu</option>
+                            <option>Anand SOK</option>
+                            {/* Add more party names dynamically if needed */}
+                        </select>
+                    </div>
+
+                    <div>
+                        <label htmlFor="refStatus" className="block mb-2 font-medium text-secondary">Status</label>
+                        <select
+                            className="glass-panel border border-slate-200 p-3 rounded-lg w-full text-base focus:ring-2 focus:ring-indigo-700"
+                            id="refStatus">
+                            <option value="">- All -</option>
+                            <option value="pending">Pending</option>
+                            <option value="approved">Approved</option>
+                            <option value="rejected">Rejected</option>
+                        </select>
+                    </div>
+                    <div className="flex items-end">
+                        <button
+                            className="btn-primary px-6 py-3 bg-indigo-700 text-white font-bold rounded-lg text-base w-full glow transition-all">
+                            <i className="fas fa-search mr-2"></i> Search
+                        </button>
+                    </div>
+                </div>
+
+                {/* Reference Items Display Table */}
+                <div className="overflow-x-auto rounded-lg">
+                    <table className="table-auto border border-indigo-700 border-collapse w-full text-sm" id="referenceTable">
+                        <thead className="bg-indigo-700 text-white ">
+                            <tr className="table-header rounded-lg">
+                                <th className="border  border-indigo-200 px-4 py-3 rounded-tl-lg cursor-pointer" onClick={() => requestSort('refNo')}>
+                                    Ref No.{getSortIndicator('refNo')}
+                                </th>
+                                <th className="border  border-indigo-200 px-4 py-3 cursor-pointer" onClick={() => requestSort('date')}>
+                                    Date{getSortIndicator('date')}
+                                </th>
+                                <th className=" px-4 border border-indigo-200 py-3 cursor-pointer" onClick={() => requestSort('party')}>
+                                    Party{getSortIndicator('party')}
+                                </th>
+                                <th className="  px-4 border border-indigo-200 py-3 cursor-pointer" onClick={() => requestSort('itemName')}>
+                                    Item Name{getSortIndicator('itemName')}
+                                </th>
+                                <th className=" px-4 border border-indigo-200 py-3 cursor-pointer" onClick={() => requestSort('amount')}>
+                                    Amount{getSortIndicator('amount')}
+                                </th>
+                                <th className=" px-4 border border-indigo-200 py-3 cursor-pointer" onClick={() => requestSort('type')}>
+                                    Type{getSortIndicator('type')}
+                                </th>
+                                <th className=" px-4 border border-indigo-200 py-3 cursor-pointer" onClick={() => requestSort('status')}>
+                                    Status{getSortIndicator('status')}
+                                </th>
+                                <th className=" px-4 border border-indigo-200 py-3 rounded-tr-lg">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="referenceTableBody">
+                            {/* Render reference items */}
+                            {sortedReferenceItems.map((refItem, index) => (
+                                <tr key={index} className="table-row">
+                                    <td className=" border border-indigo-500 border-slate-100 px-4 py-2">{refItem.refNo}</td>
+                                    <td className=" px-4 border border-indigo-200 py-2">{refItem.date}</td>
+                                    <td className=" px-4 border border-indigo-200 py-2">{refItem.party}</td>
+                                    <td className=" px-4 border border-indigo-200 py-2">{refItem.itemName}</td>
+                                    <td className=" px-4 border border-indigo-200 py-2">₹{parseFloat(refItem.amount).toFixed(2)}</td>
+                                    <td className=" px-4 border border-indigo-200 py-2">{refItem.type}</td>
+                                    <td className=" px-4 border border-indigo-200 py-2">
+                                        <span className={`px-3 py-1 rounded-full text-xs font-medium ${refItem.status === 'Approved' ? 'badge-approved' :
+                                            refItem.status === 'Pending' ? 'badge-pending' :
+                                                'badge-rejected'
+                                            }`}>{refItem.status}</span>
+                                    </td>
+                                    <td className="border border-slate-100 px-4 py-2">
+                                        <button className="btn-primary px-3 py-1 rounded text-xs mr-1">
+                                            <i className="fas fa-eye"></i>
+                                        </button>
+                                        <button className="btn-secondary px-3 py-1 rounded text-xs">
+                                            <i className="fas fa-copy"></i>
+                                        </button>
+                                    </td>
                                 </tr>
-                            </thead>
-                            <tbody id="referenceTableBody">
-                                {/* Render reference items */}
-                                {sortedReferenceItems.map((refItem, index) => (
-                                    <tr key={index} className="table-row">
-                                        <td className=" border border-indigo-500 border-slate-100 px-4 py-2">{refItem.refNo}</td>
-                                        <td className=" px-4 border border-indigo-200 py-2">{refItem.date}</td>
-                                        <td className=" px-4 border border-indigo-200 py-2">{refItem.party}</td>
-                                        <td className=" px-4 border border-indigo-200 py-2">{refItem.itemName}</td>
-                                        <td className=" px-4 border border-indigo-200 py-2">₹{parseFloat(refItem.amount).toFixed(2)}</td>
-                                        <td className=" px-4 border border-indigo-200 py-2">{refItem.type}</td>
-                                        <td className=" px-4 border border-indigo-200 py-2">
-                                            <span className={`px-3 py-1 rounded-full text-xs font-medium ${refItem.status === 'Approved' ? 'badge-approved' :
-                                                refItem.status === 'Pending' ? 'badge-pending' :
-                                                    'badge-rejected'
-                                                }`}>{refItem.status}</span>
-                                        </td>
-                                        <td className="border border-slate-100 px-4 py-2">
-                                            <button className="btn-primary px-3 py-1 rounded text-xs mr-1">
-                                                <i className="fas fa-eye"></i>
-                                            </button>
-                                            <button className="btn-secondary px-3 py-1 rounded text-xs">
-                                                <i className="fas fa-copy"></i>
-                                            </button>
-                                        </td>
-                                    </tr>
-                                ))}
-                                {referenceItems.length === 0 && (
-                                    <tr>
-                                        <td colSpan="8" className="text-center text-gray-400 py-4">No reference items added yet.</td>
-                                    </tr>
-                                )}
-                            </tbody>
-                        </table>
-                    </div>
+                            ))}
+                            {referenceItems.length === 0 && (
+                                <tr>
+                                    <td colSpan="8" className="text-center text-gray-400 py-4">No reference items added yet.</td>
+                                </tr>
+                            )}
+                        </tbody>
+                    </table>
                 </div>
             </div>
-        );
-    }
+        </div>
+    );
+}
 
-    export default PurchaseSale;
+export default PurchaseSale;

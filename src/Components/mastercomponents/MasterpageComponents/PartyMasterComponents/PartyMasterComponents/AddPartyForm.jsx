@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import ConfirmModel from '../../../../../essentials/ConfirmModel'; // Adjust path if necessary
 
 const AddPartyForm = () => {
     const [sameAsBilling, setSameAsBilling] = useState(false);
@@ -21,6 +22,9 @@ const AddPartyForm = () => {
         pin: ''
     });
 
+    // State for the confirmation modal
+    const [showCancelConfirm, setShowCancelConfirm] = useState(false);
+
     const handleBillingChange = (e) => {
         const { name, value } = e.target;
         setBillingAddress({ ...billingAddress, [name]: value });
@@ -36,6 +40,26 @@ const AddPartyForm = () => {
         setSameAsBilling(newValue);
         if (newValue) setShippingAddress(billingAddress);
     };
+
+    // --- Modal Handler Functions ---
+
+    const handleConfirmCancel = () => {
+        // Logic to execute when "Confirm" is clicked in the modal
+        console.log("Party creation cancelled!");
+        window.history.back(); // Example: navigate back to previous page
+        setShowCancelConfirm(false); // Close the modal
+    };
+
+    const handleCloseCancelModal = () => {
+        // Logic to execute when "Cancel" is clicked in the modal or modal is dismissed
+        setShowCancelConfirm(false); // Simply close the modal
+    };
+
+    const openCancelConfirmModal = () => {
+        setShowCancelConfirm(true); // Open the confirmation modal
+    };
+
+    // --- End Modal Handler Functions ---
 
     return (
         <div className="max-w-7xl mx-auto px-4 py-6">
@@ -140,7 +164,7 @@ const AddPartyForm = () => {
                                     onChange={handleShippingChange}
                                     className="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary"
                                     required
-                                    disabled={sameAsBilling}
+                                    disabled={sameAsBilling} // Disable inputs if sameAsBilling is checked
                                 />
                             </div>
                         ))}
@@ -149,7 +173,11 @@ const AddPartyForm = () => {
 
                 {/* Form Actions */}
                 <div className="flex justify-end space-x-3">
-                    <button type="button" className="bg-white border border-gray-300 text-gray-700 px-4 py-2 rounded hover:bg-gray-50">
+                    <button
+                        type="button"
+                        onClick={openCancelConfirmModal} // Attach the function to show the modal
+                        className="bg-white border border-gray-300 text-gray-700 px-4 py-2 rounded hover:bg-gray-50"
+                    >
                         Cancel
                     </button>
                     <button type="submit" className="bg-primary text-white px-6 py-2 rounded hover:bg-secondary">
@@ -157,6 +185,15 @@ const AddPartyForm = () => {
                     </button>
                 </div>
             </form>
+
+            {/* Confirmation Modal for Cancel */}
+            <ConfirmModel
+                isOpen={showCancelConfirm}
+                title="Confirm Cancellation"
+                message="Are you sure you want to cancel? Any unsaved changes will be lost."
+                onConfirm={handleConfirmCancel}
+                onCancel={handleCloseCancelModal}
+            />
         </div>
     );
 };

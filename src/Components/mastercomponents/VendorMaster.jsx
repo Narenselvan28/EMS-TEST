@@ -1,8 +1,10 @@
-import React, { use, useState } from 'react';
+import React, { useState } from 'react';
 import Filters from './MasterpageComponents/VendorMasterComponents/Filters';
 import VendorTable from './MasterpageComponents/VendorMasterComponents/VendorTable';
 import ItemPagination from './MasterpageComponents/ItemMasterComponents/ItemPagination';
+import ConfirmResetModal from '../../essentials/ConfirmResetModel';
 import { useNavigate } from 'react-router-dom';
+
 const vendorData = [
     {
         code: 'VND-1001',
@@ -51,21 +53,46 @@ const vendorData = [
     }
 ];
 
-
 function VendorMaster() {
     const [currentPage, setCurrentPage] = useState(1);
+    const [searchTerm, setSearchTerm] = useState('');
+    const [categoryFilter, setCategoryFilter] = useState('');
+    const [statusFilter, setStatusFilter] = useState('');
+    const [showResetModal, setShowResetModal] = useState(false);
+    const navigate = useNavigate();
     const itemsPerPage = 3;
 
-    const filteredItems = vendorData; // can add search/filter later
+    const Handleaddvendor = () => {
+        navigate('/masters/vendor/addvendor');
+    };
+
+    const handleResetClick = () => {
+        setShowResetModal(true);
+    };
+
+    const handleConfirmReset = () => {
+        setSearchTerm('');
+        setCategoryFilter('');
+        setStatusFilter('');
+        setCurrentPage(1);
+        setShowResetModal(false);
+    };
+
+    const handleCancelReset = () => {
+        setShowResetModal(false);
+    };
+
+    const filteredItems = vendorData.filter((vendor) =>
+        vendor.name.toLowerCase().includes(searchTerm.toLowerCase()) &&
+        (categoryFilter ? vendor.category === categoryFilter : true) &&
+        (statusFilter ? vendor.status === statusFilter : true)
+    );
+
     const totalPages = Math.ceil(filteredItems.length / itemsPerPage);
     const currentItems = filteredItems.slice(
         (currentPage - 1) * itemsPerPage,
         currentPage * itemsPerPage
     );
-    const navigate = useNavigate()
-    function Handleaddvendor(){
-        navigate('/masters/vendor/addvendor')
-    }
 
     return (
         <div className="min-h-screen bg-gray-50 px-10 pt-6">
@@ -73,13 +100,12 @@ function VendorMaster() {
             <div className="mb-6">
                 <div className="flex justify-between items-center mb-4">
                     <h2 className="text-3xl font-bold text-dark">Vendor Master</h2>
-                    <a
-                    onClick={Handleaddvendor}
-                        href="/vendor-add"
+                    <button
+                        onClick={Handleaddvendor}
                         className="px-4 py-2 bg-indigo-600 text-white hover:bg-indigo-700 rounded-md"
                     >
                         + Add New Vendor
-                    </a>
+                    </button>
                 </div>
 
                 {/* Breadcrumb */}
@@ -104,7 +130,15 @@ function VendorMaster() {
             </div>
 
             {/* Filters */}
-            <Filters />
+            <Filters
+                search={searchTerm}
+                setSearch={setSearchTerm}
+                category={categoryFilter}
+                setCategory={setCategoryFilter}
+                status={statusFilter}
+                setStatus={setStatusFilter}
+                onResetFilters={handleResetClick}
+            />
 
             {/* Vendor Table */}
             <VendorTable vendors={currentItems} />
@@ -116,6 +150,13 @@ function VendorMaster() {
                 onPageChange={setCurrentPage}
                 filteredItems={filteredItems}
                 itemsPerPage={itemsPerPage}
+            />
+
+            {/* Confirm Reset Modal */}
+            <ConfirmResetModal
+                isOpen={showResetModal}
+                onConfirm={handleConfirmReset}
+                onCancel={handleCancelReset}
             />
         </div>
     );

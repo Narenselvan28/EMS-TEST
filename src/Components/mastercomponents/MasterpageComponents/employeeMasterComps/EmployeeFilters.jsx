@@ -1,6 +1,7 @@
 // src/Components/mastercomponents/MasterpageComponents/employeeMasterComps/EmployeeFilters.jsx
 
-import React from 'react';
+import React, { useState } from 'react';
+import ConfirmResetModal from '../../../../essentials/ConfirmResetModel';
 
 const EmployeeFilters = ({
   search,
@@ -14,6 +15,8 @@ const EmployeeFilters = ({
   onApplyFilters,
   onResetFilters
 }) => {
+  const [showModal, setShowModal] = useState(false);
+
   const handleApply = () => {
     onApplyFilters({ search, department, role, status });
   };
@@ -23,7 +26,8 @@ const EmployeeFilters = ({
     setDepartment('All');
     setRole('All');
     setStatus('All');
-    onResetFilters?.(); // Optional chaining in case it's undefined
+    onResetFilters?.(); // Optional chaining
+    setShowModal(false); // Close modal after reset
   };
 
   return (
@@ -95,12 +99,19 @@ const EmployeeFilters = ({
           Apply
         </button>
         <button
-          onClick={handleReset}
+          onClick={() => setShowModal(true)}
           className="px-5 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition"
         >
           Reset
         </button>
       </div>
+
+      {/* Confirm Reset Modal */}
+      <ConfirmResetModal
+        isOpen={showModal}
+        onConfirm={handleReset}
+        onCancel={() => setShowModal(false)}
+      />
     </div>
   );
 };

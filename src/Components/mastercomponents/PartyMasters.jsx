@@ -4,9 +4,7 @@ import PartyFilters from './MasterpageComponents/PartyMasterComponents/PartyMast
 import Pagination from '../../essentials/pagination4all';
 
 const PartyMasterPage = () => {
-    const [currentPage, setCurrentPage] = useState(1);
-    const itemsPerPage = 5;
-    const parties = [
+    const allParties = [
         {
             partyId: 'PTY-1001',
             partyName: 'ABC Textiles',
@@ -14,6 +12,7 @@ const PartyMasterPage = () => {
             contact: '9876543210',
             gstNo: '33ABCDE1234F1Z5',
             state: 'Tamil Nadu',
+            district: 'Coimbatore',
             status: 'Active',
         },
         {
@@ -23,6 +22,7 @@ const PartyMasterPage = () => {
             contact: '8765432109',
             gstNo: '24XYZW65678H910',
             state: 'Gujarat',
+            district: 'Ahmedabad',
             status: 'Active',
         },
         {
@@ -32,6 +32,7 @@ const PartyMasterPage = () => {
             contact: '7654321098',
             gstNo: '29PQRS3456E7F8',
             state: 'Punjab',
+            district: 'Ludhiana',
             status: 'Inactive',
         },
         {
@@ -41,6 +42,7 @@ const PartyMasterPage = () => {
             contact: '6543210987',
             gstNo: '32LMNOP7890Q1R2',
             state: 'Maharashtra',
+            district: 'Mumbai',
             status: 'Active',
         },
         {
@@ -50,13 +52,44 @@ const PartyMasterPage = () => {
             contact: '5432109876',
             gstNo: '07DEFGH2345I6J7',
             state: 'Delhi',
+            district: 'Central',
             status: 'Active',
         },
     ];
 
-    const totalPages = Math.ceil(parties.length / itemsPerPage);
+    const [filters, setFilters] = useState({
+        partyName: '',
+        status: '',
+        state: '',
+        district: '',
+    });
+
+    const [currentPage, setCurrentPage] = useState(1);
+    const itemsPerPage = 5;
+
+    // Moved above JSX call
+    const handleReset = () => {
+        setFilters({ partyName: '', status: '', state: '', district: '' });
+        setCurrentPage(1);
+    };
+
+    const applyFilters = (newFilters) => {
+        setFilters(newFilters);
+        setCurrentPage(1);
+    };
+
+    const filteredParties = allParties.filter((party) => {
+        return (
+            (!filters.partyName || party.partyName.toLowerCase().includes(filters.partyName.toLowerCase())) &&
+            (!filters.status || party.status === filters.status) &&
+            (!filters.state || party.state === filters.state) &&
+            (!filters.district || party.district === filters.district)
+        );
+    });
+
+    const totalPages = Math.ceil(filteredParties.length / itemsPerPage);
     const startIndex = (currentPage - 1) * itemsPerPage;
-    const paginatedParties = parties.slice(startIndex, startIndex + itemsPerPage);
+    const paginatedParties = filteredParties.slice(startIndex, startIndex + itemsPerPage);
 
     const getStatusStyle = (status) => {
         return status === 'Active'
@@ -67,8 +100,7 @@ const PartyMasterPage = () => {
     return (
         <div className="min-h-screen px-8 py-6 space-y-6 bg-gray-50">
             <Header />
-          
-            <PartyFilters />
+            <PartyFilters onApplyFilters={applyFilters} onResetFilters={handleReset} />
 
             <div className="overflow-x-auto bg-white shadow-md rounded-lg">
                 <table className="min-w-full divide-y divide-gray-200">

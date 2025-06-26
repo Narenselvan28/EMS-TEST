@@ -1,9 +1,9 @@
 // components/Filters.jsx
 import React from 'react';
 
-function Filters() {
+function Filters({ search, setSearch, category, setCategory, status, setStatus, onResetFilters }) {
     return (
-        <div className="bg-white shadow rounded-lg mt-10     p-4 mb-6">
+        <div className="bg-white shadow rounded-lg mt-10 p-4 mb-6">
             <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
                 {/* Search Input */}
                 <div>
@@ -14,6 +14,8 @@ function Filters() {
                             id="search"
                             name="search"
                             placeholder="Search vendors..."
+                            value={search}
+                            onChange={(e) => setSearch(e.target.value)}
                             className="w-full border border-gray-300 rounded-md pl-10 pr-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
                         />
                         <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -24,37 +26,22 @@ function Filters() {
                     </div>
                 </div>
 
-                {/* State Filter */}
-                <div>
-                    <label htmlFor="state" className="block text-sm font-medium text-gray-700 mb-1">State</label>
-                    <select
-                        id="state"
-                        name="state"
-                        className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
-                    >
-                        <option value="">All States</option>
-                        <option value="Tamil Nadu">Tamil Nadu</option>
-                        <option value="Kerala">Kerala</option>
-                        <option value="Karnataka">Karnataka</option>
-                        <option value="Andhra Pradesh">Andhra Pradesh</option>
-                    </select>
-                </div>
-
                 {/* Category Filter */}
                 <div>
                     <label htmlFor="category" className="block text-sm font-medium text-gray-700 mb-1">Category</label>
                     <select
                         id="category"
                         name="category"
+                        value={category}
+                        onChange={(e) => setCategory(e.target.value)}
                         className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
                     >
                         <option value="">All Categories</option>
-                        <option value="fuel">Fuel</option>
-                        <option value="service_maintenance">Service Maintenance</option>
-                        <option value="etc">Etc.</option>
-                        <option value="raw_materials">Raw Materials</option>
-                        <option value="finished_goods">Finished Goods</option>
-                        <option value="services_logistics">Logistics Services</option>
+                        <option value="Raw Materials">Raw Materials</option>
+                        <option value="Logistics Services">Logistics Services</option>
+                        <option value="Maintenance Services">Maintenance Services</option>
+                        <option value="IT Equipment">IT Equipment</option>
+                        <option value="Office Supplies">Office Supplies</option>
                     </select>
                 </div>
 
@@ -64,32 +51,46 @@ function Filters() {
                     <select
                         id="status"
                         name="status"
+                        value={status}
+                        onChange={(e) => setStatus(e.target.value)}
                         className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
                     >
                         <option value="">All Statuses</option>
                         <option value="active">Active</option>
-                        <option value="inactive">Inactive</option>
                         <option value="on_hold">On Hold</option>
                         <option value="blacklisted">Blacklisted</option>
+                    </select>
+                </div>
+
+                {/* Optional Extra Filter */}
+                <div>
+                    <label htmlFor="dummy" className="block text-sm font-medium text-gray-700 mb-1">State</label>
+                    <select
+                        id="dummy"
+                        name="dummy"
+                        className="w-full border border-gray-300 rounded-md px-3 py-2"
+                        disabled
+                    >
+                        <option value="">-- Not Used --</option>
                     </select>
                 </div>
             </div>
 
             {/* Filter Buttons */}
-            <div className="mt-4 flex justify-end gap-2 ">
+            <div className="mt-4 flex justify-end gap-2">
                 <button
+                    type="button"
                     className="px-5 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition flex items-center"
                 >
-                    <span>Apply </span>
+                    <span>Apply</span>
                 </button>
                 <button
-
+                    type="button"
+                    onClick={onResetFilters}
                     className="px-5 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition flex items-center"
                 >
                     <span>Reset</span>
                 </button>
-
-
             </div>
         </div>
     );

@@ -1,7 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
 
-
-
 import VoucherDetailsSection from '../VoucherComponents/VoucherDetailsSection';
 import SalaryDetailsSection from '../VoucherComponents/SalaryDetailsSection';
 import AdvanceByGroupSection from '../VoucherComponents/AdvanceByGroupSection';
@@ -9,7 +7,7 @@ import AdvanceByIndividualSection from '../VoucherComponents/AdvancebyIndividual
 import PartyDetailsSection from '../VoucherComponents/PartyDetailsSection';
 import VendorDetailsSection from '../VoucherComponents/VendorDetailsSection';
 import GeneralVoucherSection from '../VoucherComponents/GeneralVoucherSection';
-
+import ConfirmResetModal from '../../essentials/ConfirmResetModel';
 const Vouchers = () => {
     // State for Voucher Details
     const [voucherDate, setVoucherDate] = useState(new Date().toISOString().slice(0, 10));
@@ -63,6 +61,9 @@ const Vouchers = () => {
     const [vendorAmount, setVendorAmount] = useState('');
     const [vendorRemarks, setVendorRemarks] = useState('');
     const [tripsheetEntries, setTripsheetEntries] = useState([]);
+
+    // State for Reset Confirmation Modal
+    const [isResetModalOpen, setIsResetModalOpen] = useState(false);
 
     const payoutCategories = [
         { value: 'salary', text: 'Salary' },
@@ -207,7 +208,7 @@ const Vouchers = () => {
         alert('Voucher Saved Successfully! Check console for data.');
     };
 
-    const resetForm = () => {
+    const performReset = () => { // Renamed original resetForm to performReset
         setVoucherDate(new Date().toISOString().slice(0, 10));
         setVoucherType('');
         setVoucherCategory('');
@@ -253,6 +254,21 @@ const Vouchers = () => {
         setVendorRemarks('');
         setTripsheetEntries([]);
     };
+
+    // Functions to handle reset modal interactions
+    const handleResetClick = () => {
+        setIsResetModalOpen(true);
+    };
+
+    const handleResetConfirm = () => {
+        performReset();
+        setIsResetModalOpen(false);
+    };
+
+    const handleResetCancel = () => {
+        setIsResetModalOpen(false);
+    };
+
 
     // This useEffect handles the Enter key functionality for form navigation
     useEffect(() => {
@@ -606,11 +622,18 @@ const Vouchers = () => {
                     <button onClick={saveVoucher} className="btn-primary px-8 py-4 rounded-xl text-base font-medium">
                         <i className="fas fa-save mr-2"></i> Save Voucher
                     </button>
-                    <button onClick={resetForm} className="btn-danger px-8 py-4 rounded-xl text-base font-medium">
+                    <button onClick={handleResetClick} className="btn-danger px-8 py-4 rounded-xl text-base font-medium"> { /* Modified onClick to open modal */}
                         <i className="fas fa-redo mr-2"></i> Reset Form
                     </button>
                 </div>
             </div>
+
+            {/* Confirm Reset Modal */}
+            <ConfirmResetModal
+                isOpen={isResetModalOpen}
+                onConfirm={handleResetConfirm}
+                onCancel={handleResetCancel}
+            />
         </div>
     );
 };
