@@ -8,52 +8,52 @@ const PartyMasterPage = () => {
         {
             partyId: 'PTY-1001',
             partyName: 'ABC Textiles',
-            contactPerson: 'Ramesh Kumar',
             contact: '9876543210',
             gstNo: '33ABCDE1234F1Z5',
             state: 'Tamil Nadu',
             district: 'Coimbatore',
             status: 'Active',
+            balance: 15000 // Positive = Debit (you owe them), Negative = Credit (they owe you)
         },
         {
             partyId: 'PTY-1002',
             partyName: 'XYZ Fabrics',
-            contactPerson: 'Suresh Patel',
             contact: '8765432109',
             gstNo: '24XYZW65678H910',
             state: 'Gujarat',
             district: 'Ahmedabad',
             status: 'Active',
+            balance: -5000 // Negative = Credit
         },
         {
             partyId: 'PTY-1003',
             partyName: 'PQR Yarns',
-            contactPerson: 'Arun Sharma',
             contact: '7654321098',
             gstNo: '29PQRS3456E7F8',
             state: 'Punjab',
             district: 'Ludhiana',
             status: 'Inactive',
+            balance: 0 // No due
         },
         {
             partyId: 'PTY-1004',
             partyName: 'LMN Textile Mills',
-            contactPerson: 'Priya Iyer',
             contact: '6543210987',
             gstNo: '32LMNOP7890Q1R2',
             state: 'Maharashtra',
             district: 'Mumbai',
             status: 'Active',
+            balance: 25000 // Debit
         },
         {
             partyId: 'PTY-1005',
             partyName: 'DEF Garments',
-            contactPerson: 'Neha Gupta',
             contact: '5432109876',
             gstNo: '07DEFGH2345I6J7',
             state: 'Delhi',
             district: 'Central',
             status: 'Active',
+            balance: -10000 // Credit
         },
     ];
 
@@ -67,7 +67,6 @@ const PartyMasterPage = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 5;
 
-    // Moved above JSX call
     const handleReset = () => {
         setFilters({ partyName: '', status: '', state: '', district: '' });
         setCurrentPage(1);
@@ -97,6 +96,18 @@ const PartyMasterPage = () => {
             : 'bg-red-100 text-red-700';
     };
 
+    const getDueDisplay = (balance) => {
+        if (balance === 0) return 'No Due';
+        if (balance > 0) return `Debit`;
+        return `Credit`;
+    };
+
+    const getDueStyle = (balance) => {
+        if (balance > 0) return 'bg-red-100 text-red-700'; // Debit
+        if (balance < 0) return 'bg-green-100 text-green-700'; // Credit
+        return 'bg-gray-100 text-gray-700'; // No due
+    };
+
     return (
         <div className="min-h-screen px-8 py-6 space-y-6 bg-gray-50">
             <Header />
@@ -108,10 +119,10 @@ const PartyMasterPage = () => {
                         <tr>
                             <th className="px-6 py-3 text-left text-xs font-bold text-gray-600">Party Code</th>
                             <th className="px-6 py-3 text-left text-xs font-bold text-gray-600">Party Name</th>
-                            <th className="px-6 py-3 text-left text-xs font-bold text-gray-600">Contact Person</th>
                             <th className="px-6 py-3 text-left text-xs font-bold text-gray-600">Phone</th>
                             <th className="px-6 py-3 text-left text-xs font-bold text-gray-600">GST No</th>
                             <th className="px-6 py-3 text-left text-xs font-bold text-gray-600">State</th>
+                            <th className="px-6 py-3 text-left text-xs font-bold text-gray-600">Balance</th>
                             <th className="px-6 py-3 text-left text-xs font-bold text-gray-600">Status</th>
                             <th className="px-6 py-3 text-right text-xs font-bold text-gray-600">Actions</th>
                         </tr>
@@ -121,10 +132,14 @@ const PartyMasterPage = () => {
                             <tr key={index} className="hover:bg-gray-50">
                                 <td className="px-6 py-4 text-sm font-semibold text-gray-700">{party.partyId}</td>
                                 <td className="px-6 py-4 text-sm text-gray-600">{party.partyName}</td>
-                                <td className="px-6 py-4 text-sm text-gray-600">{party.contactPerson}</td>
                                 <td className="px-6 py-4 text-sm text-gray-600">{party.contact}</td>
                                 <td className="px-6 py-4 text-sm text-gray-600">{party.gstNo}</td>
                                 <td className="px-6 py-4 text-sm text-gray-600">{party.state}</td>
+                                <td className="px-6 py-4">
+                                    <span className={`text-xs font-semibold px-2 py-1 rounded-full ${getDueStyle(party.balance)}`}>
+                                        {getDueDisplay(party.balance)}
+                                    </span>
+                                </td>
                                 <td className="px-6 py-4">
                                     <span className={`text-xs font-semibold px-2 py-1 rounded-full ${getStatusStyle(party.status)}`}>
                                         {party.status}

@@ -24,8 +24,6 @@ const ExclamationCircleIcon = (props) => (
     </svg>
 );
 
-
-
 const ExportIcon = (props) => (
     <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor" {...props}>
         <path fillRule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clipRule="evenodd" />
@@ -33,10 +31,10 @@ const ExportIcon = (props) => (
 );
 
 const PartyDues = () => {
-    const navigate = useNavigate(); // Call useNavigate inside the component
+    const navigate = useNavigate();
 
     const handleBackToHome = () => navigate('/');
-    const handleBackToDuesMgmt = () => navigate('/duesmanagement'); // adjust as needed
+    const handleBackToDuesMgmt = () => navigate('/duesmanagement');
 
     // Simple Object Model for Party Dues Data
     const [allPartyDues] = useState([
@@ -58,11 +56,11 @@ const PartyDues = () => {
     });
 
     const [currentPage, setCurrentPage] = useState(1);
-    const itemsPerPage = 6; // Display 6 cards per page
+    const itemsPerPage = 6;
 
     const handleApplyFilters = (newFilters) => {
         setFilters(newFilters);
-        setCurrentPage(1); // Reset to first page on filter change
+        setCurrentPage(1);
     };
 
     const handleResetFilters = () => {
@@ -72,16 +70,27 @@ const PartyDues = () => {
             startDate: '',
             endDate: '',
         });
-        setCurrentPage(1); // Reset to first page on filter reset
+        setCurrentPage(1);
+    };
+
+    // Sort parties with Overdue first, then Pending, then Paid
+    const sortParties = (parties) => {
+        return [...parties].sort((a, b) => {
+            if (a.status === 'Overdue' && b.status !== 'Overdue') return -1;
+            if (a.status !== 'Overdue' && b.status === 'Overdue') return 1;
+            if (a.status === 'Pending' && b.status !== 'Pending') return -1;
+            if (a.status !== 'Pending' && b.status === 'Pending') return 1;
+            return 0;
+        });
     };
 
     const filteredPartyDues = useMemo(() => {
-        return allPartyDues.filter((party) => {
+        const filtered = allPartyDues.filter((party) => {
             const matchesPartyName = party.partyName.toLowerCase().includes(filters.partyName.toLowerCase());
             const matchesStatus = filters.status === 'All Dues' || party.status === filters.status;
 
-            // Date filtering logic (basic example, can be more robust)
-            const partyDueDate = new Date(party.dueDate); // Assuming format compatible with Date constructor
+            // Date filtering logic
+            const partyDueDate = new Date(party.dueDate);
             const filterStartDate = filters.startDate ? new Date(filters.startDate) : null;
             const filterEndDate = filters.endDate ? new Date(filters.endDate) : null;
 
@@ -90,6 +99,8 @@ const PartyDues = () => {
 
             return matchesPartyName && matchesStatus && matchesDateRange;
         });
+
+        return sortParties(filtered);
     }, [allPartyDues, filters]);
 
     const totalPages = Math.ceil(filteredPartyDues.length / itemsPerPage);
@@ -101,45 +112,36 @@ const PartyDues = () => {
     const paidDues = allPartyDues.filter(party => party.status === 'Paid').reduce((sum, party) => sum + party.dueAmount, 0);
     const overdueDues = allPartyDues.filter(party => party.status === 'Overdue').reduce((sum, party) => sum + party.dueAmount, 0);
 
-
     return (
         <div className='p-5 m-3'>
             <div className="flex justify-between items-center mb-6">
                 <h2 className="text-2xl text-dark text-3xl font-bold">Party Dues Overview</h2>
-
                 <div className="flex space-x-3">
                     <button className="px-4 py-2 border border-gray-300 hover:bg-gray-50 rounded-md flex items-center">
                         <ExportIcon />
                         Export
                     </button>
                 </div>
-
             </div>
+
             <nav className="flex items-center mb-6 text-sm text-gray-600" aria-label="Breadcrumb">
                 <ol className="inline-flex items-center space-x-1 md:space-x-3">
-
-                    {/* Homepage */}
                     <li className="flex items-center">
                         <button
                             onClick={handleBackToHome}
                             className="flex items-center text-gray-500 hover:text-indigo-600 transition-colors"
                         >
-                            {/* Updated Home Icon */}
                             <svg className="w-4 h-4 mr-1.5" fill="currentColor" viewBox="0 0 20 20">
                                 <path d="M10.707 1.293a1 1 0 00-1.414 0L2 8.586V17a1 1 0 001 1h5a1 1 0 001-1v-4h2v4a1 1 0 001 1h5a1 1 0 001-1V8.586l-7.293-7.293z" />
                             </svg>
                             Dashboard
                         </button>
                     </li>
-
-                    {/* Arrow */}
                     <li>
                         <svg className="w-3 h-3 text-gray-400 mx-1" fill="none" viewBox="0 0 6 10">
                             <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M1 9l4-4-4-4" />
                         </svg>
                     </li>
-
-                    {/* Intermediate Page */}
                     <li className="inline-flex items-center">
                         <button
                             onClick={handleBackToDuesMgmt}
@@ -148,28 +150,22 @@ const PartyDues = () => {
                             Dues Management
                         </button>
                     </li>
-
-                    {/* Arrow */}
                     <li>
                         <svg className="w-3 h-3 text-gray-400 mx-1" fill="none" viewBox="0 0 6 10">
                             <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M1 9l4-4-4-4" />
                         </svg>
                     </li>
-
-                    {/* Current Page */}
                     <li aria-current="page">
                         <span className="text-gray-700 font-medium">Party Dues</span>
                     </li>
                 </ol>
             </nav>
 
-
-
             {/* Summary Cards */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
                 <SummaryCard
                     title="Total Debit Dues"
-                    amount={`$${totalDues.toFixed(2)}`}
+                    amount={`${totalDues.toFixed(2)}`}
                     icon={<CurrencyDollarIcon />}
                     borderColor="border-indigo-500"
                     bgColor="bg-primary/10"
@@ -177,7 +173,7 @@ const PartyDues = () => {
                     desc="From 12 Parties"
                 />
                 <SummaryCard
-                    title="Total Credit Dues "
+                    title="Total Credit Dues"
                     amount={`$${paidDues.toFixed(2)}`}
                     icon={<CheckCircleIcon />}
                     borderColor="border-green-500"
@@ -198,12 +194,11 @@ const PartyDues = () => {
 
             {/* Filters */}
             <Filters
-                onApplyFilters={(filters) => console.log("Apply Filters:", filters)}
-                onResetFilters={() => console.log("Reset Filters")}
+                onApplyFilters={handleApplyFilters}
+                onResetFilters={handleResetFilters}
             />
 
-
-            {/* Party Dues Cards */}
+            {/* Party Dues Cards - Now sorted with Overdue first */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {currentPartyDues.map((party) => (
                     <PartyCard key={party.id} party={party} />

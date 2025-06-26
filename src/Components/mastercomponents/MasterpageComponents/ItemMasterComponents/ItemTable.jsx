@@ -11,6 +11,8 @@ import {
   faIndianRupeeSign,
   faUserPen,
   faTrashCan,
+  faWarehouse,
+  faBoxesStacked
 } from '@fortawesome/free-solid-svg-icons';
 
 const ItemTable = ({
@@ -24,6 +26,22 @@ const ItemTable = ({
   const indexOfFirstItem = (currentPage - 1) * itemsPerPage;
   const indexOfLastItem = currentPage * itemsPerPage;
 
+  // Function to determine stock status color
+  const getStockStatusColor = (item) => {
+    if (item.stock === 0) return 'bg-red-100 text-red-800';
+    if (item.stock <= item.lowStockThreshold) return 'bg-yellow-100 text-yellow-800';
+    if (item.stock >= item.overStockThreshold) return 'bg-purple-100 text-purple-800';
+    return 'bg-green-100 text-green-800';
+  };
+
+  // Function to get stock status text
+  const getStockStatusText = (item) => {
+    if (item.stock === 0) return 'Out of Stock';
+    if (item.stock <= item.lowStockThreshold) return 'Low Stock';
+    if (item.stock >= item.overStockThreshold) return 'Over Stock';
+    return 'In Stock';
+  };
+
   return (
     <div className="bg-white shadow rounded-lg overflow-hidden w-full">
       <div className="overflow-x-auto w-full">
@@ -31,14 +49,15 @@ const ItemTable = ({
           <thead className="bg-gray-100">
             <tr>
               {[
-                { icon: faDatabase, label: 'ID' },
+                { icon: faDatabase, label: 'CODE' },
                 { icon: faBoxOpen, label: 'Item Name' },
                 { icon: faLayerGroup, label: 'Category' },
-                { icon: faTags, label: 'Sub-Category' },
-                { icon: faBarcode, label: 'SKU' },
+                { icon: faBarcode, label: 'HSN' },
                 { icon: faIndianRupeeSign, label: 'Price' },
-                { label: 'Stock' },
-                { icon: faStopwatch, label: 'Status' },
+                { icon: faBoxesStacked, label: 'Current Stock' },
+                { icon: faWarehouse, label: 'Storage Location' },
+                { icon: faStopwatch, label: 'Stock Status' },
+                { icon: faStopwatch, label: 'Item Status' },
                 { label: 'Actions' },
               ].map((col, i) => (
                 <th
@@ -60,18 +79,30 @@ const ItemTable = ({
                   <td className="px-4 py-3 text-gray-900 font-medium">{item.id}</td>
                   <td className="px-4 py-3 text-gray-700">{item.name}</td>
                   <td className="px-4 py-3 text-gray-600">{item.category}</td>
-                  <td className="px-4 py-3 text-gray-600">{item.subCategory}</td>
-                  <td className="px-4 py-3 text-gray-600">{item.sku}</td>
+                  <td className="px-4 py-3 text-gray-600">{item.HSN}</td>
                   <td className="px-4 py-3 text-gray-600">₹{item.price.toFixed(2)}</td>
+                  
+                  {/* Current Stock */}
+                  <td className="px-4 py-3 text-gray-600">
+                    <div className="flex items-center">
+                      <span className="font-medium">{item.stock}</span>
+                      <span className="text-xs text-gray-500 ml-1">units</span>
+                    </div>
+                  </td>
+                  
+                  {/* Storage Location */}
+                  <td className="px-4 py-3 text-gray-600">
+                    {item.storageLocation || 'Warehouse A'}
+                  </td>
+                  
+                  {/* Stock Status */}
                   <td className="px-4 py-3">
-                    <span
-                      className={`px-2 py-1 inline-flex text-xs font-semibold rounded-full ${
-                        item.stock > 0 ? 'bg-blue-100 text-blue-800' : 'bg-red-100 text-red-800'
-                      }`}
-                    >
-                      {item.stock} in stock
+                    <span className={`px-2 py-1 inline-flex text-xs font-semibold rounded-full ${getStockStatusColor(item)}`}>
+                      {getStockStatusText(item)}
                     </span>
                   </td>
+                  
+                  {/* Item Status */}
                   <td className="px-4 py-3">
                     <span
                       className={`px-2 py-1 inline-flex text-xs font-semibold rounded-full ${
@@ -81,6 +112,8 @@ const ItemTable = ({
                       {item.status.charAt(0).toUpperCase() + item.status.slice(1)}
                     </span>
                   </td>
+                  
+                  {/* Actions */}
                   <td className="px-4 py-3">
                     <div className="flex items-center justify-center space-x-3">
                       <button
@@ -110,7 +143,7 @@ const ItemTable = ({
               ))
             ) : (
               <tr>
-                <td colSpan="9" className="px-6 py-4 text-center text-sm text-gray-500">
+                <td colSpan="10" className="px-6 py-4 text-center text-sm text-gray-500">
                   No items found matching your criteria.
                 </td>
               </tr>

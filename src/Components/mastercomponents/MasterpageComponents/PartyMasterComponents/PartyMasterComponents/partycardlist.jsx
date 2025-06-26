@@ -11,13 +11,23 @@ const PartyTable = ({ parties = [] }) => {
 
     const getStatusClass = (status) => {
         switch (status) {
-            case 'Active':
-                return 'bg-green-100 text-green-700';
-            case 'Inactive':
-                return 'bg-red-100 text-red-700';
-            default:
-                return 'bg-gray-100 text-gray-800';
+            case 'Active': return 'bg-green-100 text-green-700';
+            case 'Inactive': return 'bg-red-100 text-red-700';
+            default: return 'bg-gray-100 text-gray-800';
         }
+    };
+
+  const getDueClass = (balance) => {
+    const num = parseFloat(balance);
+    if (num > 0) return 'bg-red-100 text-red-700';
+    if (num < 0) return 'bg-green-100 text-green-700';
+    return 'bg-gray-100 text-gray-700';
+};
+
+    const formatBalance = (balance) => {
+        if (balance === 0) return 'No Due';
+        if (balance > 0) return `Debit`;
+        return `Credit`;
     };
 
     return (
@@ -27,10 +37,10 @@ const PartyTable = ({ parties = [] }) => {
                     <tr>
                         <th className="px-6 py-3">Party Code</th>
                         <th className="px-6 py-3">Party Name</th>
-                        <th className="px-6 py-3">Contact Person</th>
-                        <th className="px-6 py-3">Phone</th>
+                        <th className="px-6 py-3">Contact</th>
                         <th className="px-6 py-3">GST No</th>
                         <th className="px-6 py-3">State</th>
+                        <th className="px-6 py-3">Balance</th>
                         <th className="px-6 py-3">Status</th>
                         <th className="px-6 py-3 text-right">Actions</th>
                     </tr>
@@ -40,10 +50,14 @@ const PartyTable = ({ parties = [] }) => {
                         <tr key={index} className="hover:bg-gray-50">
                             <td className="px-6 py-4 font-medium">{party.partyId}</td>
                             <td className="px-6 py-4">{party.partyName}</td>
-                            <td className="px-6 py-4">{party.contactPerson}</td>
                             <td className="px-6 py-4">{party.contact}</td>
-                            <td className="px-6 py-4">{party.gst}</td>
+                            <td className="px-6 py-4">{party.gstNo}</td>
                             <td className="px-6 py-4">{party.state}</td>
+                            <td className="px-6 py-4">
+                                <span className={`text-xs font-semibold px-2 py-1 rounded-full ${getDueClass(party.balance)}`}>
+                                    {formatBalance(party.balance)}
+                                </span>
+                            </td>
                             <td className="px-6 py-4">
                                 <span className={`text-xs font-semibold px-2 py-1 rounded-full ${getStatusClass(party.status)}`}>
                                     {party.status}
@@ -60,10 +74,6 @@ const PartyTable = ({ parties = [] }) => {
                     ))}
                 </tbody>
             </table>
-
-            <div className="px-6 py-3 text-sm text-gray-500 border-t">
-                Showing 1 to {parties.length} of {parties.length} results
-            </div>
         </div>
     );
 };

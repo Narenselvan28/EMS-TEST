@@ -2,33 +2,20 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const PartyCard = ({ party }) => {
-    const { partyName, partyId, dueAmount, dueDate, contact, status, contactPerson, transactions } = party;
+    const { partyName, partyId, dueAmount, dueDate, contact, status } = party;
     const navigate = useNavigate();
 
     const getStatusClasses = (status) => {
         switch (status) {
-            case 'Paid': return 'bg-green-100 text-green-800';
             case 'Pending': return 'bg-yellow-100 text-yellow-800';
             case 'Overdue': return 'bg-red-100 text-red-800';
-            default: return 'bg-gray-100 text-gray-800';
-        }
-    };
-
-    const getButtonText = (status) => {
-        switch (status) {
-            case 'Paid': return { btn1: '', btn2: 'View Details' };
-            case 'Pending': return { btn1: '', btn2: 'View Details' };
-            case 'Overdue': return { btn1: 'Send Reminder', btn2: 'View Details' };
-            default: return { btn1: '', btn2: 'View Details' };
+            default: return '';
         }
     };
 
     const handleViewDetails = () => {
         navigate('/party-details');
     };
-
-    const statusClasses = getStatusClasses(status);
-    const { btn1, btn2 } = getButtonText(status);
 
     return (
         <div className="bg-white rounded-lg shadow-sm overflow-hidden border border-gray-200 hover:shadow-md transition-shadow">
@@ -38,14 +25,17 @@ const PartyCard = ({ party }) => {
                         <h3 className="text-lg font-semibold text-dark">{partyName}</h3>
                         <p className="text-sm text-gray-500">#{partyId}</p>
                     </div>
-                    <span className={`px-2 py-1 text-xs font-semibold rounded-full ${statusClasses}`}>
-                        {status}
-                    </span>
+                    {/* Show status only for Pending or Overdue - Paid status is not shown */}
+                    {(status === 'Pending' || status === 'Overdue') && (
+                        <span className={`px-2 py-1 text-xs font-semibold rounded-full ${getStatusClasses(status)}`}>
+                            {status}
+                        </span>
+                    )}
                 </div>
                 <div className="mt-4 space-y-3">
                     <div className="flex justify-between">
                         <span className="text-sm text-gray-500">Due Amount</span>
-                        <span className="text-sm font-medium">${dueAmount.toFixed(2)}</span>
+                        <span className="text-sm font-medium">₹{dueAmount.toLocaleString('en-IN')}.00</span>
                     </div>
                     <div className="flex justify-between">
                         <span className="text-sm text-gray-500">Due Date</span>
@@ -58,20 +48,39 @@ const PartyCard = ({ party }) => {
                 </div>
             </div>
             <div className="bg-gray-50 px-5 py-3 flex justify-end space-x-3">
-                {btn1 && (
+                {/* Buttons only for Pending or Overdue */}
+                {status === 'Overdue' && (
                     <button className="text-sm text-red-600 hover:text-red-800 font-medium">
-                        {btn1}
+                        Send Reminder
                     </button>
                 )}
-                <button
-                    onClick={handleViewDetails}
-                    className="text-sm text-indigo-600 hover:text-indigo-800 font-medium"
-                >
-                    {btn2}
-                </button>
+                {(status === 'Pending' || status === 'Overdue') && (
+                    <button
+                        onClick={handleViewDetails}
+                        className="text-sm text-indigo-600 hover:text-indigo-800 font-medium"
+                    >
+                        View Details
+                    </button>
+                )}
             </div>
         </div>
     );
+};
+
+// This is how you would sort the parties before rendering them
+export const sortParties = (parties) => {
+    return [...parties].sort((a, b) => {
+        // Overdue comes first
+        if (a.status === 'Overdue' && b.status !== 'Overdue') return -1;
+        if (a.status !== 'Overdue' && b.status === 'Overdue') return 1;
+        
+        // Then Pending
+        if (a.status === 'Pending' && b.status !== 'Pending') return -1;
+        if (a.status !== 'Pending' && b.status === 'Pending') return 1;
+        
+        // Then others (like Paid)
+        return 0;
+    });
 };
 
 export default PartyCard;

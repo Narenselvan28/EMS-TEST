@@ -45,29 +45,35 @@ export default function AddEmployeeForm() {
             <Input label="Employee ID*" id="employeeId" type="text" defaultValue="EMP-1004" readOnly />
             <Input label="Join Date*" id="joinDate" type="date" />
             <Select label="Category*" id="category" options={["HR", "Finance", "IT", "Operations", "Marketing", "Sales"]} />
-            <Select label="Group*" id="group" options={["Group 1", "Group 2", "Group 3"]} />
-            <Select label="Status*" id="status" options={["Active", "Probation", "Inactive"]} />
+            <Select label="Special Category*" id="category" options={["HR", "Finance", "IT", "Operations", "Marketing", "Sales"]} />
 
+            <Select label="Group*" id="group" options={["Group 1", "Group 2", "Group 3"]} />
+            <Select label="Special Group*" id="group" options={["Group 1", "Group 2", "Group 3"]} />
+
+            <Select label="Status*" id="status" options={["Active", "Probation", "Inactive"]} />
+            {/* Removed the first duplicate "Due Type" Select component */}
+
+            <Select label="Work Location*" id="workLocation" options={["Head Office", "Branch 1", "Branch 2", "Remote"]} />
+            <Select label="Due Type" id="dueType" options={["Debit", "Credit"]} /> {/* This one remains, changed id to dueType for clarity */}
             <div>
-              <label htmlFor="salary" className="block text-sm font-medium text-gray-700 mb-1">
-                Basic Salary*
+              <label htmlFor="dueAmount" className="block text-sm font-medium text-gray-700 mb-1"> {/* Changed htmlFor to dueAmount */}
+                Due Amount*
               </label>
               <div className="relative">
                 <span className="absolute left-3 top-2 text-gray-400">₹</span>
                 <input
-                  id="salary"
+                  id="dueAmount" // Changed id to dueAmount
                   type="number"
                   placeholder="0.00"
-                  className="pl-7 pr-20 py-2 w-full border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                  className="pl-7 pr-20 py-2 w-full border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
                 />
+
                 <select className="absolute right-2 top-2 text-sm text-gray-600 bg-transparent">
                   <option>INR</option>
                   <option>USD</option>
                 </select>
               </div>
             </div>
-
-            <Select label="Work Location*" id="workLocation" options={["Head Office", "Branch 1", "Branch 2", "Remote"]} />
 
             {/* Action Buttons */}
             <div className="col-span-2 flex justify-end mt-8 space-x-4">
@@ -89,9 +95,6 @@ export default function AddEmployeeForm() {
         </div>
 
         {/* Footer */}
-        <footer className="text-center text-sm text-gray-500 mt-10">
-          © 2025 Websyra. Built with ❤️ by Team Fedora
-        </footer>
 
         {/* Confirm Cancel Modal */}
         <ConfirmModel
