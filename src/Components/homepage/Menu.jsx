@@ -23,6 +23,8 @@ function Menu() {
         { label: "Settings", path: "/settings" },
         { label: "Vouchers", path: "/vouchers" },
         { label: "Salary", path: "/salary" },
+        { label: "Fuel Management", path: "/fuelmanagement" },
+
 
 
         { label: "Help & Support", path: "/help" },

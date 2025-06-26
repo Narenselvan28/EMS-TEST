@@ -34,8 +34,10 @@ import Employeeduesmanagements from "./Components/pages/Employeeduesmanagement";
 import VendorDuesManagement from "./Components/pages/VendorDuesManagement";
 import InventoryDashboard from "./Components/pages/Inventory";
 
+import FuelExpensesManagement from "./Components/Fuel/FuelMainPage";
 import SalaryManagement from "./Components/pages/SalaryPage";
 import PurchaseMain from "./Components/pages/PurchaseSalesMain";
+import FuelExpensesForm from "./Components/Fuel/NewFuelTransactiion";
 function App() {
     const handleBack = () => {
         window.history.back();
@@ -72,6 +74,10 @@ function App() {
         { path: "/vendor-details", element: <VendorDueDetails /> },
         { path: "/employee-details", element: <EmployeeDueDetails /> },
         { path: "/salary", element: <SalaryManagement /> },
+        { path: "/fuelmanagement/addtransaction", element: <FuelExpensesForm /> },
+        { path: "/fuelmanagement", element: <FuelExpensesManagement/> },
+
+
 
 
         // Due Management
@@ -79,7 +85,6 @@ function App() {
         { path: "/duesmanagement/employeeduesmanagement", element: <Employeeduesmanagements /> },
         { path: "/duesmanagement/vendorduesmanagement", element: <VendorDuesManagement /> },
     ];
-
     return (
         <div>
             {/* Sticky Navbar */}
