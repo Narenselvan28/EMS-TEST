@@ -355,10 +355,36 @@ const SalaryManagement = () => {
         alert('Salary data saved successfully!');
     };
 
+    function handleBackToHomee(){
+        window.history.back()
+    }
     return (
-        <div className="bg-gray-50 min-h-screen font-poppins">
+        <div className=" min-h-screen m-4 font-poppins">
             <div className="container mx-auto px-4 py-8">
                 <h1 className="text-2xl font-bold text-gray-800 mb-6">Salary Management</h1>
+                  <nav className="flex items-center mb-6 text-sm text-gray-600" aria-label="Breadcrumb">
+                    <ol className="inline-flex items-center space-x-1 md:space-x-3">
+                        <li className="flex items-center">
+                            <button onClick={handleBackToHomee} className="flex items-center text-gray-500 hover:text-indigo-600">
+                                <svg className="w-4 h-4 mr-1.5" fill="currentColor" viewBox="0 0 20 20">
+                                    <path d="M10.707 1.293a1 1 0 00-1.414 0L2 8.586V17a1 1 0 001 1h5a1 1 0 001-1v-4h2v4a1 1 0 001 1h5a1 1 0 001-1V8.586l-7.293-7.293z" />
+                                </svg>
+                                Dashboard
+                            </button>
+                        </li>
+                        <li>
+                            <svg className="w-3 h-3 text-gray-400 mx-1" fill="none" viewBox="0 0 6 10">
+                                <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M1 9l4-4-4-4" />
+                            </svg>
+                        </li>
+                        <li>
+                            <button className="text-gray-500 hover:text-indigo-600">
+                                Salary Management
+                            </button>
+                        </li>
+
+                    </ol>
+                </nav>
 
                 {/* Salary Management Form */}
                 <div className="bg-white p-6 rounded-lg shadow-md mb-6">

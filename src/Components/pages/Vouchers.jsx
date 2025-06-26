@@ -301,7 +301,9 @@ const Vouchers = () => {
         };
     }, []);
 
-
+function handleBackToHome(){
+    window.history.back()
+}
     return (
         <div className="p-6 sm:p-8 md:p-10 lg:p-12"> {/* Increased overall padding */}
             <style jsx>{`
@@ -493,29 +495,34 @@ const Vouchers = () => {
                 }
             `}</style>
             <div className="w-full mx-auto">
-                <nav className="text-gray-700 mb-6" aria-label="Breadcrumb">
-                    <ol className="list-none p-0 inline-flex">
-                        <li className="flex items-center">
-                            <a href="#" className="text-indigo-600 hover:text-indigo-800">Home</a>
-                            <i className="fas fa-chevron-right mx-2 text-gray-400"></i>
-                        </li>
-                        <li className="flex items-center">
-                            <span id="breadcrumbDate" className="text-gray-500">{voucherDate}</span>
-                            <i className="fas fa-chevron-right mx-2 text-gray-400"></i>
-                        </li>
-                        <li className="flex items-center">
-                            <span id="breadcrumbVoucherType" className="text-gray-500 capitalize">{voucherType || 'Select Type'}</span>
-                            <i className="fas fa-chevron-right mx-2 text-gray-400"></i>
-                        </li>
-                        <li className="flex items-center">
-                            <span id="breadcrumbVoucherCategory" className="text-gray-500 capitalize">{voucherCategory || 'Select Category'}</span>
-                        </li>
-                    </ol>
-                </nav>
+               
 
-                <h1 className="text-4xl font-bold mb-6 gradient-text flex items-center">
+                <h1 className="text-4xl text-black font-bold mb-6 gradient-text flex items-center">
                     <i className="fas fa-receipt mr-3"></i> Voucher Entry
                 </h1>
+                    <nav className="flex items-center mb-6 text-sm text-gray-600" aria-label="Breadcrumb">
+                        <ol className="inline-flex items-center space-x-1 md:space-x-3">
+                            <li className="flex items-center">
+                                <button onClick={handleBackToHome} className="flex items-center text-gray-500 hover:text-indigo-600">
+                                    <svg className="w-4 h-4 mr-1.5" fill="currentColor" viewBox="0 0 20 20">
+                                        <path d="M10.707 1.293a1 1 0 00-1.414 0L2 8.586V17a1 1 0 001 1h5a1 1 0 001-1v-4h2v4a1 1 0 001 1h5a1 1 0 001-1V8.586l-7.293-7.293z" />
+                                    </svg>
+                                    Dashboard
+                                </button>
+                            </li>
+                            <li>
+                                <svg className="w-3 h-3 text-gray-400 mx-1" fill="none" viewBox="0 0 6 10">
+                                    <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M1 9l4-4-4-4" />
+                                </svg>
+                            </li>
+                            <li>
+                                <button className="text-gray-500 hover:text-indigo-600">
+                                    Vouchers
+                                </button>
+                            </li>
+
+                        </ol>
+                    </nav>
 
                 <VoucherDetailsSection
                     voucherDate={voucherDate}

@@ -202,6 +202,9 @@ const InventoryDashboard = () => {
     e.preventDefault();
     setCurrentPage(1); // Reset to first page when searching
   };
+  function handleBackToHome(){
+    window.history.back()
+  }
 
   return (
     <div className="m-2 bg-gray-50 min-h-screen font-['Poppins']">
@@ -217,7 +220,29 @@ const InventoryDashboard = () => {
             Export
           </button>
         </div>
-
+ <nav className="flex items-center mb-6 text-sm text-gray-600" aria-label="Breadcrumb">
+                <ol className="inline-flex items-center space-x-1 md:space-x-3">
+                    <li className="flex items-center">
+                        <button onClick={handleBackToHome} className="flex items-center text-gray-500 hover:text-indigo-600">
+                            <svg className="w-4 h-4 mr-1.5" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M10.707 1.293a1 1 0 00-1.414 0L2 8.586V17a1 1 0 001 1h5a1 1 0 001-1v-4h2v4a1 1 0 001 1h5a1 1 0 001-1V8.586l-7.293-7.293z" />
+                            </svg>
+                            Dashboard
+                        </button>
+                    </li>
+                    <li>
+                        <svg className="w-3 h-3 text-gray-400 mx-1" fill="none" viewBox="0 0 6 10">
+                            <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M1 9l4-4-4-4" />
+                        </svg>
+                    </li>
+                    <li>
+                        <button  className="text-gray-500 hover:text-indigo-600">
+                            Inventory
+                        </button>
+                    </li>
+                 
+                </ol>
+            </nav>
         {/* Summary Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
           {[
