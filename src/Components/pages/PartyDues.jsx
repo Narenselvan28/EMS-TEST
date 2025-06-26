@@ -152,8 +152,7 @@ const PartyDues = () => {
                     </li>
                 </ol>
             </nav>
-
-            {/* Summary Cards */}
+            
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
                 <SummaryCard title="Total Debit Dues" amount={`₹${totalDues.toFixed(2)}`} icon={<CurrencyDollarIcon />} borderColor="border-indigo-500" bgColor="bg-primary/10" textColor="text-primary" desc="From 12 Parties" />
                 <SummaryCard title="Total Credit Dues" amount={`₹${paidDues.toFixed(2)}`} icon={<CheckCircleIcon />} borderColor="border-green-500" bgColor="bg-green-100" textColor="text-green-600" desc="From 7 Parties" />

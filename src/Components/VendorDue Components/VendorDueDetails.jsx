@@ -14,32 +14,24 @@ const VendorDueDetails = () => {
             {
                 id: 1,
                 date: "2025-05-15",
-                orderNo: "SO-1058",
-                orderType: "Sales",
                 amount: 7000,
                 status: "Paid"
             },
             {
                 id: 2,
                 date: "2025-05-28",
-                orderNo: "SO-1071",
-                orderType: "Sales",
                 amount: 5000,
                 status: "Pending"
             },
             {
                 id: 3,
                 date: "2025-06-10",
-                orderNo: "PO-2053",
-                orderType: "Purchase",
                 amount: 8500,
                 status: "Overdue"
             },
             {
                 id: 4,
                 date: "2025-06-16",
-                orderNo: "SO-1092",
-                orderType: "Sales",
                 amount: 3000,
                 status: "Overdue"
             }
@@ -105,8 +97,6 @@ const VendorDueDetails = () => {
                         <tr>
                             <TableHeader title="Sr. No" />
                             <TableHeader title="Date" />
-                            <TableHeader title="Order No" />
-                            <TableHeader title="Order Type" />
                             <TableHeader title="Amount" />
                             <TableHeader title="Status" />
                         </tr>
@@ -116,8 +106,6 @@ const VendorDueDetails = () => {
                             <tr key={txn.id}>
                                 <td className="px-6 py-4 text-sm text-gray-900">{index + 1}</td>
                                 <td className="px-6 py-4 text-sm text-gray-900">{txn.date}</td>
-                                <td className="px-6 py-4 text-sm text-gray-900">{txn.orderNo}</td>
-                                <td className="px-6 py-4 text-sm text-gray-900">{txn.orderType}</td>
                                 <td className="px-6 py-4 text-sm text-gray-900">₹{txn.amount.toLocaleString('en-IN')}.00</td>
                                 <td className={`px-6 py-4 text-sm font-medium ${getStatusColor(txn.status)}`}>{txn.status}</td>
                             </tr>

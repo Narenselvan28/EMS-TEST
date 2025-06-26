@@ -3,7 +3,7 @@ import React from 'react';
 const cards = [
     { title: 'Total Credit Outstanding', amount: '$87,420.00', subtitle: 'Across 32 vendors', color: 'primary' },
     { title: 'Total Debit Outstanding', amount: '$24,150.00', subtitle: 'From 14 vendors', color: 'accent' },
-    { title: 'Overdue Payments', amount: '$12,780.00', subtitle: 'From 8 vendors', color: 'danger' },
+    { title: 'Overdue Credit Payments', amount: '$12,780.00', subtitle: 'From 8 vendors', color: 'danger' },
 ];
 
 const colorClasses = {

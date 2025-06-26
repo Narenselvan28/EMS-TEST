@@ -1,10 +1,8 @@
 import React, { useEffect, useState, useRef } from 'react';
 import Chart from 'chart.js/auto';
 import ItemPagination from '../mastercomponents/MasterpageComponents/ItemMasterComponents/ItemPagination';
-
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrash, faEye, faUserPen } from '@fortawesome/free-solid-svg-icons';
-
+import { faTrash, faEye, faUserPen, faSearch } from '@fortawesome/free-solid-svg-icons';
 import {
   CubeIcon,
   ExclamationTriangleIcon,
@@ -14,6 +12,7 @@ import {
 
 const InventoryDashboard = () => {
   const [currentPage, setCurrentPage] = useState(1);
+  const [searchTerm, setSearchTerm] = useState('');
   const itemsPerPage = 5;
 
   const stockChartRef = useRef(null);
@@ -79,7 +78,12 @@ const InventoryDashboard = () => {
     },
   ];
 
-  const filteredItems = items;
+  // Filter items based on search term (location or name)
+  const filteredItems = items.filter(item => 
+    item.location.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    item.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   const totalPages = Math.ceil(filteredItems.length / itemsPerPage);
   const paginatedItems = filteredItems.slice(
     (currentPage - 1) * itemsPerPage,
@@ -194,6 +198,11 @@ const InventoryDashboard = () => {
     });
   }, []);
 
+  const handleSearch = (e) => {
+    e.preventDefault();
+    setCurrentPage(1); // Reset to first page when searching
+  };
+
   return (
     <div className="m-2 bg-gray-50 min-h-screen font-['Poppins']">
       <div className="container mx-auto px-4 py-6">
@@ -245,6 +254,28 @@ const InventoryDashboard = () => {
             <h3 className="text-lg font-semibold text-gray-800 mb-4">Inventory Value by Category</h3>
             <div className="h-64"><canvas ref={categoryChartRef}></canvas></div>
           </div>
+        </div>
+
+        {/* Search Box */}
+        <div className="mb-4">
+          <form onSubmit={handleSearch} className="flex">
+            <div className="relative flex-grow">
+              <input
+                type="text"
+                placeholder="Search by location or item name..."
+                className="w-full px-4 py-2 border border-gray-300 rounded-l-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+              />
+            </div>
+            <button
+              type="submit"
+              className="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-r-lg flex items-center"
+            >
+              <FontAwesomeIcon icon={faSearch} className="mr-2" />
+              Search
+            </button>
+          </form>
         </div>
 
         {/* Inventory Table */}
