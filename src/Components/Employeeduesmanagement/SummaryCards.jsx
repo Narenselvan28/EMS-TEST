@@ -3,9 +3,9 @@ import clsx from 'clsx'; // Optional: For cleaner conditional classes
 
 const SummaryCards = () => (
     <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-        <Card title="Total Outstanding" amount="$24,560.00" info="From 45 employees" color="border-indigo-600" />
-        <Card title="Cleared This Month" amount="$8,320.00" info="From 12 employees" color="border-red-600" />
-        <Card title="Overdue Payments" amount="$5,670.00" info="From 8 employees" color="border-teal-700" />
+        <Card title="Total Outstanding" amount="₹24,560.00" info="From 45 employees" color="border-indigo-600" />
+        <Card title="Cleared This Month" amount="₹8,320.00" info="From 12 employees" color="border-red-600" />
+        <Card title="Overdue Payments" amount="₹5,670.00" info="From 8 employees" color="border-teal-700" />
     </div>
 );
 

@@ -88,10 +88,17 @@ function Employeeduesmanagements() {
     const handleBackToHome = () => navigate('/');
     const handleBackToDuesMgmt = () => navigate('/duesmanagement');
 
-    const totalPages = Math.ceil(sampleDues.length / itemsPerPage);
+    // Filter sampleDues first
+    const filteredDues = sampleDues.filter(
+        (due) =>
+            due.status.toLowerCase() !== 'paid' &&
+            due.status.toLowerCase() !== 'partial'
+    );
+
+    const totalPages = Math.ceil(filteredDues.length / itemsPerPage);
     const indexOfLastItem = currentPage * itemsPerPage;
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-    const currentItems = sampleDues.slice(indexOfFirstItem, indexOfLastItem);
+    const currentItems = filteredDues.slice(indexOfFirstItem, indexOfLastItem);
 
     return (
         <div className="min-h-screen bg-gray-100 px-4 py-6 sm:px-6 lg:px-8">
@@ -144,12 +151,15 @@ function Employeeduesmanagements() {
                 ))}
             </div>
 
-            {/* Pagination Component */}
-            <Pagination
-                currentPage={currentPage}
-                totalPages={totalPages}
-                onPageChange={setCurrentPage}
-            />
+            {/* Conditionally render Pagination Component */}
+            {/* Pagination is shown only if totalPages is greater than 1 AND the total number of filtered items is greater than itemsPerPage */}
+            {totalPages > 1 && filteredDues.length > itemsPerPage && (
+                <Pagination
+                    currentPage={currentPage}
+                    totalPages={totalPages}
+                    onPageChange={setCurrentPage}
+                />
+            )}
         </div>
     );
 }

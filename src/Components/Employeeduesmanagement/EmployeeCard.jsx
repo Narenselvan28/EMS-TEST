@@ -1,18 +1,23 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import ForwardLoading from '../../essentials/ForwardLoading'; // ✅ Adjust path accordingly
+import ForwardLoading from '../../essentials/ForwardLoading';
 
 const EmployeeCard = ({ due }) => {
-    const { id, name, department, type, amount, date, status } = due;
+    // First call all hooks unconditionally
     const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate();
 
+    // Then check for paid status
+    if (due.status.toLowerCase() === 'paid') return null;
+    if (due.status.toLowerCase() === 'partial') return null;
+
+    const { id, name, department, type, amount, date, status } = due;
+
     const getStatusClass = (status) => {
         switch (status.toLowerCase()) {
-            case 'paid': return 'hidden';
             case 'pending': return 'bg-yellow-100 text-yellow-800';
             case 'overdue': return 'bg-red-100 text-red-800';
-            case 'partial': return 'bg-blue-100 text-blue-800';
+
             default: return 'bg-gray-100 text-gray-800';
         }
     };
