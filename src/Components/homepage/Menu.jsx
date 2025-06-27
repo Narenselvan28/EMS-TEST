@@ -3,19 +3,19 @@ import { useNavigate } from 'react-router-dom';
 import ForwardLoading from '../../essentials/ForwardLoading'; // adjust path if needed
 import { motion } from "framer-motion";
 import {
-    ShoppingCart,      // Purchase & Sales
-    Banknote,          // Accounts
-    Boxes,             // Inventory
-    ScrollText,        // Vouchers
-    LayoutGrid,        // Masters
-    BarChart2,         // Reports
-    Clock,             // Dues Management
-    DollarSign,        // Salary
-    Fuel,              // Fuel Management
-    Settings,          // Settings
-    FileEdit,          // Drafts
-    HelpCircle,        // Help & Support
-    Briefcase          // For ERP branding icon
+    ShoppingCart,          // Purchase & Sales
+    Banknote,            // Accounts
+    Boxes,               // Inventory
+    ScrollText,          // Vouchers
+    LayoutGrid,          // Masters
+    BarChart2,           // Reports
+    Clock,               // Dues Management
+    DollarSign,          // Salary
+    Fuel,                // Fuel Management
+    Settings,            // Settings
+    FileEdit,            // Drafts
+    HelpCircle,          // Help & Support
+    Briefcase            // For ERP branding icon
 } from 'lucide-react';
 
 function Menu() {
@@ -161,14 +161,14 @@ function Menu() {
                                         <div className={`relative z-10 flex flex-col items-center`}>
                                             <motion.div
                                                 className={`mb-3 p-4 rounded-full shadow-sm transition-all duration-300
-                                                           ${hoveredCard === index ? 'bg-white/30' : theme.iconBg}`}
+                                                        ${hoveredCard === index ? 'bg-white/30' : theme.iconBg}`}
                                                 animate={{ scale: hoveredCard === index ? 1.08 : 1 }}
                                                 transition={{ type: "spring", stiffness: 200, damping: 15 }}
                                             >
                                                 <IconComponent className={`w-8 h-8 md:w-10 md:h-10 ${hoveredCard === index ? theme.hoverText : theme.primaryText} transition-colors duration-300`} />
                                             </motion.div>
                                             <h3 className={`text-xl font-semibold mb-2 transition-colors duration-300 ${hoveredCard === index ? theme.hoverText : 'text-gray-800'}`}>{option.label}</h3>
-                                            <p className={`text-sm text-gray-600 text-center transition-colors duration-300 ${hoveredCard === index ? 'text-gray-200' : ''}`}>
+                                            <p className={`text-sm text-gray-600 text-center transition-colors duration-300 ${hoveredCard === index ? 'text-white' : ''}`}>
                                                 {option.description}
                                             </p>
                                         </div>
