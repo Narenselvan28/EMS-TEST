@@ -95,7 +95,7 @@ function Menu() {
     };
 
     return (
-        <div className="min-h-screen w-full bg-gradient-to-br from-gray-50 via-white to-gray-100 flex flex-col items-center justify-start p-6 sm:p-8 md:p-10 font-sans relative overflow-hidden pt-16">
+        <div className="min-h-screen w-full bg-gradient-to-br from-gray-50 via-white to-gray-100 flex flex-col items-center justify-start p-6 sm:p-8 md:p-10 relative overflow-hidden pt-16">
             <div className="flex flex-col items-center w-full">
                 {/* WEBSYRA ERP Branding Header */}
                 <motion.div
