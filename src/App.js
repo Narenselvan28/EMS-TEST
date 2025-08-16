@@ -50,7 +50,6 @@ function App() {
         { path: "/duesmanagement", element: <DuesPage /> },
         { path: "/purchase&Sales", element: <PurchaseMain /> },
 
-        { path: "/purchase&sale/addtransaction", element: <TransactionForm/> },
         { path: "/settings", element: <SettingsPage /> },
         { path: "/vouchers", element: <VoucherEntryLayout /> },
         { path: "/inventory", element: <InventoryDashboard /> },
