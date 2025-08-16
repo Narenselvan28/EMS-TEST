@@ -463,7 +463,7 @@ const PurchaseMain = () => {
                 </div>
             </div>
         </div>
-    );
+    )
 };
 
-export default PurchaseMain;
+export default PurchaseMain; 
