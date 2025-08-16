@@ -5,11 +5,10 @@ import { Routes, Route } from "react-router-dom";
 import Homepage from "./homepage";
 import MastersPage from "./Components/pages/masters";
 import DuesPage from "./Components/pages/DuesManagement";
-import PurchaseSale from "./Components/pages/PurchaseSale";
 import SettingsPage from "./settings/SettingsMainPage";
 import VoucherEntryLayout from "./Components/pages/Vouchers";
 
-// Master pages
+import TransactionForm from "./Components/PurchaseSales Components/Purchaseandsalesmod"
 import PartyMasterPage from "./Components/mastercomponents/PartyMasters";
 import ItemMaster from "./Components/mastercomponents/ItemMaster";
 import EmployeeMaster from "./Components/mastercomponents/EmployeeMaster";
@@ -51,7 +50,7 @@ function App() {
         { path: "/duesmanagement", element: <DuesPage /> },
         { path: "/purchase&Sales", element: <PurchaseMain /> },
 
-        { path: "/purchase&sale/addtransaction", element: <PurchaseSale /> },
+        { path: "/purchase&sale/addtransaction", element: <TransactionForm/> },
         { path: "/settings", element: <SettingsPage /> },
         { path: "/vouchers", element: <VoucherEntryLayout /> },
         { path: "/inventory", element: <InventoryDashboard /> },

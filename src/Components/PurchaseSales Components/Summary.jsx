@@ -1,102 +1,216 @@
-import React, { useMemo, useState } from 'react';
-import ConfirmModel from '../../essentials/ConfirmModel';
-function SummaryAndActions({ items, sundryEntries, showGST, onSave, onReset, onSaveReference }) {
-    const [showResetConfirm, setShowResetConfirm] = useState(false);
-    const [showCancelConfirm, setShowCancelConfirm] = useState(false);
+import React, { useState, useEffect } from 'react';
+import SearchableDropdown from './Orderinfo';
+const ItemRow = ({
+    item,
+    isGST,
+    onUpdate,
+    onDelete,
+    itemOptions,
+    uomOptions,
+    debitCreditOptions
+}) => {
+    const [localItem, setLocalItem] = useState({ ...item });
 
-    const calculateTotals = useMemo(() => {
-        let subtotal = 0, totalGST = 0, grandTotal = 0, sundryTotal = 0;
+    useEffect(() => {
+        setLocalItem({ ...item });
+    }, [item]);
 
-        items.forEach(item => {
-            const amount = parseFloat(item.amount) || 0;
-            subtotal += amount;
-            if (showGST) totalGST += parseFloat(item.totalGst) || 0;
-        });
+    const handleFieldChange = (field, value) => {
+        const updatedItem = { ...localItem, [field]: value };
 
-        sundryEntries.forEach(entry => {
-            const value = parseFloat(entry.value) || 0;
-            sundryTotal += entry.category === 'Roundoff (-)' ? -value : value;
-        });
+        if (isGST) {
+            // Recalculate GST values
+            const taxableValue = updatedItem.qty * updatedItem.price * (1 - updatedItem.discount / 100);
+            updatedItem.cgstAmt = (taxableValue * (updatedItem.cgstPercent / 100)).toFixed(2);
+            updatedItem.sgstAmt = (taxableValue * (updatedItem.sgstPercent / 100)).toFixed(2);
+            updatedItem.totalGst = (parseFloat(updatedItem.cgstAmt) + parseFloat(updatedItem.sgstAmt)).toFixed(2);
+            updatedItem.grandTotal = (taxableValue + parseFloat(updatedItem.totalGst)).toFixed(2);
+        } else {
+            // For regular items
+            updatedItem.grandTotal = (updatedItem.qty * updatedItem.price * (1 - updatedItem.discount / 100)).toFixed(2);
+        }
 
-        grandTotal = subtotal + (showGST ? totalGST : 0) + sundryTotal;
-        return { subtotal, totalGST, grandTotal, sundryTotal };
-    }, [items, sundryEntries, showGST]);
+        setLocalItem(updatedItem);
+        onUpdate(updatedItem);
+    };
 
-    const { subtotal, totalGST, grandTotal, sundryTotal } = calculateTotals;
+    const handleInputChange = (e, field) => {
+        const value = field === 'itemName' || field === 'uom' || field === 'debitCredit'
+            ? e
+            : parseFloat(e.target.value) || 0;
+        handleFieldChange(field, value);
+    };
 
     return (
-        <div className="flex flex-col items-center justify-center w-full space-y-6">
-            {/* Summary */}
-            <div className="bg-white p-6 rounded-xl shadow-md w-full max-w-md">
-                <h2 className="text-xl font-bold text-gray-800 mb-4 text-center">Order Summary</h2>
-                <div className="space-y-3">
-                    <div className="flex justify-between border-b py-2">
-                        <span>Subtotal:</span><span>₹{subtotal.toFixed(2)}</span>
+        <div id={`item-row-${localItem.id}`} className="card p-4 shadow-md space-y-4">
+            <div className="flex justify-between items-start">
+                <div className="w-full mr-4">
+                    <label className="block text-xs font-semibold text-gray-500 mb-1">
+                        <i className="fas fa-box mr-1"></i> Item Name
+                    </label>
+                    <SearchableDropdown
+                        options={itemOptions}
+                        initialValue={localItem.itemName}
+                        onChange={(value) => handleInputChange(value, 'itemName')}
+                        placeholder="Select item"
+                        showIcon={false}
+                        renderLabel={false}
+                    />
+                </div>
+                <button
+                    onClick={() => onDelete(localItem.id)}
+                    className="text-danger-red hover:text-danger-red-dark transition-colors duration-200 p-2 rounded-full"
+                    title="Remove Item"
+                >
+                    <i className="fas fa-times-circle text-lg"></i>
+                </button>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 p-3 bg-gray-50 rounded-lg border border-gray-200">
+                {/* Quantity */}
+                <div>
+                    <label className="block text-xs font-semibold text-gray-700 mb-1">
+                        <i className="fas fa-hashtag mr-1"></i> Quantity
+                    </label>
+                    <input
+                        type="number"
+                        value={localItem.qty}
+                        className="qty-input input-field w-full text-sm"
+                        onChange={(e) => handleInputChange(e, 'qty')}
+                    />
+                </div>
+
+                {/* UOM */}
+                <div>
+                    <label className="block text-xs font-semibold text-gray-700 mb-1">
+                        <i className="fas fa-balance-scale mr-1"></i> Unit
+                    </label>
+                    <SearchableDropdown
+                        options={uomOptions}
+                        initialValue={localItem.uom}
+                        onChange={(value) => handleInputChange(value, 'uom')}
+                        placeholder="Select UOM"
+                        showIcon={false}
+                        renderLabel={false}
+                    />
+                </div>
+
+                {/* Price */}
+                <div>
+                    <label className="block text-xs font-semibold text-gray-700 mb-1">
+                        <i className="fas fa-rupee-sign mr-1"></i> Price (per unit)
+                    </label>
+                    <input
+                        type="number"
+                        value={localItem.price}
+                        className="price-input input-field w-full text-sm"
+                        onChange={(e) => handleInputChange(e, 'price')}
+                    />
+                </div>
+
+                {/* Discount */}
+                <div>
+                    <label className="block text-xs font-semibold text-gray-700 mb-1">
+                        <i className="fas fa-percent mr-1"></i> Discount (%)
+                    </label>
+                    <input
+                        type="number"
+                        value={localItem.discount}
+                        className="discount-input input-field w-full text-sm"
+                        onChange={(e) => handleInputChange(e, 'discount')}
+                    />
+                </div>
+
+                {/* Transaction Type (only for Regular Items) */}
+                {!isGST && (
+                    <div>
+                        <label className="block text-xs font-semibold text-gray-700 mb-1">
+                            <i className="fas fa-exchange-alt mr-1"></i> Transaction Type
+                        </label>
+                        <SearchableDropdown
+                            options={debitCreditOptions}
+                            initialValue={localItem.debitCredit}
+                            onChange={(value) => handleInputChange(value, 'debitCredit')}
+                            placeholder="Select type"
+                            showIcon={false}
+                            renderLabel={false}
+                        />
                     </div>
-                    {showGST && (
-                        <div className="flex justify-between border-b py-2">
-                            <span>Total GST:</span><span>₹{totalGST.toFixed(2)}</span>
-                        </div>
-                    )}
-                    <div className="flex justify-between border-b py-2">
-                        <span>Sundry Total:</span><span>₹{sundryTotal.toFixed(2)}</span>
+                )}
+            </div>
+
+            {/* GST specific fields */}
+            {isGST && (
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 p-3 bg-blue-50 rounded-lg border border-blue-200">
+                    {/* CGST % */}
+                    <div>
+                        <label className="block text-xs font-semibold text-gray-600 mb-1">CGST (%)</label>
+                        <input
+                            type="number"
+                            value={localItem.cgstPercent}
+                            className="input-field w-full text-sm"
+                            onChange={(e) => handleInputChange(e, 'cgstPercent')}
+                        />
                     </div>
-                    <div className="flex justify-between pt-3 text-indigo-800 font-bold text-lg">
-                        <span>Grand Total:</span><span>₹{grandTotal.toFixed(2)}</span>
+
+                    {/* CGST Amt (Read-only) */}
+                    <div>
+                        <label className="block text-xs font-semibold text-gray-600 mb-1">CGST Amt</label>
+                        <input
+                            type="number"
+                            value={localItem.cgstAmt}
+                            className="input-field w-full text-sm bg-gray-100 cursor-not-allowed font-bold"
+                            readOnly
+                        />
+                    </div>
+
+                    {/* SGST % */}
+                    <div>
+                        <label className="block text-xs font-semibold text-gray-600 mb-1">SGST (%)</label>
+                        <input
+                            type="number"
+                            value={localItem.sgstPercent}
+                            className="input-field w-full text-sm"
+                            onChange={(e) => handleInputChange(e, 'sgstPercent')}
+                        />
+                    </div>
+
+                    {/* SGST Amt (Read-only) */}
+                    <div>
+                        <label className="block text-xs font-semibold text-gray-600 mb-1">SGST Amt</label>
+                        <input
+                            type="number"
+                            value={localItem.sgstAmt}
+                            className="input-field w-full text-sm bg-gray-100 cursor-not-allowed font-bold"
+                            readOnly
+                        />
+                    </div>
+
+                    {/* Total GST (Read-only) */}
+                    <div className="col-span-full sm:col-span-2 lg:col-span-2">
+                        <label className="block text-xs font-semibold text-gray-600 mb-1">Total GST</label>
+                        <input
+                            type="number"
+                            value={localItem.totalGst}
+                            className="input-field w-full text-sm bg-gray-100 cursor-not-allowed font-bold"
+                            readOnly
+                        />
+                    </div>
+
+                    {/* Grand Total (Read-only) */}
+                    <div className="col-span-full sm:col-span-2 lg:col-span-2">
+                        <label className="block text-xs font-semibold text-gray-600 mb-1">Grand Total (Item)</label>
+                        <input
+                            type="number"
+                            value={localItem.grandTotal}
+                            className="input-field w-full text-sm bg-gray-100 cursor-not-allowed font-bold text-lg text-primary-blue"
+                            readOnly
+                        />
                     </div>
                 </div>
-            </div>
-
-            {/* Buttons */}
-            <div className="flex flex-col sm:flex-row gap-3 justify-center w-full max-w-md">
-                <button
-                    onClick={onSaveReference}
-                    className="px-6 py-2.5 bg-indigo-800 text-white rounded-lg flex items-center justify-center"
-                >
-                    <i className="fas fa-save mr-2"></i> Save
-                </button>
-
-                <button
-                    onClick={() => setShowResetConfirm(true)}
-                    className="px-6 py-2.5 bg-gray-200 text-gray-800 rounded-lg flex items-center justify-center"
-                >
-                    <i className="fas fa-redo mr-2"></i> Reset
-                </button>
-
-                <button
-                    onClick={() => setShowCancelConfirm(true)}
-                    className="px-6 py-2.5 bg-red-600 text-white rounded-lg flex items-center justify-center"
-                >
-                    <i className="fas fa-times mr-2"></i> Cancel
-                </button>
-            </div>
-
-            {/* Reset Confirmation Modal */}
-            <ConfirmModel
-                isOpen={showResetConfirm}
-                title="Confirm Reset"
-                message="Are you sure you want to reset all entries? This action cannot be undone."
-                onConfirm={() => {
-                    onReset();
-                    setShowResetConfirm(false);
-                }}
-                onCancel={() => setShowResetConfirm(false)}
-            />
-
-            {/* Cancel Confirmation Modal */}
-            <ConfirmModel
-                isOpen={showCancelConfirm}
-                title="Confirm Cancel"
-                message="Are you sure you want to cancel? All unsaved data will be lost."
-                onConfirm={() => {
-                    // handle cancel logic or navigate away
-                    console.log("Cancelled");
-                    setShowCancelConfirm(false);
-                }}
-                onCancel={() => setShowCancelConfirm(false)}
-            />
+            )}
         </div>
     );
-}
+};
 
-export default SummaryAndActions;
+export default ItemRow;

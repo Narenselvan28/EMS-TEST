@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useCallback } from 'react';
-
 import VoucherDetailsSection from '../VoucherComponents/VoucherDetailsSection';
 import SalaryDetailsSection from '../VoucherComponents/SalaryDetailsSection';
 import AdvanceByGroupSection from '../VoucherComponents/AdvanceByGroupSection';
@@ -8,6 +7,7 @@ import PartyDetailsSection from '../VoucherComponents/PartyDetailsSection';
 import VendorDetailsSection from '../VoucherComponents/VendorDetailsSection';
 import GeneralVoucherSection from '../VoucherComponents/GeneralVoucherSection';
 import ConfirmResetModal from '../../essentials/ConfirmResetModel';
+
 const Vouchers = () => {
     // State for Voucher Details
     const [voucherDate, setVoucherDate] = useState(new Date().toISOString().slice(0, 10));
@@ -80,22 +80,17 @@ const Vouchers = () => {
         { value: 'others', text: 'Others' }
     ];
 
-    const updateBreadcrumb = useCallback(() => {
-        // This function is now mostly for display and is implicitly handled by state
-    }, []);
-
     const validateDateYear = (e) => {
         const input = e.target;
         const year = input.value.substring(0, 4);
         if (year.length > 4) {
-            input.value = input.value.substring(0, 10); // Truncate to YYYY-MM-DD
+            input.value = input.value.substring(0, 10);
         }
         setVoucherDate(input.value);
     };
 
     const filterVoucherCategories = useCallback(() => {
-        // No direct DOM manipulation, the select options will re-render based on voucherType state
-        setVoucherCategory(''); // Reset category when type changes
+        setVoucherCategory('');
     }, [voucherType]);
 
     useEffect(() => {
@@ -104,18 +99,15 @@ const Vouchers = () => {
 
     const toggleCategorySpecificSections = useCallback(() => {
         setGeneralLoader(true);
-        // Simulate loading delay for section transitions
         const timer = setTimeout(() => {
             setGeneralLoader(false);
-        }, 500); // Match CSS transition duration
-
+        }, 500);
         return () => clearTimeout(timer);
     }, []);
 
     useEffect(() => {
         toggleCategorySpecificSections();
     }, [voucherCategory, toggleCategorySpecificSections]);
-
 
     const saveVoucher = () => {
         if (!voucherDate || !voucherType || !voucherCategory) {
@@ -208,7 +200,7 @@ const Vouchers = () => {
         alert('Voucher Saved Successfully! Check console for data.');
     };
 
-    const performReset = () => { // Renamed original resetForm to performReset
+    const performReset = () => {
         setVoucherDate(new Date().toISOString().slice(0, 10));
         setVoucherType('');
         setVoucherCategory('');
@@ -255,7 +247,6 @@ const Vouchers = () => {
         setTripsheetEntries([]);
     };
 
-    // Functions to handle reset modal interactions
     const handleResetClick = () => {
         setIsResetModalOpen(true);
     };
@@ -269,8 +260,6 @@ const Vouchers = () => {
         setIsResetModalOpen(false);
     };
 
-
-    // This useEffect handles the Enter key functionality for form navigation
     useEffect(() => {
         const handleKeyDown = (event) => {
             if (event.key === 'Enter') {
@@ -279,7 +268,7 @@ const Vouchers = () => {
                     document.querySelectorAll(
                         'input:not([type="hidden"]):not([readonly]):not(.no-enter-tab), select:not(.no-enter-tab), button:not([disabled]):not(.no-enter-tab), textarea:not(.no-enter-tab)'
                     )
-                ).filter(el => el.offsetParent !== null); // Only visible elements
+                ).filter(el => el.offsetParent !== null);
 
                 const currentActiveElement = document.activeElement;
                 const currentIndex = focusableElements.indexOf(currentActiveElement);
@@ -301,16 +290,16 @@ const Vouchers = () => {
         };
     }, []);
 
-function handleBackToHome(){
-    window.history.back()
-}
+    function handleBackToHome() {
+        window.history.back();
+    }
+
     return (
-        <div className="p-6 sm:p-8 md:p-10 lg:p-12"> {/* Increased overall padding */}
+        <div className="p-4 sm:p-6 md:p-8 lg:p-10 bg-gray-50 min-h-screen">
             <style jsx>{`
                 body {
-                    font-family: 'Poppins', sans-serif;
-                    background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
-                    min-height: 100vh;
+                    font-family: 'Inter', sans-serif;
+                    background-color: #f8fafc;
                     color: #1e293b;
                 }
 
@@ -322,90 +311,112 @@ function handleBackToHome(){
                     border: 1px solid #cbd5e1;
                     padding: 0.75rem;
                     border-radius: 0.5rem;
-                    background-color: rgba(255, 255, 255, 0.85);
-                    transition: all 0.2s ease-in-out;
+                    background-color: white;
+                    transition: all 0.2s ease;
                     color: #334155;
+                    font-size: 0.95rem;
                 }
 
                 input:focus,
                 select:focus,
                 textarea:focus {
-                    border-color: #818cf8;
-                    box-shadow: 0 0 0 3px rgba(129, 140, 248, 0.2);
+                    border-color: #3182CE;
+                    box-shadow: 0 0 0 3px rgba(49, 130, 206, 0.2);
                     outline: none;
-                    background: rgba(255, 255, 255, 0.9);
                 }
 
                 textarea {
                     height: auto;
-                    min-height: 80px;
-                    padding-top: 0.5rem;
-                    padding-bottom: 0.5rem;
+                    min-height: 100px;
+                    padding: 0.75rem;
                 }
 
-                .glass-card {
-                    background: rgba(255, 255, 255, 0.85);
-                    backdrop-filter: blur(12px);
-                    -webkit-backdrop-filter: blur(12px);
-                    border-radius: 16px;
-                    border: 1px solid rgba(255, 255, 255, 0.25);
-                    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-                    transition: opacity 0.5s ease-in-out, visibility 0.5s ease-in-out, transform 0.3s ease, box-shadow 0.3s ease;
-                }
-
-                .glass-panel {
-                    background: rgba(255, 255, 255, 0.75);
-                    backdrop-filter: blur(8px);
-                    -webkit-backdrop-filter: blur(8px);
+                .card {
+                    background: white;
                     border-radius: 12px;
-                    border: 1px solid rgba(203, 213, 225, 0.2);
+                    border: 1px solid #e2e8f0;
+                    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.03);
                     transition: all 0.3s ease;
                 }
 
-                .glass-panel:hover {
-                    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+                .card:hover {
+                    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.05);
+                }
+
+                .panel {
+                    background: white;
+                    border-radius: 10px;
+                    border: 1px solid #e2e8f0;
+                    transition: all 0.3s ease;
+                }
+
+                .panel:hover {
+                    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+                }
+
+                .btn {
+                    display: inline-flex;
+                    align-items: center;
+                    justify-content: center;
+                    padding: 0.75rem 1.5rem;
+                    border-radius: 0.5rem;
+                    font-weight: 500;
+                    font-size: 0.95rem;
+                    line-height: 1;
+                    transition: all 0.2s ease;
+                    cursor: pointer;
+                    border: none;
+                    outline: none;
                 }
 
                 .btn-primary {
-                    background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+                    background: #3182CE;
                     color: white;
-                    box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
-                    transition: all 0.3s ease;
-                    border: none;
+                    box-shadow: 0 2px 4px rgba(49, 130, 206, 0.2);
                 }
 
                 .btn-primary:hover {
-                    background: linear-gradient(135deg, #4f46e5 0%, #4338ca 100%);
-                    box-shadow: 0 6px 20px rgba(99, 102, 241, 0.4);
-                    transform: translateY(-2px);
+                    background: #2b6cb0;
+                    box-shadow: 0 4px 6px rgba(49, 130, 206, 0.3);
+                    transform: translateY(-1px);
                 }
 
-                .btn-danger {
-                    background: linear-gradient(135deg, #f43f5e 0%, #e11d48 100%);
-                    color: white;
-                    box-shadow: 0 4px 15px rgba(244, 63, 94, 0.3);
-                    transition: all 0.3s ease;
-                    border: none;
+                .btn-primary:active {
+                    transform: translateY(0);
                 }
 
-                .btn-danger:hover {
-                    background: linear-gradient(135deg, #e11d48 0%, #be123c 100%);
-                    box-shadow: 0 6px 20px rgba(244, 63, 94, 0.4);
-                    transform: translateY(-2px);
+                .btn-secondary {
+                    background: white;
+                    color: #3182CE;
+                    border: 1px solid #3182CE;
+                }
+
+                .btn-secondary:hover {
+                    background: #ebf5ff;
+                    transform: translateY(-1px);
+                }
+
+                .btn-secondary:active {
+                    transform: translateY(0);
+                }
+
+                .btn-icon {
+                    margin-right: 0.5rem;
+                    width: 1.25rem;
+                    height: 1.25rem;
                 }
 
                 .table-header {
-                    background: linear-gradient(135deg, rgba(79, 70, 229, 0.9) 0%, rgba(67, 56, 202, 0.9) 100%);
+                    background: #3182CE;
                     color: white;
-                    backdrop-filter: blur(8px);
                 }
 
                 .table-row:hover {
-                    background-color: rgba(224, 231, 255, 0.3);
+                    background-color: #ebf5ff;
                 }
 
                 .gradient-text {
-                    background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+                    background: linear-gradient(135deg, #3182CE 0%, #63B3ED 100%);
                     -webkit-background-clip: text;
                     background-clip: text;
                     color: transparent;
@@ -417,21 +428,18 @@ function handleBackToHome(){
 
                 .select-wrapper select {
                     appearance: none;
-                    -webkit-appearance: none;
-                    -moz-appearance: none;
                     padding-right: 2.5rem;
                 }
 
                 .select-wrapper::after {
-                    content: '\\f0d7';
-                    font-family: "Font Awesome 5 Free";
-                    font-weight: 900;
+                    content: '▼';
                     position: absolute;
                     right: 1rem;
                     top: 50%;
                     transform: translateY(-50%);
                     pointer-events: none;
                     color: #64748b;
+                    font-size: 0.7rem;
                 }
 
                 .section-hidden {
@@ -440,21 +448,17 @@ function handleBackToHome(){
                     pointer-events: none;
                     max-height: 0;
                     overflow: hidden;
-                    padding-top: 0;
-                    padding-bottom: 0;
-                    margin-top: 0;
-                    margin-bottom: 0;
+                    padding: 0;
+                    margin: 0;
+                    transition: all 0.3s ease;
                 }
 
                 .section-visible {
                     opacity: 1;
                     visibility: visible;
                     pointer-events: auto;
-                    max-height: 2000px; /* Sufficiently large to allow expansion */
-                    padding-top: 1.5rem;
-                    padding-bottom: 1.5rem;
-                    margin-top: 1.5rem;
-                    margin-bottom: 1.5rem;
+                    max-height: 5000px;
+                    transition: all 0.5s ease;
                 }
 
                 .loader {
@@ -468,7 +472,7 @@ function handleBackToHome(){
                 .loader > div {
                     width: 12px;
                     height: 12px;
-                    background-color: #6366f1;
+                    background-color: #3182CE;
                     border-radius: 50%;
                     margin: 0 4px;
                     animation: stretch 1s infinite ease-in-out;
@@ -483,8 +487,7 @@ function handleBackToHome(){
                 }
 
                 @keyframes stretch {
-                    0%,
-                    100% {
+                    0%, 100% {
                         transform: scale(0.6);
                         opacity: 0.6;
                     }
@@ -493,149 +496,207 @@ function handleBackToHome(){
                         opacity: 1;
                     }
                 }
+
+                .breadcrumb-item {
+                    color: #4a5568;
+                    transition: color 0.2s;
+                }
+
+                .breadcrumb-item:hover {
+                    color: #3182CE;
+                }
+
+                .breadcrumb-separator {
+                    color: #a0aec0;
+                }
+
+                .active-breadcrumb {
+                    color: #3182CE;
+                    font-weight: 500;
+                }
+
+                .action-buttons {
+                    display: flex;
+                    gap: 1rem;
+                    justify-content: flex-end;
+                    margin-top: 2rem;
+                    padding-top: 1.5rem;
+                    border-top: 1px solid #e2e8f0;
+                }
+
+                @media (max-width: 640px) {
+                    .action-buttons {
+                        flex-direction: column;
+                        gap: 0.75rem;
+                    }
+                    
+                    .btn {
+                        width: 100%;
+                    }
+                }
             `}</style>
-            <div className="w-full mx-auto">
-               
 
-                <h1 className="text-4xl text-black font-bold mb-6 gradient-text flex items-center">
-                    <i className="fas fa-receipt mr-3"></i> Voucher Entry
-                </h1>
-                    <nav className="flex items-center mb-6 text-sm text-gray-600" aria-label="Breadcrumb">
-                        <ol className="inline-flex items-center space-x-1 md:space-x-3">
-                            <li className="flex items-center">
-                                <button onClick={handleBackToHome} className="flex items-center text-gray-500 hover:text-indigo-600">
-                                    <svg className="w-4 h-4 mr-1.5" fill="currentColor" viewBox="0 0 20 20">
-                                        <path d="M10.707 1.293a1 1 0 00-1.414 0L2 8.586V17a1 1 0 001 1h5a1 1 0 001-1v-4h2v4a1 1 0 001 1h5a1 1 0 001-1V8.586l-7.293-7.293z" />
-                                    </svg>
-                                    Dashboard
-                                </button>
-                            </li>
-                            <li>
-                                <svg className="w-3 h-3 text-gray-400 mx-1" fill="none" viewBox="0 0 6 10">
-                                    <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M1 9l4-4-4-4" />
+            <div className="max-w-7xl mx-auto">
+                <div className="flex flex-col space-y-6">
+                    {/* Header Section */}
+                    <div className="flex flex-col space-y-4">
+                        <div className="flex items-center justify-between">
+                            <h1 className="text-3xl md:text-4xl font-bold text-gray-800 flex items-center">
+                                <svg className="w-8 h-8 mr-3 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fillRule="evenodd" d="M4 4a2 2 0 00-2 2v4a2 2 0 002 2V6h10a2 2 0 00-2-2H4zm2 6a2 2 0 012-2h8a2 2 0 012 2v4a2 2 0 01-2 2H8a2 2 0 01-2-2v-4zm6 4a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd" />
                                 </svg>
-                            </li>
-                            <li>
-                                <button className="text-gray-500 hover:text-indigo-600">
-                                    Vouchers
-                                </button>
-                            </li>
+                                <span className="gradient-text">Voucher Entry</span>
+                            </h1>
+                        </div>
 
-                        </ol>
-                    </nav>
+                        <nav className="flex" aria-label="Breadcrumb">
+                            <ol className="flex items-center space-x-2">
+                                <li>
+                                    <button 
+                                        onClick={handleBackToHome} 
+                                        className="flex items-center text-gray-500 hover:text-blue-600 transition-colors"
+                                    >
+                                        <svg className="w-5 h-5 mr-1.5" fill="currentColor" viewBox="0 0 20 20">
+                                            <path d="M10.707 1.293a1 1 0 00-1.414 0L2 8.586V17a1 1 0 001 1h5a1 1 0 001-1v-4h2v4a1 1 0 001 1h5a1 1 0 001-1V8.586l-7.293-7.293z" />
+                                        </svg>
+                                        Dashboard
+                                    </button>
+                                </li>
+                                <li className="flex items-center">
+                                    <svg className="w-4 h-4 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clipRule="evenodd" />
+                                    </svg>
+                                    <span className="ml-2 text-blue-600 font-medium">Vouchers</span>
+                                </li>
+                            </ol>
+                        </nav>
+                    </div>
 
-                <VoucherDetailsSection
-                    voucherDate={voucherDate}
-                    setVoucherDate={setVoucherDate}
-                    voucherType={voucherType}
-                    setVoucherType={setVoucherType}
-                    voucherCategory={voucherCategory}
-                    setVoucherCategory={setVoucherCategory}
-                    payoutCategories={payoutCategories}
-                    receiptCategories={receiptCategories}
-                    validateDateYear={validateDateYear}
-                />
+                    {/* Main Content */}
+                    <div className="grid grid-cols-1 gap-6">
+                        <VoucherDetailsSection
+                            voucherDate={voucherDate}
+                            setVoucherDate={setVoucherDate}
+                            voucherType={voucherType}
+                            setVoucherType={setVoucherType}
+                            voucherCategory={voucherCategory}
+                            setVoucherCategory={setVoucherCategory}
+                            payoutCategories={payoutCategories}
+                            receiptCategories={receiptCategories}
+                            validateDateYear={validateDateYear}
+                        />
 
+                        {voucherCategory === 'salary' && (
+                            <SalaryDetailsSection
+                                employeeCategory={employeeCategory}
+                                setEmployeeCategory={setEmployeeCategory}
+                                employeeGroup={employeeGroup}
+                                setEmployeeGroup={setEmployeeGroup}
+                                dateRangeFrom={dateRangeFrom}
+                                setDateRangeFrom={setDateRangeFrom}
+                                dateRangeTo={dateRangeTo}
+                                setDateRangeTo={setDateRangeTo}
+                                employees={employees}
+                                setEmployees={setEmployees}
+                                employeeLoader={employeeLoader}
+                                setEmployeeLoader={setEmployeeLoader}
+                                salarySummary={salarySummary}
+                                setSalarySummary={setSalarySummary}
+                            />
+                        )}
 
-                {voucherCategory === 'salary' && (
-                    <SalaryDetailsSection
-                        employeeCategory={employeeCategory}
-                        setEmployeeCategory={setEmployeeCategory}
-                        employeeGroup={employeeGroup}
-                        setEmployeeGroup={setEmployeeGroup}
-                        dateRangeFrom={dateRangeFrom}
-                        setDateRangeFrom={setDateRangeFrom}
-                        dateRangeTo={dateRangeTo}
-                        setDateRangeTo={setDateRangeTo}
-                        employees={employees}
-                        setEmployees={setEmployees}
-                        employeeLoader={employeeLoader}
-                        setEmployeeLoader={setEmployeeLoader}
-                        salarySummary={salarySummary}
-                        setSalarySummary={setSalarySummary}
-                    />
-                )}
+                        {voucherCategory === 'advance_group' && (
+                            <AdvanceByGroupSection
+                                advGroupDate={advGroupDate}
+                                setAdvGroupDate={setAdvGroupDate}
+                                advGroupEmployeeCategory={advGroupEmployeeCategory}
+                                setAdvGroupEmployeeCategory={setAdvGroupEmployeeCategory}
+                                advGroupEmployeeGroup={advGroupEmployeeGroup}
+                                setAdvGroupEmployeeGroup={setAdvGroupEmployeeGroup}
+                                advGroupAmount={advGroupAmount}
+                                setAdvGroupAmount={setAdvGroupAmount}
+                                advGroupRemarks={advGroupRemarks}
+                                setAdvGroupRemarks={setAdvGroupRemarks}
+                            />
+                        )}
 
-                {voucherCategory === 'advance_group' && (
-                    <AdvanceByGroupSection
-                        advGroupDate={advGroupDate}
-                        setAdvGroupDate={setAdvGroupDate}
-                        advGroupEmployeeCategory={advGroupEmployeeCategory}
-                        setAdvGroupEmployeeCategory={setAdvGroupEmployeeCategory}
-                        advGroupEmployeeGroup={advGroupEmployeeGroup}
-                        setAdvGroupEmployeeGroup={setAdvGroupEmployeeGroup}
-                        advGroupAmount={advGroupAmount}
-                        setAdvGroupAmount={setAdvGroupAmount}
-                        advGroupRemarks={advGroupRemarks}
-                        setAdvGroupRemarks={setAdvGroupRemarks}
-                    />
-                )}
+                        {voucherCategory === 'advance_individual' && (
+                            <AdvanceByIndividualSection
+                                advIndividualEmployeeCategory={advIndividualEmployeeCategory}
+                                setAdvIndividualEmployeeCategory={setAdvIndividualEmployeeCategory}
+                                advIndividualEmployeeGroup={advIndividualEmployeeGroup}
+                                setAdvIndividualEmployeeGroup={setAdvIndividualEmployeeGroup}
+                                advIndividualAdvanceByGroup={advIndividualAdvanceByGroup}
+                                setAdvIndividualAdvanceByGroup={setAdvIndividualAdvanceByGroup}
+                                splitEvenCheckbox={splitEvenCheckbox}
+                                setSplitEvenCheckbox={setSplitEvenCheckbox}
+                                individualAdvances={individualAdvances}
+                                setIndividualAdvances={setIndividualAdvances}
+                            />
+                        )}
 
-                {voucherCategory === 'advance_individual' && (
-                    <AdvanceByIndividualSection
-                        advIndividualEmployeeCategory={advIndividualEmployeeCategory}
-                        setAdvIndividualEmployeeCategory={setAdvIndividualEmployeeCategory}
-                        advIndividualEmployeeGroup={advIndividualEmployeeGroup}
-                        setAdvIndividualEmployeeGroup={setAdvIndividualEmployeeGroup}
-                        advIndividualAdvanceByGroup={advIndividualAdvanceByGroup}
-                        setAdvIndividualAdvanceByGroup={setAdvIndividualAdvanceByGroup}
-                        splitEvenCheckbox={splitEvenCheckbox}
-                        setSplitEvenCheckbox={setSplitEvenCheckbox}
-                        individualAdvances={individualAdvances}
-                        setIndividualAdvances={setIndividualAdvances}
-                    />
-                )}
+                        {voucherCategory === 'party' && (
+                            <PartyDetailsSection
+                                partyDate={partyDate}
+                                setPartyDate={setPartyDate}
+                                partyName={partyName}
+                                setPartyName={setPartyName}
+                                transactionMethod={transactionMethod}
+                                setTransactionMethod={setTransactionMethod}
+                                payoutAmount={payoutAmount}
+                                setPayoutAmount={setPayoutAmount}
+                                nafedCheckbox={nafedCheckbox}
+                                setNafedCheckbox={setNafedCheckbox}
+                                existingDues={existingDues}
+                                setExistingDues={setExistingDues}
+                            />
+                        )}
 
-                {voucherCategory === 'party' && (
-                    <PartyDetailsSection
-                        partyDate={partyDate}
-                        setPartyDate={setPartyDate}
-                        partyName={partyName}
-                        setPartyName={setPartyName}
-                        transactionMethod={transactionMethod}
-                        setTransactionMethod={setTransactionMethod}
-                        payoutAmount={payoutAmount}
-                        setPayoutAmount={setPayoutAmount}
-                        nafedCheckbox={nafedCheckbox}
-                        setNafedCheckbox={setNafedCheckbox}
-                        existingDues={existingDues}
-                        setExistingDues={setExistingDues}
-                    />
-                )}
+                        {voucherCategory === 'vendor' && (
+                            <VendorDetailsSection
+                                vendorName={vendorName}
+                                setVendorName={setVendorName}
+                                expenseCategory={expenseCategory}
+                                setExpenseCategory={setExpenseCategory}
+                                vendorTransactionMethod={vendorTransactionMethod}
+                                setVendorTransactionMethod={setVendorTransactionMethod}
+                                vendorAmount={vendorAmount}
+                                setVendorAmount={setVendorAmount}
+                                vendorRemarks={vendorRemarks}
+                                setVendorRemarks={setVendorRemarks}
+                                tripsheetEntries={tripsheetEntries}
+                                setTripsheetEntries={setTripsheetEntries}
+                            />
+                        )}
 
-                {voucherCategory === 'vendor' && (
-                    <VendorDetailsSection
-                        vendorName={vendorName}
-                        setVendorName={setVendorName}
-                        expenseCategory={expenseCategory}
-                        setExpenseCategory={setExpenseCategory}
-                        vendorTransactionMethod={vendorTransactionMethod}
-                        setVendorTransactionMethod={setVendorTransactionMethod}
-                        vendorAmount={vendorAmount}
-                        setVendorAmount={setVendorAmount}
-                        vendorRemarks={vendorRemarks}
-                        setVendorRemarks={setVendorRemarks}
-                        tripsheetEntries={tripsheetEntries}
-                        setTripsheetEntries={setTripsheetEntries}
-                    />
-                )}
+                        {voucherCategory && !['salary', 'advance_group', 'advance_individual', 'party', 'vendor'].includes(voucherCategory) && (
+                            <GeneralVoucherSection />
+                        )}
 
-                {voucherCategory && !['salary', 'advance_group', 'advance_individual', 'party', 'vendor'].includes(voucherCategory) && (
-                    <GeneralVoucherSection />
-                )}
-
-
-                <div className="flex flex-wrap gap-4 mb-8 justify-center">
-                    <button onClick={saveVoucher} className="btn-primary px-8 py-4 rounded-xl text-base font-medium">
-                        <i className="fas fa-save mr-2"></i> Save Voucher
-                    </button>
-                    <button onClick={handleResetClick} className="btn-danger px-8 py-4 rounded-xl text-base font-medium"> { /* Modified onClick to open modal */}
-                        <i className="fas fa-redo mr-2"></i> Reset Form
-                    </button>
+                        <div className="action-buttons">
+                            <button 
+                                onClick={handleResetClick} 
+                                className="btn btn-secondary"
+                            >
+                                <svg className="btn-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                                </svg>
+                                Reset Form
+                            </button>
+                            <button 
+                                onClick={saveVoucher} 
+                                className="btn btn-primary"
+                            >
+                                <svg className="btn-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4" />
+                                </svg>
+                                Save Voucher
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            {/* Confirm Reset Modal */}
             <ConfirmResetModal
                 isOpen={isResetModalOpen}
                 onConfirm={handleResetConfirm}

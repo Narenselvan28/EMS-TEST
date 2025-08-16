@@ -17,12 +17,13 @@ const SalaryDetailsSection = ({
     salarySummary,
     setSalarySummary,
 }) => {
-
+    /**
+     * Simulates fetching employee data from a backend based on selected filters.
+     * Sets a loading state, fetches mock data, and then updates the employee list.
+     */
     const loadEmployeeData = () => {
         setEmployeeLoader(true);
-        setEmployees([]); // Clear existing data
-
-        console.log(`Loading employees for Category: ${employeeCategory}, Group: ${employeeGroup}, From: ${dateRangeFrom}, To: ${dateRangeTo}`);
+        setEmployees([]);
 
         setTimeout(() => {
             const fetchedEmployees = [
@@ -33,7 +34,9 @@ const SalaryDetailsSection = ({
                 { empCode: 'E005', name: 'Eve Adams', advance: 1000, gross: 28000, net: 25500, amountGiven: 0, isPresent: true },
             ].map(emp => ({
                 ...emp,
+                // Calculate the remaining amount to be given after deductions
                 amountToBeGiven: Math.max(0, emp.net - emp.advance - emp.amountGiven),
+                // Calculate any due amount (e.g., if advances and amount given exceed net salary)
                 dueAmount: (emp.advance + emp.amountGiven) > emp.net ? (emp.advance + emp.amountGiven) - emp.net : 0,
             }));
             setEmployees(fetchedEmployees);
@@ -41,6 +44,11 @@ const SalaryDetailsSection = ({
         }, 1000);
     };
 
+    /**
+     * Updates the 'amountGiven' field for a specific employee and recalculates related fields.
+     * @param {number} index - The index of the employee in the array.
+     * @param {string} value - The new value for the amount given.
+     */
     const updateEmployeeAmounts = (index, value) => {
         const newEmployees = [...employees];
         const emp = newEmployees[index];
@@ -50,12 +58,20 @@ const SalaryDetailsSection = ({
         setEmployees(newEmployees);
     };
 
+    /**
+     * Toggles the 'isPresent' status for a specific employee.
+     * @param {number} index - The index of the employee in the array.
+     */
     const toggleEmployeeAttendance = (index) => {
         const newEmployees = [...employees];
         newEmployees[index].isPresent = !newEmployees[index].isPresent;
         setEmployees(newEmployees);
     };
 
+    /**
+     * Recalculates the total salary summary whenever the 'employees' state changes.
+     * This ensures the summary is always up-to-date with user edits.
+     */
     useEffect(() => {
         let totalAdvance = 0;
         let totalGrossSalary = 0;
@@ -78,18 +94,30 @@ const SalaryDetailsSection = ({
     }, [employees, setSalarySummary]);
 
     return (
-        <div className="bg-white shadow-md rounded-xl p-6 mb-8">
-            <h2 className="text-2xl font-semibold mb-6 text-indigo-600">
-                Salary Details
-            </h2>
+        <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6 mb-8 transition-all duration-200 hover:shadow-md">
+            {/* Header Section with Icon and Title */}
+            <div className="flex items-center mb-6 pb-4 border-b border-gray-100">
+                <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-[#3182CE] text-white mr-3">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z" />
+                    </svg>
+                </div>
+                <h2 className="text-2xl font-semibold text-[#3182CE]">
+                    Salary Details
+                </h2>
+            </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+            {/* Input fields for filters */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
                 <div>
-                    <label htmlFor="employeeCategory" className="block mb-2 font-medium text-gray-700">
+                    <label htmlFor="employeeCategory" className="block text-sm font-medium text-gray-600 mb-1">
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 inline mr-2 text-[#3182CE]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M3 10h18M7 15h10M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                        </svg>
                         Employee Category
                     </label>
                     <select
-                        className="w-full border border-gray-300 p-2 rounded-md focus:ring-2 focus:ring-indigo-200"
+                        className="w-full pl-8 pr-3 py-2 text-sm border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#3182CE]/50 focus:border-[#3182CE] transition-all"
                         id="employeeCategory"
                         value={employeeCategory}
                         onChange={(e) => setEmployeeCategory(e.target.value)}
@@ -102,11 +130,14 @@ const SalaryDetailsSection = ({
                 </div>
 
                 <div>
-                    <label htmlFor="employeeGroup" className="block mb-2 font-medium text-gray-700">
+                    <label htmlFor="employeeGroup" className="block text-sm font-medium text-gray-600 mb-1">
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 inline mr-2 text-[#3182CE]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M17 20h-8a2 2 0 01-2-2V7a2 2 0 012-2h8a2 2 0 012 2v11a2 2 0 01-2 2z" />
+                        </svg>
                         Employee Group
                     </label>
                     <select
-                        className="w-full border border-gray-300 p-2 rounded-md focus:ring-2 focus:ring-indigo-200"
+                        className="w-full pl-8 pr-3 py-2 text-sm border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#3182CE]/50 focus:border-[#3182CE] transition-all"
                         id="employeeGroup"
                         value={employeeGroup}
                         onChange={(e) => setEmployeeGroup(e.target.value)}
@@ -119,40 +150,48 @@ const SalaryDetailsSection = ({
                 </div>
 
                 <div>
-                    <label htmlFor="dateRangeFrom" className="block mb-2 font-medium text-gray-700">
+                    <label htmlFor="dateRangeFrom" className="block text-sm font-medium text-gray-600 mb-1">
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 inline mr-2 text-[#3182CE]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                        </svg>
                         Date Range From
                     </label>
                     <input
                         type="date"
-                        className="w-full border border-gray-300 p-2 rounded-md focus:ring-2 focus:ring-indigo-200"
+                        className="w-full pl-8 pr-3 py-2 text-sm border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#3182CE]/50 focus:border-[#3182CE] transition-all"
                         id="dateRangeFrom"
                         value={dateRangeFrom}
                         onChange={(e) => setDateRangeFrom(e.target.value)}
                     />
                 </div>
                 <div>
-                    <label htmlFor="dateRangeTo" className="block mb-2 font-medium text-gray-700">
+                    <label htmlFor="dateRangeTo" className="block text-sm font-medium text-gray-600 mb-1">
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 inline mr-2 text-[#3182CE]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                        </svg>
                         Date Range To
                     </label>
                     <input
                         type="date"
-                        className="w-full border border-gray-300 p-2 rounded-md focus:ring-2 focus:ring-indigo-200"
+                        className="w-full pl-8 pr-3 py-2 text-sm border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#3182CE]/50 focus:border-[#3182CE] transition-all"
                         id="dateRangeTo"
                         value={dateRangeTo}
                         onChange={(e) => setDateRangeTo(e.target.value)}
                     />
                 </div>
-                <div className="col-span-full flex justify-end mt-2">
-                    <button
-                        onClick={loadEmployeeData}
-                        className="bg-indigo-600 text-white px-6 py-2 rounded-md hover:bg-indigo-700 transition"
-                    >
-                        Load Employees
-                    </button>
-                </div>
+            </div>
+            
+            <div className="flex justify-end mt-4">
+                <button
+                    onClick={loadEmployeeData}
+                    className="bg-gradient-to-br from-[#3182CE] to-indigo-800 text-white px-6 py-2 rounded-lg font-medium hover:from-indigo-800 hover:to-[#3182CE] transition duration-200 shadow-sm"
+                >
+                    Load Employees
+                </button>
             </div>
 
-            <div className="border border-gray-300 rounded-xl overflow-hidden shadow-sm mb-6">
+            {/* Salary Employee Table */}
+            <div className="mt-8 border border-gray-200 rounded-xl overflow-hidden shadow-sm">
                 <SalaryEmployeeTable
                     employees={employees}
                     updateEmployeeAmounts={updateEmployeeAmounts}
@@ -160,26 +199,27 @@ const SalaryDetailsSection = ({
                 />
             </div>
 
-            <div className="border border-gray-200 rounded-xl p-6 bg-gray-50">
+            {/* Salary Summary Section */}
+            <div className="mt-8 border border-gray-200 rounded-xl p-6 bg-gray-50 shadow-sm">
                 <h3 className="text-xl font-semibold mb-4 text-gray-800">
                     Salary Summary
                 </h3>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                    <div>
-                        <span className="block text-gray-600 text-sm">Total Amount in Advance:</span>
-                        <span className="font-bold text-lg text-indigo-700">₹{salarySummary.totalAdvance.toFixed(2)}</span>
+                <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 text-center">
+                    <div className="bg-white p-4 rounded-lg border border-gray-100 shadow-sm">
+                        <span className="block text-gray-600 text-sm">Total Advance:</span>
+                        <span className="font-bold text-lg text-[#3182CE]">₹{salarySummary.totalAdvance.toFixed(2)}</span>
                     </div>
-                    <div>
+                    <div className="bg-white p-4 rounded-lg border border-gray-100 shadow-sm">
                         <span className="block text-gray-600 text-sm">Total Gross Salary:</span>
-                        <span className="font-bold text-lg text-indigo-700">₹{salarySummary.totalGrossSalary.toFixed(2)}</span>
+                        <span className="font-bold text-lg text-[#3182CE]">₹{salarySummary.totalGrossSalary.toFixed(2)}</span>
                     </div>
-                    <div>
+                    <div className="bg-white p-4 rounded-lg border border-gray-100 shadow-sm">
                         <span className="block text-gray-600 text-sm">Total Net Salary:</span>
-                        <span className="font-bold text-lg text-indigo-700">₹{salarySummary.totalNetSalary.toFixed(2)}</span>
+                        <span className="font-bold text-lg text-[#3182CE]">₹{salarySummary.totalNetSalary.toFixed(2)}</span>
                     </div>
-                    <div>
+                    <div className="bg-white p-4 rounded-lg border border-gray-100 shadow-sm">
                         <span className="block text-gray-600 text-sm">Total Amount to be given:</span>
-                        <span className="font-bold text-lg text-indigo-700">₹{salarySummary.totalAmountToBeGiven.toFixed(2)}</span>
+                        <span className="font-bold text-lg text-[#3182CE]">₹{salarySummary.totalAmountToBeGiven.toFixed(2)}</span>
                     </div>
                 </div>
             </div>

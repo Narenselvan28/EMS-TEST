@@ -13,47 +13,50 @@ const AdvanceByGroupSection = ({
     setAdvGroupRemarks,
 }) => {
     return (
-        <div className="bg-white shadow-md rounded-2xl p-6 mb-8 transition-all duration-300 hover:shadow-lg">
-            <h2 className="text-2xl font-bold  mb-6  flex items-center">
-                <i className="fas fa-users-cog text-indigo-600 mr-3 text-xl"></i>
-                Advance by Group Details
-            </h2>
+        <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6 mb-8 transition-all duration-200 hover:shadow-md">
+            {/* Header with accent color */}
+            <div className="flex items-center mb-6 pb-4 border-b border-gray-100">
+                <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-[#3182CE] text-white mr-3">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+                    </svg>
+                </div>
+                <h2 className="text-xl font-semibold text-gray-800">
+                    Group Advance Allocation
+                </h2>
+            </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {/* Date Input */}
-                <div>
-                    <label
-                        htmlFor="advGroupDate"
-                        className="block mb-2 text-sm font-medium text-gray-700"
-                    >
-                        <i className="fas fa-calendar-alt mr-2 text-indigo-500"></i>
+                <div className="space-y-1">
+                    <label className="block text-sm font-medium text-gray-600 mb-1">
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 inline mr-2 text-[#3182CE]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                        </svg>
                         Date
                     </label>
                     <input
                         type="date"
-                        id="advGroupDate"
                         value={advGroupDate}
                         onChange={(e) => setAdvGroupDate(e.target.value)}
-                        className="w-full px-3 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-400"
+                        className="w-full px-3 py-2 text-sm border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#3182CE]/50 focus:border-[#3182CE] transition-all"
                     />
                 </div>
 
                 {/* Employee Category */}
-                <div>
-                    <label
-                        htmlFor="advGroupEmployeeCategory"
-                        className="block mb-2 text-sm font-medium text-gray-700"
-                    >
-                        <i className="fas fa-user-tag mr-2 text-indigo-500"></i>
+                <div className="space-y-1">
+                    <label className="block text-sm font-medium text-gray-600 mb-1">
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 inline mr-2 text-[#3182CE]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                        </svg>
                         Employee Category
                     </label>
                     <select
-                        id="advGroupEmployeeCategory"
                         value={advGroupEmployeeCategory}
                         onChange={(e) => setAdvGroupEmployeeCategory(e.target.value)}
-                        className="w-full px-3 py-2 border rounded-lg shadow-sm bg-white focus:outline-none focus:ring-2 focus:ring-indigo-400"
+                        className="w-full px-3 py-2 text-sm border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#3182CE]/50 focus:border-[#3182CE] transition-all appearance-none bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9IiMzMTgyQ0UiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIj48cGF0aCBkPSJtMTkgOS03IDctNy03Ii8+PC9zdmc+')] bg-no-repeat bg-[center_right_0.75rem]"
                     >
-                        <option value="">— Select Category —</option>
+                        <option value="">Select Category</option>
                         <option>Permanent</option>
                         <option>Contract</option>
                         <option>Intern</option>
@@ -61,21 +64,19 @@ const AdvanceByGroupSection = ({
                 </div>
 
                 {/* Employee Group */}
-                <div>
-                    <label
-                        htmlFor="advGroupEmployeeGroup"
-                        className="block mb-2 text-sm font-medium text-gray-700"
-                    >
-                        <i className="fas fa-users mr-2 text-indigo-500"></i>
+                <div className="space-y-1">
+                    <label className="block text-sm font-medium text-gray-600 mb-1">
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 inline mr-2 text-[#3182CE]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                        </svg>
                         Employee Group
                     </label>
                     <select
-                        id="advGroupEmployeeGroup"
                         value={advGroupEmployeeGroup}
                         onChange={(e) => setAdvGroupEmployeeGroup(e.target.value)}
-                        className="w-full px-3 py-2 border rounded-lg shadow-sm bg-white focus:outline-none focus:ring-2 focus:ring-indigo-400"
+                        className="w-full px-3 py-2 text-sm border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#3182CE]/50 focus:border-[#3182CE] transition-all appearance-none bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9IiMzMTgyQ0UiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIj48cGF0aCBkPSJtMTkgOS03IDctNy03Ii8+PC9zdmc+')] bg-no-repeat bg-[center_right_0.75rem]"
                     >
-                        <option value="">— Select Group —</option>
+                        <option value="">Select Group</option>
                         <option>Management</option>
                         <option>Production</option>
                         <option>Sales</option>
@@ -83,41 +84,40 @@ const AdvanceByGroupSection = ({
                 </div>
 
                 {/* Amount Input */}
-                <div>
-                    <label
-                        htmlFor="advGroupAmount"
-                        className="block mb-2 text-sm font-medium text-gray-700"
-                    >
-                        <i className="fas fa-coins mr-2 text-indigo-500"></i>
+                <div className="space-y-1">
+                    <label className="block text-sm font-medium text-gray-600 mb-1">
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 inline mr-2 text-[#3182CE]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
                         Amount (₹)
                     </label>
-                    <input
-                        type="number"
-                        step="0.01"
-                        id="advGroupAmount"
-                        value={advGroupAmount}
-                        onChange={(e) => setAdvGroupAmount(e.target.value)}
-                        placeholder="Enter advance amount"
-                        className="w-full px-3 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-400"
-                    />
+                    <div className="relative">
+                        <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400">₹</span>
+                        <input
+                            type="number"
+                            step="0.01"
+                            value={advGroupAmount}
+                            onChange={(e) => setAdvGroupAmount(e.target.value)}
+                            placeholder="0.00"
+                            className="w-full pl-8 pr-3 py-2 text-sm border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#3182CE]/50 focus:border-[#3182CE] transition-all"
+                        />
+                    </div>
                 </div>
 
-                {/* Remarks */}
-                <div className="md:col-span-2">
-                    <label
-                        htmlFor="advGroupRemarks"
-                        className="block mb-2 text-sm font-medium text-gray-700"
-                    >
-                        <i className="fas fa-comment-alt mr-2 text-indigo-500"></i>
+                {/* Remarks - Full width */}
+                <div className="md:col-span-2 space-y-1">
+                    <label className="block text-sm font-medium text-gray-600 mb-1">
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 inline mr-2 text-[#3182CE]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z" />
+                        </svg>
                         Remarks
                     </label>
                     <textarea
-                        id="advGroupRemarks"
                         rows="3"
                         value={advGroupRemarks}
                         onChange={(e) => setAdvGroupRemarks(e.target.value)}
-                        placeholder="Add any remarks..."
-                        className="w-full px-3 py-2 border rounded-lg shadow-sm resize-none focus:outline-none focus:ring-2 focus:ring-indigo-400"
+                        placeholder="Additional notes..."
+                        className="w-full px-3 py-2 text-sm border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#3182CE]/50 focus:border-[#3182CE] transition-all resize-none"
                     ></textarea>
                 </div>
             </div>
