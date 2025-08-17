@@ -117,6 +117,7 @@ const AdvanceByIndividualSection = ({
           </select>
         </div>
 
+
         {/* Employee Group */}
         <div>
           <label className="block text-base font-medium text-gray-600 mb-2 flex items-center">

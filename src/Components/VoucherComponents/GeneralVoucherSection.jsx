@@ -77,4 +77,4 @@ const GeneralVoucherSection = () => {
     );
 };
 
-export default GeneralVoucherSection;
+export default GeneralVoucherSection; 

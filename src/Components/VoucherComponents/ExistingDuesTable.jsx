@@ -109,6 +109,7 @@ const ExistingDuesTable = ({ existingDues, setExistingDues, primaryColor = '#318
                                 />
                             </td>
                             <td 
+                            
                                 className="px-4 py-3 text-sm"
                                 style={{ 
                                     color: colors.text,

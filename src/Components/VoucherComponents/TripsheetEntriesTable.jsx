@@ -68,6 +68,6 @@ const TripsheetEntriesTable = ({ tripsheetEntries, updateTripsheetEntry, toggleT
             </table>
         </div>
     );
-};
+}; 
 
 export default TripsheetEntriesTable;

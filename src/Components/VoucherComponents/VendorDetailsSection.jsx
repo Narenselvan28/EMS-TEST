@@ -257,4 +257,5 @@ const VendorDetailsSection = ({
     );
 };
 
+
 export default VendorDetailsSection;

@@ -158,4 +158,5 @@ const IndividualAdvanceTable = ({ individualAdvances, updateIndividualAdvanceAmo
     );
 };
 
+
 export default IndividualAdvanceTable;

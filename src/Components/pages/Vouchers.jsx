@@ -295,246 +295,8 @@ const Vouchers = () => {
     }
 
     return (
-        <div className="p-4 sm:p-6 md:p-8 lg:p-10 bg-gray-50 min-h-screen">
-            <style jsx>{`
-                body {
-                    font-family: 'Inter', sans-serif;
-                    background-color: #f8fafc;
-                    color: #1e293b;
-                }
+        <div className="p-4 sm:p-6 md:p-8 lg:p- bg-gray-50 min-h-screen">
 
-                input,
-                select,
-                textarea {
-                    min-width: 100px;
-                    height: 42px;
-                    border: 1px solid #cbd5e1;
-                    padding: 0.75rem;
-                    border-radius: 0.5rem;
-                    background-color: white;
-                    transition: all 0.2s ease;
-                    color: #334155;
-                    font-size: 0.95rem;
-                }
-
-                input:focus,
-                select:focus,
-                textarea:focus {
-                    border-color: #3182CE;
-                    box-shadow: 0 0 0 3px rgba(49, 130, 206, 0.2);
-                    outline: none;
-                }
-
-                textarea {
-                    height: auto;
-                    min-height: 100px;
-                    padding: 0.75rem;
-                }
-
-                .card {
-                    background: white;
-                    border-radius: 12px;
-                    border: 1px solid #e2e8f0;
-                    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.03);
-                    transition: all 0.3s ease;
-                }
-
-                .card:hover {
-                    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.05);
-                }
-
-                .panel {
-                    background: white;
-                    border-radius: 10px;
-                    border: 1px solid #e2e8f0;
-                    transition: all 0.3s ease;
-                }
-
-                .panel:hover {
-                    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-                }
-
-                .btn {
-                    display: inline-flex;
-                    align-items: center;
-                    justify-content: center;
-                    padding: 0.75rem 1.5rem;
-                    border-radius: 0.5rem;
-                    font-weight: 500;
-                    font-size: 0.95rem;
-                    line-height: 1;
-                    transition: all 0.2s ease;
-                    cursor: pointer;
-                    border: none;
-                    outline: none;
-                }
-
-                .btn-primary {
-                    background: #3182CE;
-                    color: white;
-                    box-shadow: 0 2px 4px rgba(49, 130, 206, 0.2);
-                }
-
-                .btn-primary:hover {
-                    background: #2b6cb0;
-                    box-shadow: 0 4px 6px rgba(49, 130, 206, 0.3);
-                    transform: translateY(-1px);
-                }
-
-                .btn-primary:active {
-                    transform: translateY(0);
-                }
-
-                .btn-secondary {
-                    background: white;
-                    color: #3182CE;
-                    border: 1px solid #3182CE;
-                }
-
-                .btn-secondary:hover {
-                    background: #ebf5ff;
-                    transform: translateY(-1px);
-                }
-
-                .btn-secondary:active {
-                    transform: translateY(0);
-                }
-
-                .btn-icon {
-                    margin-right: 0.5rem;
-                    width: 1.25rem;
-                    height: 1.25rem;
-                }
-
-                .table-header {
-                    background: #3182CE;
-                    color: white;
-                }
-
-                .table-row:hover {
-                    background-color: #ebf5ff;
-                }
-
-                .gradient-text {
-                    background: linear-gradient(135deg, #3182CE 0%, #63B3ED 100%);
-                    -webkit-background-clip: text;
-                    background-clip: text;
-                    color: transparent;
-                }
-
-                .select-wrapper {
-                    position: relative;
-                }
-
-                .select-wrapper select {
-                    appearance: none;
-                    padding-right: 2.5rem;
-                }
-
-                .select-wrapper::after {
-                    content: '▼';
-                    position: absolute;
-                    right: 1rem;
-                    top: 50%;
-                    transform: translateY(-50%);
-                    pointer-events: none;
-                    color: #64748b;
-                    font-size: 0.7rem;
-                }
-
-                .section-hidden {
-                    opacity: 0;
-                    visibility: hidden;
-                    pointer-events: none;
-                    max-height: 0;
-                    overflow: hidden;
-                    padding: 0;
-                    margin: 0;
-                    transition: all 0.3s ease;
-                }
-
-                .section-visible {
-                    opacity: 1;
-                    visibility: visible;
-                    pointer-events: auto;
-                    max-height: 5000px;
-                    transition: all 0.5s ease;
-                }
-
-                .loader {
-                    display: flex;
-                    justify-content: center;
-                    align-items: center;
-                    height: 60px;
-                    margin: 20px auto;
-                }
-
-                .loader > div {
-                    width: 12px;
-                    height: 12px;
-                    background-color: #3182CE;
-                    border-radius: 50%;
-                    margin: 0 4px;
-                    animation: stretch 1s infinite ease-in-out;
-                }
-
-                .loader div:nth-child(1) {
-                    animation-delay: -0.32s;
-                }
-
-                .loader div:nth-child(2) {
-                    animation-delay: -0.16s;
-                }
-
-                @keyframes stretch {
-                    0%, 100% {
-                        transform: scale(0.6);
-                        opacity: 0.6;
-                    }
-                    50% {
-                        transform: scale(1.2);
-                        opacity: 1;
-                    }
-                }
-
-                .breadcrumb-item {
-                    color: #4a5568;
-                    transition: color 0.2s;
-                }
-
-                .breadcrumb-item:hover {
-                    color: #3182CE;
-                }
-
-                .breadcrumb-separator {
-                    color: #a0aec0;
-                }
-
-                .active-breadcrumb {
-                    color: #3182CE;
-                    font-weight: 500;
-                }
-
-                .action-buttons {
-                    display: flex;
-                    gap: 1rem;
-                    justify-content: flex-end;
-                    margin-top: 2rem;
-                    padding-top: 1.5rem;
-                    border-top: 1px solid #e2e8f0;
-                }
-
-                @media (max-width: 640px) {
-                    .action-buttons {
-                        flex-direction: column;
-                        gap: 0.75rem;
-                    }
-                    
-                    .btn {
-                        width: 100%;
-                    }
-                }
-            `}</style>
 
             <div className="max-w-7xl mx-auto">
                 <div className="flex flex-col space-y-6">
@@ -552,8 +314,8 @@ const Vouchers = () => {
                         <nav className="flex" aria-label="Breadcrumb">
                             <ol className="flex items-center space-x-2">
                                 <li>
-                                    <button 
-                                        onClick={handleBackToHome} 
+                                    <button
+                                        onClick={handleBackToHome}
                                         className="flex items-center text-gray-500 hover:text-blue-600 transition-colors"
                                     >
                                         <svg className="w-5 h-5 mr-1.5" fill="currentColor" viewBox="0 0 20 20">
@@ -674,24 +436,27 @@ const Vouchers = () => {
                         )}
 
                         <div className="action-buttons">
-                            <button 
-                                onClick={handleResetClick} 
-                                className="btn btn-secondary"
-                            >
-                                <svg className="btn-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
-                                </svg>
-                                Reset Form
-                            </button>
-                            <button 
-                                onClick={saveVoucher} 
-                                className="btn btn-primary"
-                            >
-                                <svg className="btn-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4" />
-                                </svg>
-                                Save Voucher
-                            </button>
+                            <div className="flex justify-end gap-3 mt-6">
+                                <button
+                                    onClick={handleResetClick}
+                                    className="flex items-center gap-2 px-4 py-2 rounded-xl border border-gray-300 text-gray-700 hover:bg-gray-100 transition"
+                                >
+                                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                                    </svg>
+                                    Reset
+                                </button>
+
+                                <button
+                                    onClick={saveVoucher}
+                                    className="flex items-center gap-2 px-4 py-2 rounded-xl bg-blue-600 text-white hover:bg-blue-700 shadow-md transition"
+                                >
+                                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4" />
+                                    </svg>
+                                    Save Voucher
+                                </button>
+                            </div>  
                         </div>
                     </div>
                 </div>
