@@ -8,7 +8,7 @@ import DuesPage from "./Components/pages/DuesManagement";
 import SettingsPage from "./settings/SettingsMainPage";
 import VoucherEntryLayout from "./Components/pages/Vouchers";
 
-import TransactionForm from "./Components/PurchaseSales Components/Purchaseandsalesmod"
+import PurchaseTransactionForm from "./Components/PurchaseSales Components/Purchaseandsalesmod";
 import PartyMasterPage from "./Components/mastercomponents/PartyMasters";
 import ItemMaster from "./Components/mastercomponents/ItemMaster";
 import EmployeeMaster from "./Components/mastercomponents/EmployeeMaster";
@@ -49,7 +49,7 @@ function App() {
         { path: "/masters", element: <MastersPage /> },
         { path: "/duesmanagement", element: <DuesPage /> },
         { path: "/purchase&Sales", element: <PurchaseMain /> },
-
+        { path: "/purchase&sale/addtransaction", element: <PurchaseTransactionForm /> },
         { path: "/settings", element: <SettingsPage /> },
         { path: "/vouchers", element: <VoucherEntryLayout /> },
         { path: "/inventory", element: <InventoryDashboard /> },
