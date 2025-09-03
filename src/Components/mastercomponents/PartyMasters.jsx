@@ -98,8 +98,8 @@ const PartyMasterPage = () => {
 
     const getDueDisplay = (balance) => {
         if (balance === 0) return 'No Due';
-        if (balance > 0) return `Debit`;
-        return `Credit`;
+        if (balance > 0) return `₹${Math.abs(balance).toLocaleString('en-IN')} Debit`;
+        return `₹${Math.abs(balance).toLocaleString('en-IN')} Credit`;
     };
 
     const getDueStyle = (balance) => {
@@ -109,62 +109,117 @@ const PartyMasterPage = () => {
     };
 
     return (
-        <div className="min-h-screen px-8 py-6 space-y-6 bg-gray-50">
+        <div className="min-h-screen px-4 md:px-8 py-6 space-y-6 bg-gray-50">
             <Header />
             <PartyFilters onApplyFilters={applyFilters} onResetFilters={handleReset} />
 
-            <div className="overflow-x-auto bg-white shadow-md rounded-lg">
-                <table className="min-w-full divide-y divide-gray-200">
-                    <thead className="bg-gray-100">
-                        <tr>
-                            <th className="px-6 py-3 text-left text-xs font-bold text-gray-600">Party Code</th>
-                            <th className="px-6 py-3 text-left text-xs font-bold text-gray-600">Party Name</th>
-                            <th className="px-6 py-3 text-left text-xs font-bold text-gray-600">Phone</th>
-                            <th className="px-6 py-3 text-left text-xs font-bold text-gray-600">GST No</th>
-                            <th className="px-6 py-3 text-left text-xs font-bold text-gray-600">State</th>
-                            <th className="px-6 py-3 text-left text-xs font-bold text-gray-600">Balance</th>
-                            <th className="px-6 py-3 text-left text-xs font-bold text-gray-600">Status</th>
-                            <th className="px-6 py-3 text-right text-xs font-bold text-gray-600">Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody className="bg-white divide-y divide-gray-100">
-                        {paginatedParties.map((party, index) => (
-                            <tr key={index} className="hover:bg-gray-50">
-                                <td className="px-6 py-4 text-sm font-semibold text-gray-700">{party.partyId}</td>
-                                <td className="px-6 py-4 text-sm text-gray-600">{party.partyName}</td>
-                                <td className="px-6 py-4 text-sm text-gray-600">{party.contact}</td>
-                                <td className="px-6 py-4 text-sm text-gray-600">{party.gstNo}</td>
-                                <td className="px-6 py-4 text-sm text-gray-600">{party.state}</td>
-                                <td className="px-6 py-4">
-                                    <span className={`text-xs font-semibold px-2 py-1 rounded-full ${getDueStyle(party.balance)}`}>
-                                        {getDueDisplay(party.balance)}
-                                    </span>
-                                </td>
-                                <td className="px-6 py-4">
-                                    <span className={`text-xs font-semibold px-2 py-1 rounded-full ${getStatusStyle(party.status)}`}>
-                                        {party.status}
-                                    </span>
-                                </td>
-                                <td className="px-6 py-4 text-right">
-                                    <div className="flex justify-end space-x-2 text-lg">
-                                        <button className="text-blue-600 hover:text-blue-800" title="Edit">✏️</button>
-                                        <button className="text-red-600 hover:text-red-800" title="Delete">🗑️</button>
-                                        <button className="text-gray-600 hover:text-gray-800" title="Info">ℹ️</button>
-                                    </div>
-                                </td>
-                            </tr>
-                        ))}
-                    </tbody>
-                </table>
-            </div>
+            {/* Stats Overview */}
+            
 
-            {totalPages > 1 && (
-                <Pagination
-                    currentPage={currentPage}
-                    totalPages={totalPages}
-                    onPageChange={setCurrentPage}
-                />
-            )}
+            {/* Table Container */}
+            <div className="bg-white rounded-xl shadow-sm overflow-hidden border border-gray-100">
+                <div className="px-6 py-4 border-b border-gray-100 flex justify-between items-center">
+                    <h3 className="text-lg font-semibold text-gray-800">Party List</h3>
+                    <span className="text-sm text-gray-500">
+                        Showing {paginatedParties.length} of {filteredParties.length} parties
+                    </span>
+                </div>
+
+                <div className="overflow-x-auto">
+                    <table className="min-w-full divide-y divide-gray-200">
+                        <thead className="bg-gray-50">
+                            <tr>
+                                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Party Code</th>
+                                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Party Name</th>
+                                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Phone</th>
+                                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">GST No</th>
+                                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">State</th>
+                                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Balance</th>
+                                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                                <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody className="bg-white divide-y divide-gray-200">
+                            {paginatedParties.map((party, index) => (
+                                <tr key={index} className="hover:bg-blue-50 transition-colors duration-150">
+                                    <td className="px-6 py-4 whitespace-nowrap">
+                                        <div className="text-sm font-medium text-gray-900">{party.partyId}</div>
+                                    </td>
+                                    <td className="px-6 py-4 whitespace-nowrap">
+                                        <div className="flex items-center">
+                                            <div className="flex-shrink-0 h-10 w-10 bg-blue-100 rounded-lg flex items-center justify-center mr-3">
+                                                <span className="text-blue-800 font-bold text-sm">
+                                                    {party.partyName.charAt(0)}
+                                                </span>
+                                            </div>
+                                            <div className="text-sm font-medium text-gray-900">{party.partyName}</div>
+                                        </div>
+                                    </td>
+                                    <td className="px-6 py-4 whitespace-nowrap">
+                                        <div className="text-sm text-gray-900">{party.contact}</div>
+                                    </td>
+                                    <td className="px-6 py-4 whitespace-nowrap">
+                                        <div className="text-sm text-gray-500">{party.gstNo}</div>
+                                    </td>
+                                    <td className="px-6 py-4 whitespace-nowrap">
+                                        <div className="text-sm text-gray-900">{party.state}</div>
+                                        <div className="text-xs text-gray-500">{party.district}</div>
+                                    </td>
+                                    <td className="px-6 py-4 whitespace-nowrap">
+                                        <span className={`inline-flex text-xs leading-5 font-semibold px-2.5 py-0.5 rounded-full ${getDueStyle(party.balance)}`}>
+                                            {getDueDisplay(party.balance)}
+                                        </span>
+                                    </td>
+                                    <td className="px-6 py-4 whitespace-nowrap">
+                                        <span className={`inline-flex text-xs leading-5 font-semibold px-2.5 py-0.5 rounded-full ${getStatusStyle(party.status)}`}>
+                                            {party.status}
+                                        </span>
+                                    </td>
+                                    <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                        <div className="flex justify-end items-center space-x-2">
+                                            <button className="text-blue-600 hover:text-blue-900 p-1.5 rounded-md hover:bg-blue-100 transition-colors" title="Edit">
+                                                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                                                </svg>
+                                            </button>
+                                            <button className="text-red-600 hover:text-red-900 p-1.5 rounded-md hover:bg-red-100 transition-colors" title="Delete">
+                                                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                                </svg>
+                                            </button>
+                                            <button className="text-gray-600 hover:text-gray-900 p-1.5 rounded-md hover:bg-gray-100 transition-colors" title="Info">
+                                                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                                </svg>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
+
+                {paginatedParties.length === 0 && (
+                    <div className="text-center py-12">
+                        <svg className="mx-auto h-12 w-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                        <h3 className="mt-2 text-sm font-medium text-gray-900">No parties found</h3>
+                        <p className="mt-1 text-sm text-gray-500">Try adjusting your search or filter to find what you're looking for.</p>
+                    </div>
+                )}
+
+                {totalPages > 1 && (
+                    <div className="px-6 py-4 border-t border-gray-200 bg-gray-50">
+                        <Pagination
+                            currentPage={currentPage}
+                            totalPages={totalPages}
+                            onPageChange={setCurrentPage}
+                        />
+                    </div>
+                )}
+            </div>
         </div>
     );
 };

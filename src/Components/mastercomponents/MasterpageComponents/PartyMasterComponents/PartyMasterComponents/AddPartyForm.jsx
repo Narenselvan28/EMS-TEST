@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import ConfirmModel from '../../../../../essentials/ConfirmModel'; // Adjust path if necessary
+import ConfirmModel from '../../../../../essentials/ConfirmModel';
 
 const AddPartyForm = () => {
     const [sameAsBilling, setSameAsBilling] = useState(false);
@@ -25,6 +25,17 @@ const AddPartyForm = () => {
     // State for the confirmation modal
     const [showCancelConfirm, setShowCancelConfirm] = useState(false);
 
+    // Color definitions based on #3182CE
+    const colors = {
+        primary: '#3182CE',
+        primaryLight: '#EBF5FF',
+        primaryDark: '#2C5282',
+        border: '#E2E8F0',
+        text: '#2D3748',
+        textLight: '#4A5568',
+        background: '#F7FAFC'
+    };
+
     const handleBillingChange = (e) => {
         const { name, value } = e.target;
         setBillingAddress({ ...billingAddress, [name]: value });
@@ -42,98 +53,207 @@ const AddPartyForm = () => {
     };
 
     // --- Modal Handler Functions ---
-
     const handleConfirmCancel = () => {
-        // Logic to execute when "Confirm" is clicked in the modal
         console.log("Party creation cancelled!");
-        window.history.back(); // Example: navigate back to previous page
-        setShowCancelConfirm(false); // Close the modal
+        window.history.back();
+        setShowCancelConfirm(false);
     };
 
     const handleCloseCancelModal = () => {
-        // Logic to execute when "Cancel" is clicked in the modal or modal is dismissed
-        setShowCancelConfirm(false); // Simply close the modal
+        setShowCancelConfirm(false);
     };
 
     const openCancelConfirmModal = () => {
-        setShowCancelConfirm(true); // Open the confirmation modal
+        setShowCancelConfirm(true);
     };
 
-    // --- End Modal Handler Functions ---
+    // Format label text (convert camelCase to Title Case)
+    const formatLabel = (key) => {
+        return key
+            .replace(/([A-Z])/g, ' $1')
+            .replace(/^./, str => str.toUpperCase())
+            .replace('Pin', 'PIN');
+    };
+
+    // Get placeholder text for address fields
+    const getPlaceholder = (fieldName) => {
+        const placeholders = {
+            building: 'Enter building name/number',
+            street: 'Enter street name',
+            village: 'Enter village/town name',
+            taluk: 'Enter taluk name',
+            district: 'Enter district name',
+            state: 'Enter state name',
+            pin: 'Enter PIN code'
+        };
+        return placeholders[fieldName] || '';
+    };
 
     return (
-        <div className="max-w-7xl mx-auto px-4 py-6">
+        <div className="max-w-6xl mx-auto px-4 py-6 font-sans">
             {/* Header with Back Button */}
-            <div className="flex items-center mb-2">
+            <div className="flex items-center mb-6">
                 <button
                     onClick={() => window.history.back()}
-                    className="mr-3 p-2 rounded-full hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-primary"
+                    className="mr-3 p-2 rounded-full hover:bg-gray-100 focus:outline-none transition-colors"
+                    style={{ color: colors.primary }}
                 >
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-black" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
                     </svg>
                 </button>
-                <h2 className="text-2xl font-bold text-dark">Add New Party</h2>
+                <div>
+                    <h2 className="text-2xl font-bold" style={{ color: colors.text }}>Add New Party</h2>
+                    <p className="text-sm" style={{ color: colors.textLight }}>Fill in the party details below</p>
+                </div>
             </div>
-            <p className="text-gray-600 mb-6">Fill in the party details below</p>
 
             {/* Form */}
-            <form className="bg-white p-6 rounded-lg shadow space-y-8">
+            <form className="bg-white p-6 rounded-xl shadow-sm space-y-8" style={{ borderColor: colors.border, borderWidth: '1px' }}>
                 {/* Basic Information */}
                 <section>
-                    <h3 className="text-xl font-semibold text-primary mb-4 border-b pb-2">Basic Information</h3>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="flex items-center mb-6">
+                        <div className="flex items-center justify-center w-10 h-10 rounded-lg text-white mr-3" style={{ backgroundColor: colors.primary }}>
+                            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                            </svg>
+                        </div>
+                        <h3 className="text-lg font-semibold" style={{ color: colors.primaryDark }}>Basic Information</h3>
+                    </div>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                         <div>
-                            <label className="block text-sm font-medium text-gray-700">Party Name*</label>
-                            <input type="text" required className="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary" />
+                            <label className="block text-sm font-medium mb-2" style={{ color: colors.text }}>Party Name*</label>
+                            <input 
+                                type="text" 
+                                required 
+                                placeholder="Enter party name"
+                                className="w-full rounded-lg px-4 py-3 focus:outline-none transition border placeholder-gray-400"
+                                style={{
+                                    borderColor: colors.border,
+                                    backgroundColor: colors.background,
+                                }}
+                            />
                         </div>
                         <div>
-                            <label className="block text-sm font-medium text-gray-700">Party Code*</label>
-                            <input type="text" readOnly value="PTY-1001" className="w-full border rounded px-3 py-2 bg-gray-100" />
+                            <label className="block text-sm font-medium mb-2" style={{ color: colors.text }}>Party Code*</label>
+                            <input 
+                                type="text" 
+                                readOnly 
+                                value="PTY-1001" 
+                                className="w-full rounded-lg px-4 py-3 border cursor-not-allowed"
+                                style={{
+                                    borderColor: colors.border,
+                                    backgroundColor: '#EDF2F7',
+                                    color: colors.textLight
+                                }}
+                            />
                         </div>
                         <div>
-                            <label className="block text-sm font-medium text-gray-700">GST No*</label>
-                            <input type="text" required className="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary" />
+                            <label className="block text-sm font-medium mb-2" style={{ color: colors.text }}>GST No*</label>
+                            <input 
+                                type="text" 
+                                required 
+                                placeholder="Enter GST number"
+                                className="w-full rounded-lg px-4 py-3 focus:outline-none transition border placeholder-gray-400"
+                                style={{
+                                    borderColor: colors.border,
+                                    backgroundColor: colors.background,
+                                }}
+                            />
                         </div>
                         <div>
-                            <label className="block text-sm font-medium text-gray-700">Broker Name</label>
-                            <input type="text" className="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary" />
+                            <label className="block text-sm font-medium mb-2" style={{ color: colors.text }}>Broker Name</label>
+                            <input 
+                                type="text" 
+                                placeholder="Enter broker name (if applicable)"
+                                className="w-full rounded-lg px-4 py-3 focus:outline-none transition border placeholder-gray-400"
+                                style={{
+                                    borderColor: colors.border,
+                                    backgroundColor: colors.background,
+                                }}
+                            />
                         </div>
                     </div>
                 </section>
 
                 {/* Contact Information */}
                 <section>
-                    <h3 className="text-xl font-semibold text-primary mb-4 border-b pb-2">Contact Information</h3>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="flex items-center mb-6">
+                        <div className="flex items-center justify-center w-10 h-10 rounded-lg text-white mr-3" style={{ backgroundColor: colors.primary }}>
+                            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                            </svg>
+                        </div>
+                        <h3 className="text-lg font-semibold" style={{ color: colors.primaryDark }}>Contact Information</h3>
+                    </div>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                         <div>
-                            <label className="block text-sm font-medium text-gray-700">Phone/Mobile*</label>
-                            <input type="tel" required className="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary" />
+                            <label className="block text-sm font-medium mb-2" style={{ color: colors.text }}>Phone/Mobile*</label>
+                            <input 
+                                type="tel" 
+                                required 
+                                placeholder="Enter phone number"
+                                className="w-full rounded-lg px-4 py-3 focus:outline-none transition border placeholder-gray-400"
+                                style={{
+                                    borderColor: colors.border,
+                                    backgroundColor: colors.background,
+                                }}
+                            />
                         </div>
                         <div>
-                            <label className="block text-sm font-medium text-gray-700">Contact Person*</label>
-                            <input type="text" required className="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary" />
+                            <label className="block text-sm font-medium mb-2" style={{ color: colors.text }}>Contact Person*</label>
+                            <input 
+                                type="text" 
+                                required 
+                                placeholder="Enter contact person name"
+                                className="w-full rounded-lg px-4 py-3 focus:outline-none transition border placeholder-gray-400"
+                                style={{
+                                    borderColor: colors.border,
+                                    backgroundColor: colors.background,
+                                }}
+                            />
                         </div>
                         <div>
-                            <label className="block text-sm font-medium text-gray-700">Contact Person Mobile*</label>
-                            <input type="tel" required className="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary" />
+                            <label className="block text-sm font-medium mb-2" style={{ color: colors.text }}>Contact Person Mobile*</label>
+                            <input 
+                                type="tel" 
+                                required 
+                                placeholder="Enter contact person mobile number"
+                                className="w-full rounded-lg px-4 py-3 focus:outline-none transition border placeholder-gray-400"
+                                style={{
+                                    borderColor: colors.border,
+                                    backgroundColor: colors.background,
+                                }}
+                            />
                         </div>
                     </div>
                 </section>
 
                 {/* Billing Address */}
                 <section>
-                    <h3 className="text-xl font-semibold text-primary mb-4 border-b pb-2">Billing Address</h3>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        {Object.entries(billingAddress).map(([key, value]) => (
+                    <div className="flex items-center mb-6">
+                        <div className="flex items-center justify-center w-10 h-10 rounded-lg text-white mr-3" style={{ backgroundColor: colors.primary }}>
+                            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                            </svg>
+                        </div>
+                        <h3 className="text-lg font-semibold" style={{ color: colors.primaryDark }}>Billing Address</h3>
+                    </div>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                        {Object.keys(billingAddress).map((key) => (
                             <div key={key}>
-                                <label className="block text-sm font-medium text-gray-700">{key.replace(/([A-Z])/g, ' $1')}*</label>
+                                <label className="block text-sm font-medium mb-2" style={{ color: colors.text }}>{formatLabel(key)}*</label>
                                 <input
                                     type="text"
                                     name={key}
-                                    value={value}
+                                    value={billingAddress[key]}
                                     onChange={handleBillingChange}
-                                    className="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary"
+                                    placeholder={getPlaceholder(key)}
+                                    className="w-full rounded-lg px-4 py-3 focus:outline-none transition border placeholder-gray-400"
+                                    style={{
+                                        borderColor: colors.border,
+                                        backgroundColor: colors.background,
+                                    }}
                                     required
                                 />
                             </div>
@@ -143,28 +263,49 @@ const AddPartyForm = () => {
 
                 {/* Shipping Address */}
                 <section>
-                    <div className="flex items-center mb-4">
-                        <input
-                            type="checkbox"
-                            checked={sameAsBilling}
-                            onChange={toggleSameAsBilling}
-                            className="h-4 w-4 text-primary focus:ring-primary border-gray-300 rounded"
-                        />
-                        <label className="ml-2 text-sm text-gray-700">Billing address is same for shipping address</label>
+                    <div className="flex items-center mb-6">
+                        <div className="flex items-center justify-center w-10 h-10 rounded-lg text-white mr-3" style={{ backgroundColor: colors.primary }}>
+                            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4" />
+                            </svg>
+                        </div>
+                        <div className="flex-grow">
+                            <h3 className="text-lg font-semibold mb-3" style={{ color: colors.primaryDark }}>Shipping Address</h3>
+                            <div className="flex items-center">
+                                <input
+                                    type="checkbox"
+                                    id="sameAsBilling"
+                                    checked={sameAsBilling}
+                                    onChange={toggleSameAsBilling}
+                                    className="h-4 w-4 rounded focus:ring-0"
+                                    style={{ 
+                                        color: colors.primary,
+                                        borderColor: colors.border
+                                    }}
+                                />
+                                <label htmlFor="sameAsBilling" className="ml-2 text-sm cursor-pointer" style={{ color: colors.text }}>
+                                    Same as billing address
+                                </label>
+                            </div>
+                        </div>
                     </div>
-                    <h3 className="text-xl font-semibold text-primary mb-4 border-b pb-2">Shipping Address</h3>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        {Object.entries(shippingAddress).map(([key, value]) => (
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                        {Object.keys(shippingAddress).map((key) => (
                             <div key={key}>
-                                <label className="block text-sm font-medium text-gray-700">{key.replace(/([A-Z])/g, ' $1')}*</label>
+                                <label className="block text-sm font-medium mb-2" style={{ color: colors.text }}>{formatLabel(key)}*</label>
                                 <input
                                     type="text"
                                     name={key}
-                                    value={value}
+                                    value={shippingAddress[key]}
                                     onChange={handleShippingChange}
-                                    className="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary"
+                                    placeholder={sameAsBilling ? "Same as billing address" : getPlaceholder(key)}
+                                    className="w-full rounded-lg px-4 py-3 focus:outline-none transition border placeholder-gray-400"
+                                    style={{
+                                        borderColor: colors.border,
+                                        backgroundColor: sameAsBilling ? '#EDF2F7' : colors.background,
+                                    }}
                                     required
-                                    disabled={sameAsBilling} // Disable inputs if sameAsBilling is checked
+                                    disabled={sameAsBilling}
                                 />
                             </div>
                         ))}
@@ -172,15 +313,25 @@ const AddPartyForm = () => {
                 </section>
 
                 {/* Form Actions */}
-                <div className="flex justify-end space-x-3">
+                <div className="flex justify-end space-x-4 pt-6 border-t" style={{ borderColor: colors.border }}>
                     <button
                         type="button"
-                        onClick={openCancelConfirmModal} // Attach the function to show the modal
-                        className="bg-white border border-gray-300 text-gray-700 px-4 py-2 rounded hover:bg-gray-50"
+                        onClick={openCancelConfirmModal}
+                        className="px-5 py-2.5 rounded-lg transition font-medium border"
+                        style={{ 
+                            borderColor: colors.border,
+                            color: colors.text,
+                        }}
                     >
                         Cancel
                     </button>
-                    <button type="submit" className="bg-primary text-white px-6 py-2 rounded hover:bg-secondary">
+                    <button 
+                        type="submit" 
+                        className="px-5 py-2.5 text-white rounded-lg transition font-medium shadow-sm"
+                        style={{ 
+                            backgroundColor: colors.primary,
+                        }}
+                    >
                         Save Party
                     </button>
                 </div>

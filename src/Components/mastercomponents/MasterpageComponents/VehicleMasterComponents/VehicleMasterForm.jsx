@@ -32,7 +32,7 @@ export default function VehicleMasterForm() {
     const [showResetConfirm, setShowResetConfirm] = useState(false);
     // State for the back button/cancel confirmation modal
     const [showBackConfirm, setShowBackConfirm] = useState(false); // New state for back confirmation
-
+  
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData((prev) => ({ ...prev, [name]: value }));
